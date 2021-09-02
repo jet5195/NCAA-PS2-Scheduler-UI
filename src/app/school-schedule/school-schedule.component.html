@@ -1,0 +1,32 @@
+<table mat-table [dataSource]="dataSource" matSort matSortActive="week" matSortDirection="asc" class="mat-elevation-z8 schedule-table">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Game Column -->
+    <ng-container matColumnDef="week">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Week </th>
+        <td mat-cell *matCellDef="let game"> {{game.week}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="homeTeam">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Home Team </th>
+        <td mat-cell *matCellDef="let game"> {{game.homeTeam.name}} </td>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="awayTeam">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Away Team </th>
+        <td mat-cell *matCellDef="let game"> {{game.awayTeam.name}} </td>
+    </ng-container>
+
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="conferenceGame">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Conference Game </th>
+        <td mat-cell *matCellDef="let game"> {{game.conferenceGame}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { School } from './school';
+import { Game } from './game';
 import { HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -26,5 +27,13 @@ export class ScheduleService {
 
   getSchoolByName(): Observable<School>{
     return this.http.get<School>(`${this.baseUrl}searchSchoolByName/${this.name}`);
+  }
+
+  getSchoolSchedule(): Observable<Game[]>{
+    return this.http.get<Game[]>(`${this.baseUrl}school/${this.tgid}/schedule`)
+  }
+
+  getSchoolRivals(): Observable<School[]>{
+    return this.http.get<School[]>(`${this.baseUrl}school/${this.tgid}/rivals`)
   }
 }

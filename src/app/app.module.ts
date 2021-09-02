@@ -14,12 +14,16 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SchoolScheduleComponent } from './school-schedule/school-schedule.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
     AppComponent,
     SchoolsComponent,
-    SchoolDetailComponent
+    SchoolDetailComponent,
+    SchoolScheduleComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,9 @@ import { MatButtonModule } from '@angular/material/button';
     MatSliderModule,
     MatExpansionModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]
