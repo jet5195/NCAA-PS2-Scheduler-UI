@@ -11,8 +11,8 @@ import { HttpHeaders } from '@angular/common/http';
 export class ScheduleService {
 
   private baseUrl = "http://localhost:8080/";
-  private tgid = 112;
-  private name = 'Samford';
+  // private tgid = 112;
+  // private name = 'Samford';
   private headers = new HttpHeaders({'Access-Control-Allow-Origin' : '*'})
 
   constructor(private http: HttpClient) { }
@@ -21,19 +21,19 @@ export class ScheduleService {
     return this.http.get<School[]>(`${this.baseUrl}allschools`, {headers: this.headers} );
   }
 
-  getSchoolByTgid(): Observable<School>{
-    return this.http.get<School>(`${this.baseUrl}searchSchoolByTgid/${this.tgid}`);
+  getSchoolByTgid(tgid: number): Observable<School>{
+    return this.http.get<School>(`${this.baseUrl}searchSchoolByTgid/${tgid}`);
   }
 
-  getSchoolByName(): Observable<School>{
-    return this.http.get<School>(`${this.baseUrl}searchSchoolByName/${this.name}`);
+  getSchoolByName(name: string): Observable<School>{
+    return this.http.get<School>(`${this.baseUrl}searchSchoolByName/${name}`);
   }
 
-  getSchoolSchedule(): Observable<Game[]>{
-    return this.http.get<Game[]>(`${this.baseUrl}school/${this.tgid}/schedule`)
+  getSchoolSchedule(tgid: number): Observable<Game[]>{
+    return this.http.get<Game[]>(`${this.baseUrl}school/${tgid}/schedule`)
   }
 
-  getSchoolRivals(): Observable<School[]>{
-    return this.http.get<School[]>(`${this.baseUrl}school/${this.tgid}/rivals`)
+  getSchoolRivals(tgid: number): Observable<School[]>{
+    return this.http.get<School[]>(`${this.baseUrl}school/${tgid}/rivals`)
   }
 }

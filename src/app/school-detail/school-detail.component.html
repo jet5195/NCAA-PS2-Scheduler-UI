@@ -2,7 +2,7 @@
             <mat-expansion-panel *ngIf="school" class="school-expansion-panel" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        {{school.name | uppercase}} {{school.nickname | uppercase}}
+                        {{school.name}} {{school.nickname}}
                     </mat-panel-title>
                     <!-- <mat-panel-description>
                             <mat-icon></mat-icon>
@@ -11,7 +11,7 @@
                 <div><span>Division: </span>{{school.division}}</div>
                 <div><span>Conference: </span>{{school.conference}}</div>
                 <div><span>State: </span>{{school.state}}</div>
-                <button mat-raised-button color="primary">Schedule</button>
+                <button mat-raised-button color="primary" routerLink="/school/{{school.tgid}}/schedule">Schedule</button>
             </mat-expansion-panel>
         <!--  -->
         <!-- <mat-accordion class="school-headers-align"> -->
