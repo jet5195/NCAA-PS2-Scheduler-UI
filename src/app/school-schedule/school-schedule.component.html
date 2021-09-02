@@ -1,3 +1,8 @@
+<header class="schedule-header">
+<h2 *ngIf="school">{{school.name}}</h2>
+</header>
+
+
 <table mat-table [dataSource]="dataSource" matSort matSortActive="week" matSortDirection="asc" class="mat-elevation-z8 schedule-table">
 
     <!--- Note that these columns can be defined in any order.

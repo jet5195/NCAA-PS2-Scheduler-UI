@@ -1,8 +1,13 @@
+<mat-toolbar color="primary">
+    <!-- <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button> -->
+    <a mat-button routerLink="/" routerLinkActive="activeButton">{{title}}</a>
+    <span></span>
+    <!-- <span class="example-spacer"></span> -->
+    <a mat-button routerLink="/schools" routerLinkActive="activeButton">Schools</a>
+  </mat-toolbar>
+
 <div class="big_class">
-    <mat-slider min="1" max="100" step="1" value="50"></mat-slider>
-    <h1>{{title}}</h1>
-    <nav>
-        <button mat-raised-button color="primary" routerLink="/schools">Schools</button>
-    </nav>
     <router-outlet></router-outlet>
 </div>

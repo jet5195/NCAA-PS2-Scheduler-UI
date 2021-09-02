@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Game } from '../game';
 import { ScheduleService } from '../schedule.service';
 import { MatSortModule } from '@angular/material/sort';
@@ -13,7 +13,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./school-schedule.component.css']
 })
 export class SchoolScheduleComponent implements OnInit {
-  school: School | undefined;
+  //school: School;
+  school?: School;
 
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   schedule: Game[] = [];
@@ -26,6 +27,10 @@ export class SchoolScheduleComponent implements OnInit {
 
   ngOnInit(): void {
     const tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
+    this.scheduleService.getSchoolByTgid(tgid).subscribe((data: School) => {
+      console.log(data);
+      this.school = data;
+    })
     this.scheduleService.getSchoolSchedule(tgid).subscribe((data: Game[]) => {
       console.log(data);
       this.schedule = data;

@@ -18,6 +18,7 @@ import { SchoolScheduleComponent } from './school-schedule/school-schedule.compo
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AppRoutingModule } from './app-routing.module';
     MatButtonModule,
     MatTableModule,
     MatSortModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
