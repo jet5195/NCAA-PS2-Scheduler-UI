@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.big_class {
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+
+/* .mat-grid-tile {
+    position: inherit !important;
+    overflow: visible !important;
+} */
+
+/* school-headers-align .mat-expansion-panel-header-title, 
+.example-headers-align .mat-expansion-panel-header-description {
+  flex-basis: 0;
+} */
+
+/* .school-headers-align .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
+} */
+/* 
+.mat-grid-tile-content {
+    position: relative !important;
+} */
+

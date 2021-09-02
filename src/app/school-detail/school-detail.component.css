@@ -1,0 +1,11 @@
+/* mat-expansion-panel {
+  width: 100%;
+} */
+
+.school-expansion-panel {
+  width: 25%;
+  /* position: absolute; */
+  /* right: 0px;
+  top: 0px; */
+  margin: 5px;
+}

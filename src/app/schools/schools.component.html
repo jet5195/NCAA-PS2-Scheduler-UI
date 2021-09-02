@@ -1,0 +1,43 @@
+<div class ="container">
+        <h3 class="text-center"> Schools List</h3>
+
+        <!-- <mat-grid-list class="school-grid-list" cols="3" rowHeight="1:1"> -->
+            
+            <mat-accordion>
+                <app-school-detail *ngFor="let school of schools" [school]=this.school [class.selected]="school === selectedSchool"
+                (click)="onSelect(school)"></app-school-detail>
+            </mat-accordion> 
+                <!-- *ngFor="let school of schools"
+                [class.selected]="school === selectedSchool"
+                (click)="onSelect(school)">
+                {{school.name}} -->
+        <!-- </mat-grid-list> -->
+
+            <!-- <ul class="schools">
+                <li *ngFor="let school of schools"
+                [class.selected]="school === selectedSchool"
+                (click)="onSelect(school)">
+                <span class="badge">{{school.tgid}}</span> {{school.name}}
+            </li>
+            </ul> -->
+
+            <!-- <app-school-detail [school]="selectedSchool"></app-school-detail> -->
+            <!-- <table class="table table-striped">
+                <thead>
+                    <th> Tgid</th>
+                    <th> Name</th>
+                    <th> Nickname</th>
+                    <th> Conference</th>
+                    <th> Division</th>
+                </thead>
+                <tbody>
+                    <tr *ngFor = "let school of schools">
+                        <td> {{ school.tgid}}</td>
+                        <td> {{ school.name}}</td>
+                        <td> {{ school.nickname}}</td>
+                        <td> {{ school.conference}}</td>
+                        <td> {{ school.division}}</td>
+                    </tr>
+                </tbody>
+            </table> -->
+</div>
