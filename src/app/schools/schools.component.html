@@ -1,11 +1,10 @@
 <div class ="container">
 
         <!-- <mat-grid-list class="school-grid-list" cols="3" rowHeight="1:1"> -->
-            
             <mat-accordion>
                 <app-school-detail *ngFor="let school of schools" [school]=this.school [class.selected]="school === selectedSchool"
                 (click)="onSelect(school)"></app-school-detail>
-            </mat-accordion> 
+            </mat-accordion>
                 <!-- *ngFor="let school of schools"
                 [class.selected]="school === selectedSchool"
                 (click)="onSelect(school)">

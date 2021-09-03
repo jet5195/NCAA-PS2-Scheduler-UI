@@ -5,6 +5,9 @@ export interface School {
     state: string;
     conference: string;
     division: string;
+    color: string;
+    altColor: string;
+    logo: string;
     userTeam: boolean;
     powerConf: boolean;
 }

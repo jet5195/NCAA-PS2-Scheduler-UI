@@ -23,10 +23,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   justify-content: space-between;
   align-items: center;
 } */
-/* 
+
 .mat-grid-tile-content {
     position: relative !important;
-} */
+} 
 
 /* .example-spacer {
   flex: 1 1 auto;
@@ -37,7 +37,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   }
 
 .schedule-header {
-    background-color: #CEB888;
+    /* background-color: #CEB888; */
     height:100px;
     color:white;
+}
+
+.school-logo {
+  height: 35px;
 }

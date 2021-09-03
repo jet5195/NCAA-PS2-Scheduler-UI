@@ -1,5 +1,6 @@
-<header class="schedule-header">
-<h2 *ngIf="school">{{school.name}}</h2>
+<header *ngIf="school" class="schedule-header" style="background-color: {{school.color}};">
+<h2 *ngIf="school" style="color: {{school.altColor}}">{{school.name}}</h2>
+<img *ngIf="school" class="school-logo" src="{{school.logo}}">
 </header>
 
 
