@@ -13,12 +13,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./school-schedule.component.css']
 })
 export class SchoolScheduleComponent implements OnInit {
-  //school: School;
   school?: School;
+  clickedRow?: Game;
 
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   schedule: Game[] = [];
-  selectedGame?: Game;
 
   displayedColumns: string[] = ['week', 'homeTeam', 'awayTeam', 'conferenceGame'];
   dataSource = new MatTableDataSource(this.schedule);
