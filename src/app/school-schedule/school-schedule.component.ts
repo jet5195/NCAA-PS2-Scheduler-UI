@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Game } from '../game';
 import { ScheduleService } from '../schedule.service';
-import { MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { School } from '../school';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { waitForAsync } from '@angular/core/testing';
 
 
 @Component({
@@ -28,6 +26,8 @@ export class SchoolScheduleComponent implements OnInit {
 
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   schedule: Game[] = [];
+  activatedRoute = new ActivatedRoute;
+  tgid = new Number;
 
   displayedColumns: string[] = ['game', 'week', 'opponent', 'conferenceGame'];
   dataSource = new MatTableDataSource(this.schedule);
@@ -43,7 +43,10 @@ export class SchoolScheduleComponent implements OnInit {
     //this.dataSource.setData(this.displayedColumns);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.setData();
+    });
     this.setData();
   }
 

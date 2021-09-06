@@ -130,8 +130,10 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .in-cell-school-logo {
-  height: 20px !important;
-  vertical-align: bottom !important;
+  max-height: 20px !important;
+  max-width: 20px;
+  vertical-align: middle;
+  object-fit: contain;
 }
 
 .in-cell-school-logo-container {
