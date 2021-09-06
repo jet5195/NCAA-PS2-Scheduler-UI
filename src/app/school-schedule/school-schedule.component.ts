@@ -27,7 +27,7 @@ export class SchoolScheduleComponent implements OnInit {
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   schedule: Game[] = [];
   activatedRoute = new ActivatedRoute;
-  tgid = new Number;
+  tgid?: number;
 
   displayedColumns: string[] = ['game', 'week', 'opponent', 'conferenceGame'];
   dataSource = new MatTableDataSource(this.schedule);
@@ -47,7 +47,7 @@ export class SchoolScheduleComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.setData();
     });
-    this.setData();
+    //this.setData();
   }
 
   setData(): void {

@@ -19,13 +19,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AddGameComponent } from './add-game/add-game.component';
+import { MatSelectModule } from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
     AppComponent,
     SchoolsComponent,
     SchoolDetailComponent,
-    SchoolScheduleComponent
+    SchoolScheduleComponent,
+    AddGameComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatTableModule,
     MatSortModule,
     AppRoutingModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

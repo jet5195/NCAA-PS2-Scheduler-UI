@@ -141,3 +141,27 @@ tr.game-row:not(.game-expanded-row):active {
   width: 35px;
   text-align: center;
 }
+
+.home-away-radio-group {
+    display: flex;
+    /* flex-direction: column; */
+    margin: 15px 0;
+  }
+  
+  .home-away-radio-button {
+    margin: 5px;
+  }
+
+.add-game-container {
+  padding-top: 20px;
+  display: flex;
+}
+
+.add-game-dropdown {
+  padding-right: 20px;
+}
+
+.add-game-button {
+  height: fit-content;
+  margin: 10px 20px !important;
+}

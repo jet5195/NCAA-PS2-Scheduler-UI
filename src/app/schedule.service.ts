@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { School } from './school';
 import { Game } from './game';
 import { HttpHeaders } from '@angular/common/http';
+import { AddGameRequest } from './addGameRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -40,4 +41,17 @@ export class ScheduleService {
   async deleteGame(tgid: number, week: number): Promise<School>{
     return await this.http.delete<School>(`${this.baseUrl}school/${tgid}/removeGame/${week}`).toPromise();
   }
+
+  async addGame(game: AddGameRequest): Promise<Game>{
+    return this.http.post<Game>(`${this.baseUrl}addGame`, game).toPromise();
+  }
+
+  getAvailableOpponents(tgid: number, week: number): Observable<School[]>{
+    return this.http.get<School[]>(`${this.baseUrl}school/${tgid}/availableOpponents/${week}`, {headers: this.headers} );
+  }
+
+  getEmptyWeeks(tgid: number): Observable<number[]>{
+    return this.http.get<number[]>(`${this.baseUrl}school/${tgid}/findemptyweeks`, {headers: this.headers} );
+  }
+
 }
