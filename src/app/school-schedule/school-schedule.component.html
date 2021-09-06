@@ -34,7 +34,12 @@
     <!-- Name Column -->
     <ng-container matColumnDef="opponent">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Opponent </th>
-        <td mat-cell *matCellDef="let game"> {{school.name! === game.homeTeam.name ? "vs " + game.awayTeam.name : "@ " + game.homeTeam.name}} </td>
+        <td mat-cell *matCellDef="let game"> {{school.name! === game.homeTeam.name ? "vs ": "@ "}}
+            <div class="in-cell-school-logo-container">
+                <img class="in-cell-school-logo" src="{{school.name! === game.homeTeam.name ? game.awayTeam.logo : game.homeTeam.logo}}">
+            </div>
+            {{school.name! === game.homeTeam.name ? game.awayTeam.name : game.homeTeam.name}}
+        </td>
     </ng-container>
 
     <!-- Name Column -->

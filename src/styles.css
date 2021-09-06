@@ -128,3 +128,14 @@ tr.game-row:not(.game-expanded-row):active {
   margin-bottom: 10px !important;
   margin-left: 40px !important;
 }
+
+.in-cell-school-logo {
+  height: 20px !important;
+  vertical-align: bottom !important;
+}
+
+.in-cell-school-logo-container {
+  display: inline-block;
+  width: 35px;
+  text-align: center;
+}
