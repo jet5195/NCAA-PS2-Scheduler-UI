@@ -43,7 +43,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .school-logo {
-  height: 35px;
+  height: 75px;
+  /* padding-top: 10px; */
+  padding-left: 10px;
+  margin-top: -30px;
+}
+
+.opponent-logo {
+  height: 50%;
+  padding-top: 35px;
 }
 
 .row-is-clicked {
@@ -54,4 +62,69 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   /* border-bottom: 1px solid transparent;
   border-top: 1px solid transparent; */
   cursor: pointer;
+}
+
+tr.game-detail-row {
+  height: 0 !important;
+}
+
+tr.game-row:not(.game-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.game-row:not(.game-expanded-row):active {
+  background: #efefef;
+}
+
+.game-row td {
+  border-bottom-width: 0;
+}
+
+.game-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.game-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.game-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.game-description {
+  padding: 16px;
+}
+
+.game-description-attribution {
+  opacity: 0.5;
+}
+
+.school-logo-div {
+  display: flex;
+  padding-top: 40px;
+}
+
+.school-name {
+  font-size: 25px;
+  /* font-weight: bold; */
+}
+
+.school-info {
+  margin-top: -10px;
+  padding-left: 10px;
+}
+
+.opponent-button {
+  margin-top: 10px !important;
+  margin-bottom: 10px !important;
+  margin-left: 40px !important;
 }

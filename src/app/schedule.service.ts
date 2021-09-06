@@ -30,10 +30,14 @@ export class ScheduleService {
   }
 
   getSchoolSchedule(tgid: number): Observable<Game[]>{
-    return this.http.get<Game[]>(`${this.baseUrl}school/${tgid}/schedule`)
+    return this.http.get<Game[]>(`${this.baseUrl}school/${tgid}/schedule`);
   }
 
   getSchoolRivals(tgid: number): Observable<School[]>{
-    return this.http.get<School[]>(`${this.baseUrl}school/${tgid}/rivals`)
+    return this.http.get<School[]>(`${this.baseUrl}school/${tgid}/rivals`);
+  }
+
+  async deleteGame(tgid: number, week: number): Promise<School>{
+    return await this.http.delete<School>(`${this.baseUrl}school/${tgid}/removeGame/${week}`).toPromise();
   }
 }

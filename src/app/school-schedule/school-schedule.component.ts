@@ -6,25 +6,48 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { School } from '../school';
 import { ActivatedRoute } from '@angular/router';
+import {animate, state, style, transition, trigger} from '@angular/animations';
+import { waitForAsync } from '@angular/core/testing';
+
 
 @Component({
   selector: 'app-school-schedule',
   templateUrl: './school-schedule.component.html',
-  styleUrls: ['./school-schedule.component.css']
+  styleUrls: ['./school-schedule.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class SchoolScheduleComponent implements OnInit {
-  school?: School;
+  school!: School;
   clickedRow?: Game;
 
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   schedule: Game[] = [];
 
-  displayedColumns: string[] = ['week', 'homeTeam', 'awayTeam', 'conferenceGame'];
+  displayedColumns: string[] = ['game', 'week', 'opponent', 'conferenceGame'];
   dataSource = new MatTableDataSource(this.schedule);
+  expandedGame: Game | null | undefined;
 
   constructor(private scheduleService: ScheduleService, private route: ActivatedRoute) { }
 
+  async delete(game: Game) {
+    this.schedule = this.schedule.filter(g => g !== game);
+    await this.scheduleService.deleteGame(this.school.tgid, game.week);
+    // await sleep(1000);
+    this.setData();
+    //this.dataSource.setData(this.displayedColumns);
+  }
+
   ngOnInit(): void {
+    this.setData();
+  }
+
+  setData(): void {
     const tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
     this.scheduleService.getSchoolByTgid(tgid).subscribe((data: School) => {
       console.log(data);
