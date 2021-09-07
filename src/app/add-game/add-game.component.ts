@@ -3,12 +3,14 @@ import { ScheduleService } from '../schedule.service';
 import { School } from '../school';
 import { AddGameRequest } from '../addGameRequest';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { SchoolScheduleComponent } from '../school-schedule/school-schedule.component';
 
 @Component({
   selector: 'app-add-game',
   templateUrl: './add-game.component.html',
   styleUrls: ['./add-game.component.css']
 })
+
 export class AddGameComponent implements OnInit {
 
   // school!: School;
@@ -21,26 +23,22 @@ export class AddGameComponent implements OnInit {
   isHomeTeam?: boolean;
   //addGameRequest!: AddGameRequest;
 
-  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute) { }
+
+
+  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private schoolScheduleComponent: SchoolScheduleComponent) { }
 
   ngOnInit(): void {
-    this.tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
-    this.scheduleService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
-      console.log(data);
-      this.availableWeeks = data;
-    })
-
+    this.route.params.subscribe(params => {
+      this.tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
+      this.scheduleService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
+        console.log(data);
+        this.availableWeeks = data;
+      })
+    });
   }
 
   async add() {
-    //this.schedule = this.schedule.filter(g => g !== game);
-    //addGameRequest : new AddGameRequest;
-    //category: Category = new Category();
-    //const addGameRequest: AddGameRequest = new AddGameRequest();
-
-    
-
-    if(this.isHomeTeam){
+    if (this.isHomeTeam) {
       const addGameRequest: AddGameRequest = {
         homeId: this.tgid,
         awayId: this.selectedOpponent.tgid,
@@ -48,7 +46,7 @@ export class AddGameComponent implements OnInit {
       };
       await this.scheduleService.addGame(addGameRequest);
     }
-    else if(!this.isHomeTeam) {
+    else if (!this.isHomeTeam) {
       const addGameRequest: AddGameRequest = {
         awayId: this.tgid,
         homeId: this.selectedOpponent.tgid,
@@ -56,10 +54,8 @@ export class AddGameComponent implements OnInit {
       };
       await this.scheduleService.addGame(addGameRequest);
     }
-    
-    // await sleep(1000);
-    //this.setData();
-    //this.dataSource.setData(this.displayedColumns);
+
+    this.schoolScheduleComponent.setData()
   }
 
   changeWeek(): void {
