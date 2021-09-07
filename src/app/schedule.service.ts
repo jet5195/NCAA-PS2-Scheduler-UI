@@ -54,4 +54,32 @@ export class ScheduleService {
     return this.http.get<number[]>(`${this.baseUrl}school/${tgid}/findemptyweeks`, {headers: this.headers} );
   }
 
+  autoAddGames(): Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}schedule/autoaddgames`, null, {headers: this.headers});
+  }
+
+  autoAddGamesAggressive(): Observable<any>{
+    return this.http.put(`${this.baseUrl}schedule/autoaddgamesaggressive`, null, {headers: this.headers})
+  }
+
+  fixSchedule(): Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}schedule/fixschedule`, null, {headers: this.headers});
+  }
+
+  removeAllOocGamesNonRivalry(): Observable<any>{
+    return this.http.delete<any>(`${this.baseUrl}removeAllOocNonRivalGames`);
+  }
+
+  removeAllOocGames(): Observable<any>{
+    return this.http.delete(`${this.baseUrl}removeAllOocGames`);
+  }
+
+  removeAllFcsGames(): Observable<any>{
+    return this.http.delete(`${this.baseUrl}removeAllFcsGames`);
+  }
+
+  saveToFile(): Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}schedule/savetofile`, null);
+  }
+
 }

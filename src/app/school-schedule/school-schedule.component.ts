@@ -115,6 +115,4 @@ export class SchoolScheduleComponent implements OnInit {
       })
   }
 
-  
-
 }

@@ -21,7 +21,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AddGameComponent } from './add-game/add-game.component';
 import { MatSelectModule } from '@angular/material/select';
-import {MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MatRadioModule} from '@angular/material/radio';
     SchoolsComponent,
     SchoolDetailComponent,
     SchoolScheduleComponent,
-    AddGameComponent
+    AddGameComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
