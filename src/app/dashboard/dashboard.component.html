@@ -1,9 +1,11 @@
 
 <button mat-flat-button color="primary" class="dashboard-buttons" (click)="removeAllFcsGames()">Remove All FCS Games</button>
-<button mat-raised-button color="primary" class="dashboard-buttons" (click)="removeAllOocGamesNonRivalry()">Remove All OOC Games (non-rivalry)</button>
-<button mat-stroked-button color="primary" class="dashboard-buttons" (click)="removeAllOocGames()">Remove All OOC Games</button>
-<button mat-button color="primary" class="dashboard-buttons" (click)="autoAddGames()">Auto Add Games</button>
-<button mat-button color="primary" class="dashboard-buttons" (click)="autoAddGamesAggressive()">Auto Add Games (aggressive)</button>
-<button mat-button color="primary" class="dashboard-buttons" (click)="fixSchedule()">Fix Schedule</button>
-<button mat-mini-fab color="primary" class="dashboard-buttons" (click)="saveToFile()">Save</button>
+<button mat-flat-button color="primary" class="dashboard-buttons" (click)="removeAllOocGamesNonRivalry()">Remove All OOC Games (non-rivalry)</button>
+<button mat-flat-button color="primary" class="dashboard-buttons" (click)="removeAllOocGames()">Remove All OOC Games</button>
+<button mat-flat-button color="primary" class="dashboard-buttons" (click)="autoAddGames()">Auto Add Games</button>
+<button mat-flat-button color="primary" class="dashboard-buttons" (click)="autoAddGamesAggressive()">Auto Add Games (aggressive)</button>
+<button mat-flat-button color="primary" class="dashboard-buttons" (click)="fixSchedule()">Fix Schedule</button>
+<button mat-fab color="accent" class="save-button" (click)="saveToFile()">
+    <mat-icon>save</mat-icon>
+</button>
 
