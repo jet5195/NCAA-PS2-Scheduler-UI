@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { School } from './school';
 import { Game } from './game';
 import { HttpHeaders } from '@angular/common/http';
 import { AddGameRequest } from './addGameRequest';
+import { Conference } from './conference';
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +81,19 @@ export class ScheduleService {
 
   saveToFile(): Observable<any>{
     return this.http.post<any>(`${this.baseUrl}schedule/savetofile`, null);
+  }
+
+  getAllConferences(): Observable<Conference[]>{
+    return this.http.get<Conference[]>(`${this.baseUrl}allConferences`, {headers: this.headers} );
+  }
+
+  /* GET heroes whose name contains search term */
+  searchSchools(term: string): Observable<School[]> {
+    if (!term.trim()) {
+      // if not search term, return empty hero array.
+      return of([]);
+    }
+    return this.http.get<School[]>(`${this.baseUrl}school?name=${term}`);
   }
 
 }

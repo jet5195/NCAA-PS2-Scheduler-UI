@@ -8,10 +8,26 @@
                             <mat-icon></mat-icon>
                         </mat-panel-description> -->
                 </mat-expansion-panel-header>
-                <div><span>Division: </span>{{school.division}}</div>
-                <div><span>Conference: </span>{{school.conference}}</div>
-                <div><span>State: </span>{{school.state}}</div>
-                <button mat-raised-button color="primary" routerLink="/school/{{school.tgid}}/schedule">Schedule</button>
+                <div class="expansion-panel-data">
+                    <div class="school-detail-logo-container">
+                        <img *ngIf="school" class="school-detail-logo" src="{{school.logo}}">
+                    </div>
+                    <div class="school-quick-info">
+                        <div><span>Division: </span>{{school.ncaaDivision}}</div>
+                        <div *ngIf="school.division">
+                            <span>Conference: </span>
+                            {{school.conference.name}}
+                        </div>
+                        <div *ngIf="school.division">
+                             <span>Division: </span>{{school.division}}
+                        </div>
+                        <div><span>State: </span>{{school.state}}</div>
+                    </div>
+                </div>
+                <!-- <button mat-raised-button color="primary" routerLink="/school/{{school.tgid}}/schedule">Schedule</button> -->
+                <button mat-fab style="background-color: {{school.color}};" class="schedule-button" routerLink="/school/{{school.tgid}}/schedule">
+                    <mat-icon>calendar_today</mat-icon>
+                </button>
             </mat-expansion-panel>
 
 <!-- </div> -->

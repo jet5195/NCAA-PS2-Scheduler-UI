@@ -175,3 +175,37 @@ tr.game-row:not(.game-expanded-row):active {
 .save-button {
   float: right;
 }
+
+.schools-accordian {
+    display: flex !important;
+    flex-flow: wrap !important;
+    margin-top: 10px;
+}
+
+.school-detail {
+    margin: 10px;
+}
+
+.school-detail-logo {
+    max-height: 75px;
+    max-width: 75px;
+    padding-top: 0px;
+    padding-left: 0px;
+    margin-top: 0px;
+    vertical-align: middle;
+    object-fit: contain;
+}
+
+.expansion-panel-data {
+    display: inline-flex;
+    width: -webkit-fill-available;
+}
+
+.school-quick-info {
+    align-self: center;
+    margin: auto;
+}
+
+.schedule-button {
+    float: right;
+}

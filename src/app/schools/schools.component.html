@@ -1,8 +1,31 @@
+<h2>Filter</h2>
+<!-- <div id="search-component">
+    <label for="search-box">School Search</label>
+    <input #searchBox id="search-box" (input)="search(searchBox.value)" />
+  
+    <ul class="search-result">
+      <li *ngFor="let school of schools$ | async" >
+        <a routerLink="/school/{{school.tgid}}">
+          {{school.schoolName}}
+        </a>
+      </li>
+    </ul>
+  </div> -->
+
+<mat-form-field appearance="fill">
+    <mat-label>Conference</mat-label>
+    <mat-select [(ngModel)]="selectedConference" name="conference">
+        <mat-option *ngFor="let conference of conferences" [value]="conference">
+            {{conference.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
 <div class ="container">
 
         <!-- <mat-grid-list class="school-grid-list" cols="3" rowHeight="1:1"> -->
-            <mat-accordion>
-                <app-school-detail *ngFor="let school of schools" [school]=this.school [class.selected]="school === selectedSchool"
+            <mat-accordion class="schools-accordian">
+                <app-school-detail class="school-detail" *ngFor="let school of schools" [school]=this.school [class.selected]="school === selectedSchool"
                 (click)="onSelect(school)"></app-school-detail>
             </mat-accordion>
                 <!-- *ngFor="let school of schools"
