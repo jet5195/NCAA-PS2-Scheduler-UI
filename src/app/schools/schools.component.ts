@@ -5,8 +5,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { Conference } from '../conference';
 import { Observable, Subject } from 'rxjs';
 import {
-   debounceTime, distinctUntilChanged, switchMap
- } from 'rxjs/operators';
+  debounceTime, distinctUntilChanged, switchMap
+} from 'rxjs/operators';
 
 @Component({
   selector: 'app-schools',
@@ -15,42 +15,37 @@ import {
 })
 export class SchoolsComponent implements OnInit {
   schools: School[] = [];
+  //for optimization
+  allSchools?: School[] = [];
   selectedSchool?: School;
   panelOpenState = false;
   conferences: Conference[] = [];
-  selectedConference?: Conference;
-
-  // search attempt
-  schools$!: Observable<School[]>;
-  private searchTerms = new Subject<string>();
-  // Push a search term into the observable stream.
-  search(term: string): void {
-    this.searchTerms.next(term);
-  }
+  selectedConference: string = "All";
 
   constructor(private scheduleService: ScheduleService) { }
 
   ngOnInit(): void {
-    //search stuff
-    // this.schools$ = this.searchTerms.pipe(
-    //   // wait 300ms after each keystroke before considering the term
-    //   debounceTime(300),
-
-    //   // ignore new term if same as previous term
-    //   distinctUntilChanged(),
-
-    //   // switch to new search observable each time the term changes
-    //   switchMap((term: string) => this.scheduleService.searchSchools(term)),
-    // );
-    //
-    this.scheduleService.getSchools().subscribe((data: School[]) => {
-      console.log(data);
-      this.schools = data;
-    })
+    this.getSchoolsByConference();
+    //this.allSchools = this.schools;
     this.scheduleService.getAllConferences().subscribe((data: Conference[]) => {
       console.log(data);
       this.conferences = data;
     })
+  }
+
+  getSchoolsByConference(): void {
+    if (this.allSchools!.length > 0 && this.selectedConference === 'All') {
+      this.schools = this.allSchools!;
+    }
+    else {
+      this.scheduleService.getSchoolsByConference(this.selectedConference!).subscribe((data: School[]) => {
+        console.log(data);
+        this.schools = data;
+        if (this.selectedConference === "All"){
+          this.allSchools = data;
+        }
+      });
+    }
   }
 
   onSelect(school: School): void {

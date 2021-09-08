@@ -180,6 +180,7 @@ tr.game-row:not(.game-expanded-row):active {
     display: flex !important;
     flex-flow: wrap !important;
     margin-top: 10px;
+    justify-content: center;
 }
 
 .school-detail {
@@ -208,4 +209,17 @@ tr.game-row:not(.game-expanded-row):active {
 
 .schedule-button {
     float: right;
+}
+
+.conference-select {
+  
+  max-width: 600px;
+  min-width: 300px;
+  width: -webkit-fill-available;
+  /* display: inline !important; */
+}
+
+.conference-select-container {
+  text-align: center;
+  margin-top: 25px;
 }

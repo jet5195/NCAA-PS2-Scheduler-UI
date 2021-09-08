@@ -1,4 +1,3 @@
-<h2>Filter</h2>
 <!-- <div id="search-component">
     <label for="search-box">School Search</label>
     <input #searchBox id="search-box" (input)="search(searchBox.value)" />
@@ -12,29 +11,36 @@
     </ul>
   </div> -->
 
-<mat-form-field appearance="fill">
-    <mat-label>Conference</mat-label>
-    <mat-select [(ngModel)]="selectedConference" name="conference">
-        <mat-option *ngFor="let conference of conferences" [value]="conference">
-            {{conference.name}}
-        </mat-option>
-    </mat-select>
-</mat-form-field>
 
-<div class ="container">
 
-        <!-- <mat-grid-list class="school-grid-list" cols="3" rowHeight="1:1"> -->
-            <mat-accordion class="schools-accordian">
-                <app-school-detail class="school-detail" *ngFor="let school of schools" [school]=this.school [class.selected]="school === selectedSchool"
-                (click)="onSelect(school)"></app-school-detail>
-            </mat-accordion>
-                <!-- *ngFor="let school of schools"
+<div class="container">
+
+    <div class="conference-select-container">
+        <mat-form-field appearance="fill" class="conference-select">
+            <mat-label>Conference</mat-label>
+            <mat-select [(ngModel)]="selectedConference" class="conference-select2" name="conference"
+                (selectionChange)="getSchoolsByConference()">
+                <mat-option [value]="'All'">
+                    All
+                </mat-option>
+                <mat-option *ngFor="let conference of conferences" [value]="conference.name">
+                    {{conference.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <!-- <mat-grid-list class="school-grid-list" cols="3" rowHeight="1:1"> -->
+    <mat-accordion class="schools-accordian">
+        <app-school-detail class="school-detail" *ngFor="let school of schools" [school]=this.school
+            [class.selected]="school === selectedSchool" (click)="onSelect(school)"></app-school-detail>
+    </mat-accordion>
+    <!-- *ngFor="let school of schools"
                 [class.selected]="school === selectedSchool"
                 (click)="onSelect(school)">
                 {{school.name}} -->
-        <!-- </mat-grid-list> -->
+    <!-- </mat-grid-list> -->
 
-            <!-- <ul class="schools">
+    <!-- <ul class="schools">
                 <li *ngFor="let school of schools"
                 [class.selected]="school === selectedSchool"
                 (click)="onSelect(school)">
@@ -42,8 +48,8 @@
             </li>
             </ul> -->
 
-            <!-- <app-school-detail [school]="selectedSchool"></app-school-detail> -->
-            <!-- <table class="table table-striped">
+    <!-- <app-school-detail [school]="selectedSchool"></app-school-detail> -->
+    <!-- <table class="table table-striped">
                 <thead>
                     <th> Tgid</th>
                     <th> Name</th>

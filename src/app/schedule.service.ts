@@ -87,13 +87,8 @@ export class ScheduleService {
     return this.http.get<Conference[]>(`${this.baseUrl}allConferences`, {headers: this.headers} );
   }
 
-  /* GET heroes whose name contains search term */
-  searchSchools(term: string): Observable<School[]> {
-    if (!term.trim()) {
-      // if not search term, return empty hero array.
-      return of([]);
-    }
-    return this.http.get<School[]>(`${this.baseUrl}school?name=${term}`);
+  getSchoolsByConference(name: string): Observable<School[]>{
+    return this.http.get<School[]>(`${this.baseUrl}conference/${name}/schools`, {headers: this.headers} );
   }
 
 }
