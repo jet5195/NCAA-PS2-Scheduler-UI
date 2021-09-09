@@ -155,6 +155,7 @@ tr.game-row:not(.game-expanded-row):active {
 .add-game-container {
   padding-top: 20px;
   display: flex;
+  justify-content: center;
 }
 
 .add-game-dropdown {
@@ -221,5 +222,14 @@ tr.game-row:not(.game-expanded-row):active {
 
 .conference-select-container {
   text-align: center;
+  margin-top: 25px;
+}
+
+.dashboard-buttons-container {
+  text-align: center;
+  align-self: center;
+}
+
+.school-schedule-container {
   margin-top: 25px;
 }
