@@ -12,4 +12,5 @@ export interface School {
     altColor: string;
     logo: string;
     userTeam: boolean;
+
 }

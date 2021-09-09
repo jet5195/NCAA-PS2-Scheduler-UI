@@ -23,6 +23,7 @@ import { AddGameComponent } from './add-game/add-game.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     AppRoutingModule,
     MatToolbarModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

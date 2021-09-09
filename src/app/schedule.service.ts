@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpResponse } from '@angular/common/http';
 import { School } from './school';
 import { Game } from './game';
 import { HttpHeaders } from '@angular/common/http';
 import { AddGameRequest } from './addGameRequest';
 import { Conference } from './conference';
+import { SuggestedGameResponse } from './suggestedGameResponse';
 
 @Injectable({
   providedIn: 'root'
@@ -89,6 +90,28 @@ export class ScheduleService {
 
   getSchoolsByConference(name: string): Observable<School[]>{
     return this.http.get<School[]>(`${this.baseUrl}conference/${name}/schools`, {headers: this.headers} );
+  }
+
+  getSuggestedOpponent(id: number): Observable<SuggestedGameResponse>{
+    return this.http.get<SuggestedGameResponse>(`${this.baseUrl}school/${id}/suggestgame`)
+  }
+
+  setScheduleFile(schedule: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', schedule); // what doees this do?
+
+    return this.http.post<HttpEvent<any>>(`${this.baseUrl}setScheduleFile`, formData);
+  }
+
+  setAlignmentFile(alignment: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', alignment); // what doees this do?
+
+    return this.http.post<HttpEvent<any>>(`${this.baseUrl}setAlignmentFile`, formData);
+  }
+
+  saveScheduleToExcel(): Observable<any> {
+    return this.http.get(`${this.baseUrl}schedule/download`, {responseType: 'blob'} );
   }
 
 }

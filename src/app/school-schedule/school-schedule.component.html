@@ -77,9 +77,12 @@
                     </div>
                     <div class="opponent-expanded-detail">
                         <span>{{school.name! === game.homeTeam.name ? game.awayTeam.name : game.homeTeam.name}}</span>
-                        <span> {{school.name! === game.homeTeam.name ? game.awayTeam.nickname : game.homeTeam.nickname}}</span>
-                        <span><br>{{school.name! === game.homeTeam.name ? game.awayTeam.conference.name : game.homeTeam.conference.name}}</span>
-                        <span> {{school.name! === game.homeTeam.name ? game.awayTeam.division : game.homeTeam.division}}</span>
+                        <span> {{school.name! === game.homeTeam.name ? game.awayTeam.nickname :
+                            game.homeTeam.nickname}}</span>
+                        <span><br>{{school.name! === game.homeTeam.name ? game.awayTeam.conference.name :
+                            game.homeTeam.conference.name}}</span>
+                        <span> {{school.name! === game.homeTeam.name ? game.awayTeam.division :
+                            game.homeTeam.division}}</span>
 
                     </div>
                     <button mat-stroked-button color="primary" class="opponent-button" (click)="delete(game)">Remove
@@ -111,6 +114,9 @@
 
     <div class="add-game-container">
 
+        <button mat-stroked-button color="primary" class="add-game-button" (click)="getSuggestedGame()">Suggest
+            Game</button>
+
         <!-- <h4>Select Week</h4> -->
         <mat-form-field appearance="fill" class="add-game-dropdown">
             <mat-label>Select Week</mat-label>
@@ -123,11 +129,12 @@
         <!-- <h4>Select Opponent</h4> -->
         <mat-form-field appearance="fill" class="add-game-dropdown">
             <mat-label>Select Opponent</mat-label>
-            <mat-select [(ngModel)]="selectedOpponent" name="availableOpponent">
+            <mat-select [(value)]="selectedOpponent" [compareWith]="compareSchools" name="availableOpponent">
                 <mat-option *ngFor="let availableOpponent of availableOpponents" [value]="availableOpponent">
                     {{availableOpponent.name}}
                 </mat-option>
             </mat-select>
+
         </mat-form-field>
         <!-- <span>{{selectedOpponent}}</span> -->
         <!-- <label id="example-radio-group-label">Is this needed</label> -->
@@ -135,7 +142,7 @@
             <mat-radio-button class="home-away-radio-button" [value]=true>Home</mat-radio-button>
             <mat-radio-button class="home-away-radio-button" [value]=false>Away</mat-radio-button>
         </mat-radio-group>
-        <div>{{isHomeTeam}}</div>
+        <!-- <div>{{isHomeTeam}}</div> -->
         <!-- <span>{{selectedWeek}}</span> -->
         <button mat-stroked-button color="primary" class="add-game-button" (click)="add()">Add Game</button>
 

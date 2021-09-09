@@ -7,6 +7,8 @@ import { School } from '../school';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AddGameRequest } from '../addGameRequest';
+import { SuggestedGameResponse } from '../suggestedGameResponse';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -15,8 +17,8 @@ import { AddGameRequest } from '../addGameRequest';
   styleUrls: ['./school-schedule.component.css'],
   animations: [
     trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
     ]),
   ],
@@ -27,6 +29,7 @@ import { AddGameRequest } from '../addGameRequest';
 export class SchoolScheduleComponent implements OnInit {
   school!: School;
   clickedRow?: Game;
+  suggestedGame?: SuggestedGameResponse;
 
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
   schedule: Game[] = [];
@@ -43,7 +46,7 @@ export class SchoolScheduleComponent implements OnInit {
   dataSource = new MatTableDataSource(this.schedule);
   expandedGame: Game | null | undefined;
 
-  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute) { }
+  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
 
   async add() {
 
@@ -86,7 +89,7 @@ export class SchoolScheduleComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      
+
       this.setData();
       this.setAddGameData();
     });
@@ -105,14 +108,47 @@ export class SchoolScheduleComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.schedule);
       this.dataSource.sort = this.sort;
     })
+    // this.selectedOpponent = undefined;
+    // this.selectedWeek = undefined;
+    // this.isHomeTeam = undefined;
   }
 
   setAddGameData(): void {
     this.tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
-      this.scheduleService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
-        console.log(data);
-        this.availableWeeks = data;
-      })
+    this.scheduleService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
+      console.log(data);
+      this.availableWeeks = data;
+    })
+  }
+
+  getSuggestedGame(): void {
+    this.tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
+    this.scheduleService.getSuggestedOpponent(this.tgid).subscribe((data: SuggestedGameResponse) => {
+      console.log(data);
+      this.suggestedGame = data;
+      if (this.suggestedGame !== null) {
+        this.selectedWeek = this.suggestedGame.week;
+        this.changeWeek();
+
+        this.selectedOpponent = this.suggestedGame.opponent;
+        this.isHomeTeam = this.suggestedGame.homeGame;
+
+      } else {
+        this.openSnackBar("No suggested games found", "dismiss");
+      }
+    })
+
+  }
+
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action, {duration: 5000});
+  }
+
+  compareSchools(s1: School, s2: School): boolean {
+    if (s1.tgid === s2.tgid) {
+      return true;
+    }
+    return false;
   }
 
 }

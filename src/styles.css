@@ -233,3 +233,7 @@ tr.game-row:not(.game-expanded-row):active {
 .school-schedule-container {
   margin-top: 25px;
 }
+
+.hidden-option {
+  display: none !important;
+}
