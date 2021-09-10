@@ -1,13 +1,13 @@
 <div class="school-schedule-container">
 
-    <div *ngIf="school" class="schedule-header mat-elevation-z8" style="background-color: {{school.altColor}}">
+    <div *ngIf="school" class="schedule-header mat-elevation-z8" style="background-color: {{school.color}}">
         <div class="school-info-container">
             <div class="school-logo-div">
                 <img *ngIf="school" class="school-logo" src="{{school.logo}}">
                 <!-- </div> -->
                 <div class="school-info">
                     <!-- <div class="school-name"> -->
-                    <span *ngIf="school" class="school-name" style="color: {{school.color}}"><b>{{school.name}}</b>
+                    <span *ngIf="school" class="school-name" style="color: {{school.altColor}}"><b>{{school.name}}</b>
                         {{school.nickname}}</span>
                     <br>
                     <span *ngIf="school" style="color:white"><b>{{school.conference.name}}</b></span>
@@ -26,19 +26,19 @@
 
         <!-- Game Column -->
         <ng-container matColumnDef="game">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Game </th>
+            <th mat-header-cell *matHeaderCellDef> Game </th>
             <td mat-cell *matCellDef="let game; let i = dataIndex">{{i + 1}}</td>
         </ng-container>
 
         <!-- Week Column -->
         <ng-container matColumnDef="week">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Week </th>
+            <th mat-header-cell *matHeaderCellDef> Week </th>
             <td mat-cell *matCellDef="let game"> {{game.week}} </td>
         </ng-container>
 
         <!-- Opponent Column -->
         <ng-container matColumnDef="opponent">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Opponent </th>
+            <th mat-header-cell *matHeaderCellDef> Opponent </th>
             <td mat-cell *matCellDef="let game"> {{school.name! === game.homeTeam.name ? "vs ": "@ "}}
                 <div class="in-cell-school-logo-container">
                     <img class="in-cell-school-logo"
@@ -51,8 +51,13 @@
 
         <!-- ConferenceGame Column -->
         <ng-container matColumnDef="conferenceGame">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Conference Game </th>
-            <td mat-cell *matCellDef="let game"> {{game.conferenceGame}} </td>
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let game"> 
+                <!-- {{game.conferenceGame}}  -->
+                <div class="in-cell-school-logo-container">
+                    <img class="in-cell-school-logo" src="{{game.homeTeam.conference.logo}}">
+                </div>
+            </td>
         </ng-container>
 
         <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
@@ -73,7 +78,7 @@
                             game.homeTeam.division}}</span>
 
                     </div>
-                    <button mat-stroked-button color="primary" class="opponent-button" (click)="delete(game)">Remove
+                    <button *ngIf="!game.conferenceGame" mat-stroked-button color="primary" class="opponent-button" (click)="delete(game)">Remove
                         Game</button>
                 </div>
             </td>

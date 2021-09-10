@@ -1,18 +1,3 @@
-<!-- <div id="search-component">
-    <label for="search-box">School Search</label>
-    <input #searchBox id="search-box" (input)="search(searchBox.value)" />
-  
-    <ul class="search-result">
-      <li *ngFor="let school of schools$ | async" >
-        <a routerLink="/school/{{school.tgid}}">
-          {{school.schoolName}}
-        </a>
-      </li>
-    </ul>
-  </div> -->
-
-
-
 <div class="container">
 
     <div class="conference-select-container">
@@ -34,37 +19,4 @@
         <app-school-detail class="school-detail" *ngFor="let school of schools" [school]=this.school
             [class.selected]="school === selectedSchool" (click)="onSelect(school)"></app-school-detail>
     </mat-accordion>
-    <!-- *ngFor="let school of schools"
-                [class.selected]="school === selectedSchool"
-                (click)="onSelect(school)">
-                {{school.name}} -->
-    <!-- </mat-grid-list> -->
-
-    <!-- <ul class="schools">
-                <li *ngFor="let school of schools"
-                [class.selected]="school === selectedSchool"
-                (click)="onSelect(school)">
-                <span class="badge">{{school.tgid}}</span> {{school.name}}
-            </li>
-            </ul> -->
-
-    <!-- <app-school-detail [school]="selectedSchool"></app-school-detail> -->
-    <!-- <table class="table table-striped">
-                <thead>
-                    <th> Tgid</th>
-                    <th> Name</th>
-                    <th> Nickname</th>
-                    <th> Conference</th>
-                    <th> Division</th>
-                </thead>
-                <tbody>
-                    <tr *ngFor = "let school of schools">
-                        <td> {{ school.tgid}}</td>
-                        <td> {{ school.name}}</td>
-                        <td> {{ school.nickname}}</td>
-                        <td> {{ school.conference}}</td>
-                        <td> {{ school.division}}</td>
-                    </tr>
-                </tbody>
-            </table> -->
 </div>

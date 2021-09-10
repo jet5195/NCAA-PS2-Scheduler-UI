@@ -24,6 +24,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatRadioModule } from '@angular/material/radio';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatToolbarModule,
     MatSelectModule,
     MatRadioModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

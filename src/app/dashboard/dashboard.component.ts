@@ -38,10 +38,28 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  autoAddGamesRivals(): void {
+    this.scheduleService.autoAddGamesRivals().subscribe((data: number) => {
+      console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error automatically adding rivalry games", "Dismiss");
+    });
+  }
+
+  autoAddGamesRandom(): void {
+    this.scheduleService.autoAddGamesRandomly().subscribe((data: number) => {
+      console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error automatically adding random games", "Dismiss");
+    });
+  }
+
   fixSchedule(): void {
     this.scheduleService.fixSchedule().subscribe((data: number) => {
       console.log(data);
-      this.snackBarService.openSnackBar(data + " games have been modifed", "Dismiss");
+      this.snackBarService.openSnackBar(data + " extra games have been removed", "Dismiss");
     }, error => {
       this.snackBarService.openSnackBar("Error fixing schedule", "Dismiss");
     });

@@ -54,16 +54,24 @@ export class ScheduleService {
     return this.http.get<number[]>(`${this.baseUrl}/schools/${tgid}/empty-weeks`, {headers: this.headers} );
   }
 
-  autoAddGames(): Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}/schedule/auto-add-games`, null, {headers: this.headers});
+  autoAddGames(): Observable<number>{
+    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games`, null, {headers: this.headers});
   }
 
-  autoAddGamesAggressive(): Observable<any>{
-    return this.http.put(`${this.baseUrl}/schedule/auto-add-games-aggressive`, null, {headers: this.headers})
+  autoAddGamesRandomly(): Observable<number>{
+    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games-random`, null, {headers: this.headers});
   }
 
-  fixSchedule(): Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}/schedule/fix`, null, {headers: this.headers});
+  autoAddGamesRivals(): Observable<number>{
+    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games-rivals`, null, {headers: this.headers});
+  }
+
+  autoAddGamesAggressive(): Observable<number>{
+    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games-aggressive`, null, {headers: this.headers})
+  }
+
+  fixSchedule(): Observable<number>{
+    return this.http.put<number>(`${this.baseUrl}/schedule/fix`, null, {headers: this.headers});
   }
 
   removeAllOocGamesNonRivalry(): Observable<number>{
