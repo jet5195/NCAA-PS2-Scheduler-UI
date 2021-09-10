@@ -127,7 +127,7 @@ export class SchoolScheduleComponent implements OnInit {
         this.isHomeTeam = this.suggestedGame.homeGame;
 
       } else {
-        this.snackBarService.openSnackBar("No suggested games found", "dismiss");
+        this.snackBarService.openSnackBar("No suggested games found", "Dismiss");
       }
     })
 

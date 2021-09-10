@@ -21,38 +21,56 @@ export class DashboardComponent implements OnInit {
   }
 
   autoAddGames(): void {
-    this.scheduleService.autoAddGames().subscribe((data: any) => {
+    this.scheduleService.autoAddGames().subscribe((data: number) => {
       console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error automatically adding games", "Dismiss");
     });
   }
 
   autoAddGamesAggressive(): void {
-    this.scheduleService.autoAddGamesAggressive().subscribe((data: any) => {
+    this.scheduleService.autoAddGamesAggressive().subscribe((data: number) => {
       console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been modified (some may have been removed)", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error automatically adding games (aggressively adding rivalries)", "Dismiss");
     });
   }
 
   fixSchedule(): void {
-    this.scheduleService.fixSchedule().subscribe((data: any) => {
+    this.scheduleService.fixSchedule().subscribe((data: number) => {
       console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been modifed", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error fixing schedule", "Dismiss");
     });
   }
 
   removeAllFcsGames(): void {
-    this.scheduleService.removeAllFcsGames().subscribe((data: any) => {
+    this.scheduleService.removeAllFcsGames().subscribe((data: number) => {
       console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error removing all FCS games", "Dismiss");
     });
   }
 
   removeAllOocGames(): void {
-    this.scheduleService.removeAllOocGames().subscribe((data: any) => {
+    this.scheduleService.removeAllOocGames().subscribe((data: number) => {
       console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error removing all OOC games", "Dismiss");
     });
   }
 
   removeAllOocGamesNonRivalry(): void {
-    this.scheduleService.removeAllOocGamesNonRivalry().subscribe((data: any) => {
+    this.scheduleService.removeAllOocGamesNonRivalry().subscribe((data: number) => {
       console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error removing all OOC games (non-rivalry)", "Dismiss");
     });
   }
 
@@ -71,9 +89,9 @@ export class DashboardComponent implements OnInit {
 
     this.scheduleService.setScheduleFile(this.selectedSchedule).subscribe((data: any) => {
       console.log(data);
-      this.snackBarService.openSnackBar("Schedule has been set successfully.", "Dismiss");
+      this.snackBarService.openSnackBar("Schedule has been set successfully", "Dismiss");
     }, error => {
-      this.snackBarService.openSnackBar("Error setting schedule, try checking your file.", "Dismiss");
+      this.snackBarService.openSnackBar("Error setting schedule, try checking your file", "Dismiss");
       // if(error instanceof HttpErrorResponse){
       //   this.snackBarService.openSnackBar(error.statusText, "Dismiss");
       // }
@@ -87,9 +105,9 @@ export class DashboardComponent implements OnInit {
 
     this.scheduleService.setAlignmentFile(this.selectedAlignment).subscribe((data: any) => {
       console.log(data);
-      this.snackBarService.openSnackBar("Conferences have been set successfully.", "Dismiss");
+      this.snackBarService.openSnackBar("Conferences have been set successfully", "Dismiss");
     }, error => {
-      this.snackBarService.openSnackBar("Error setting conferences, try checking your file.", "Dismiss");
+      this.snackBarService.openSnackBar("Error setting conferences, try checking your file", "Dismiss");
     });
   }
 

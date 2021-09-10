@@ -14,8 +14,6 @@ import { SuggestedGameResponse } from './suggestedGameResponse';
 export class ScheduleService {
 
   private baseUrl = "http://localhost:8080";
-  // private tgid = 112;
-  // private name = 'Samford';
   private headers = new HttpHeaders({'Access-Control-Allow-Origin' : '*'})
 
   constructor(private http: HttpClient) { }
@@ -28,9 +26,9 @@ export class ScheduleService {
     return this.http.get<School>(`${this.baseUrl}/schools/${tgid}`);
   }
 
-  getSchoolByName(name: string): Observable<School>{
-    return this.http.get<School>(`${this.baseUrl}/schools/${name}`);
-  }
+  // getSchoolByName(name: string): Observable<School>{
+  //   return this.http.get<School>(`${this.baseUrl}/schools/${name}`);
+  // }
 
   getSchoolSchedule(tgid: number): Observable<Game[]>{
     return this.http.get<Game[]>(`${this.baseUrl}/schools/${tgid}/schedule`);
@@ -68,16 +66,16 @@ export class ScheduleService {
     return this.http.put<any>(`${this.baseUrl}/schedule/fix`, null, {headers: this.headers});
   }
 
-  removeAllOocGamesNonRivalry(): Observable<any>{
-    return this.http.delete<any>(`${this.baseUrl}/schedule/remove-all-ooc-games-but-rivalry`);
+  removeAllOocGamesNonRivalry(): Observable<number>{
+    return this.http.delete<number>(`${this.baseUrl}/schedule/remove-all-ooc-games-but-rivalry`);
   }
 
-  removeAllOocGames(): Observable<any>{
-    return this.http.delete(`${this.baseUrl}/schedule/remove-all-ooc-games`);
+  removeAllOocGames(): Observable<number>{
+    return this.http.delete<number>(`${this.baseUrl}/schedule/remove-all-ooc-games`);
   }
 
-  removeAllFcsGames(): Observable<any>{
-    return this.http.delete(`${this.baseUrl}/schedule/remove-all-fcs-games`);
+  removeAllFcsGames(): Observable<number>{
+    return this.http.delete<number>(`${this.baseUrl}/schedule/remove-all-fcs-games`);
   }
 
   saveToFile(): Observable<any>{
