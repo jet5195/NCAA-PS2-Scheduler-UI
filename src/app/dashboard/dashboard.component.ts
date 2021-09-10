@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ScheduleService } from '../schedule.service';
 import * as fileSaver from 'file-saver';
+import { HttpErrorResponse } from '@angular/common/http';
+import { SnackBarService } from '../snackBar.service';
+//@types/file-saver --save-dev
 
 @Component({
   selector: 'app-dashboard',
@@ -10,7 +13,7 @@ import * as fileSaver from 'file-saver';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute) { }
+  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
 
   activatedRoute = new ActivatedRoute;
 
@@ -68,6 +71,13 @@ export class DashboardComponent implements OnInit {
 
     this.scheduleService.setScheduleFile(this.selectedSchedule).subscribe((data: any) => {
       console.log(data);
+      this.snackBarService.openSnackBar("Schedule has been set successfully.", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error setting schedule, try checking your file.", "Dismiss");
+      // if(error instanceof HttpErrorResponse){
+      //   this.snackBarService.openSnackBar(error.statusText, "Dismiss");
+      // }
+      //console.log(error);
     });
   }
 
@@ -77,35 +87,22 @@ export class DashboardComponent implements OnInit {
 
     this.scheduleService.setAlignmentFile(this.selectedAlignment).subscribe((data: any) => {
       console.log(data);
+      this.snackBarService.openSnackBar("Conferences have been set successfully.", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error setting conferences, try checking your file.", "Dismiss");
     });
   }
 
   downloadFile(): void {
-    this.scheduleService.saveScheduleToExcel().subscribe((response: any) => { //when you use stricter type checking
+    this.scheduleService.saveScheduleToExcel().subscribe((response: any) => { 
 			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
 			const url = window.URL.createObjectURL(blob);
 			//window.open(url);
 			//window.location.href = response.url;
 		  fileSaver.saveAs(blob, 'new_sched.xlsx');
 		//}), error => console.log('Error downloading the file'),
-		}), (error: any) => console.log('Error downloading the file'), //when you use stricter type checking
+		}), (error: any) => console.log('Error downloading the file'), 
                  () => console.info('File downloaded successfully');
   }
-
-  // srcResult!: object;
-
-  // onFileSelected() {
-  //   const inputNode: any = document.querySelector('#file');
-
-  //   if (typeof (FileReader) !== 'undefined') {
-  //     const reader = new FileReader();
-
-  //     reader.onload = (e: any) => {
-  //       this.srcResult = e.target.result;
-  //     };
-
-  //     reader.readAsArrayBuffer(inputNode.files[0]);
-  //   }
-  // }
 
 }

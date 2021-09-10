@@ -13,7 +13,7 @@ import { SuggestedGameResponse } from './suggestedGameResponse';
 })
 export class ScheduleService {
 
-  private baseUrl = "http://localhost:8080/";
+  private baseUrl = "http://localhost:8080";
   // private tgid = 112;
   // private name = 'Samford';
   private headers = new HttpHeaders({'Access-Control-Allow-Origin' : '*'})
@@ -21,97 +21,97 @@ export class ScheduleService {
   constructor(private http: HttpClient) { }
 
   getSchools(): Observable<School[]>{
-    return this.http.get<School[]>(`${this.baseUrl}allschools`, {headers: this.headers} );
+    return this.http.get<School[]>(`${this.baseUrl}/schools`, {headers: this.headers} );
   }
 
   getSchoolByTgid(tgid: number): Observable<School>{
-    return this.http.get<School>(`${this.baseUrl}searchSchoolByTgid/${tgid}`);
+    return this.http.get<School>(`${this.baseUrl}/schools/${tgid}`);
   }
 
   getSchoolByName(name: string): Observable<School>{
-    return this.http.get<School>(`${this.baseUrl}searchSchoolByName/${name}`);
+    return this.http.get<School>(`${this.baseUrl}/schools/${name}`);
   }
 
   getSchoolSchedule(tgid: number): Observable<Game[]>{
-    return this.http.get<Game[]>(`${this.baseUrl}school/${tgid}/schedule`);
+    return this.http.get<Game[]>(`${this.baseUrl}/schools/${tgid}/schedule`);
   }
 
   getSchoolRivals(tgid: number): Observable<School[]>{
-    return this.http.get<School[]>(`${this.baseUrl}school/${tgid}/rivals`);
+    return this.http.get<School[]>(`${this.baseUrl}/schools/${tgid}/rivals`);
   }
 
   async deleteGame(tgid: number, week: number): Promise<School>{
-    return await this.http.delete<School>(`${this.baseUrl}school/${tgid}/removeGame/${week}`).toPromise();
+    return await this.http.delete<School>(`${this.baseUrl}/schools/${tgid}/week/${week}/remove-game`).toPromise();
   }
 
   async addGame(game: AddGameRequest): Promise<Game>{
-    return this.http.post<Game>(`${this.baseUrl}addGame`, game).toPromise();
+    return this.http.post<Game>(`${this.baseUrl}/schedule/add-game`, game).toPromise();
   }
 
   getAvailableOpponents(tgid: number, week: number): Observable<School[]>{
-    return this.http.get<School[]>(`${this.baseUrl}school/${tgid}/availableOpponents/${week}`, {headers: this.headers} );
+    return this.http.get<School[]>(`${this.baseUrl}/schools/${tgid}/week/${week}/available-opponents`, {headers: this.headers} );
   }
 
   getEmptyWeeks(tgid: number): Observable<number[]>{
-    return this.http.get<number[]>(`${this.baseUrl}school/${tgid}/findemptyweeks`, {headers: this.headers} );
+    return this.http.get<number[]>(`${this.baseUrl}/schools/${tgid}/empty-weeks`, {headers: this.headers} );
   }
 
   autoAddGames(): Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}schedule/autoaddgames`, null, {headers: this.headers});
+    return this.http.put<any>(`${this.baseUrl}/schedule/auto-add-games`, null, {headers: this.headers});
   }
 
   autoAddGamesAggressive(): Observable<any>{
-    return this.http.put(`${this.baseUrl}schedule/autoaddgamesaggressive`, null, {headers: this.headers})
+    return this.http.put(`${this.baseUrl}/schedule/auto-add-games-aggressive`, null, {headers: this.headers})
   }
 
   fixSchedule(): Observable<any>{
-    return this.http.put<any>(`${this.baseUrl}schedule/fixschedule`, null, {headers: this.headers});
+    return this.http.put<any>(`${this.baseUrl}/schedule/fix`, null, {headers: this.headers});
   }
 
   removeAllOocGamesNonRivalry(): Observable<any>{
-    return this.http.delete<any>(`${this.baseUrl}removeAllOocNonRivalGames`);
+    return this.http.delete<any>(`${this.baseUrl}/schedule/remove-all-ooc-games-but-rivalry`);
   }
 
   removeAllOocGames(): Observable<any>{
-    return this.http.delete(`${this.baseUrl}removeAllOocGames`);
+    return this.http.delete(`${this.baseUrl}/schedule/remove-all-ooc-games`);
   }
 
   removeAllFcsGames(): Observable<any>{
-    return this.http.delete(`${this.baseUrl}removeAllFcsGames`);
+    return this.http.delete(`${this.baseUrl}/schedule/remove-all-fcs-games`);
   }
 
   saveToFile(): Observable<any>{
-    return this.http.post<any>(`${this.baseUrl}schedule/savetofile`, null);
+    return this.http.post<any>(`${this.baseUrl}/schedule/save-to-file`, null);
   }
 
   getAllConferences(): Observable<Conference[]>{
-    return this.http.get<Conference[]>(`${this.baseUrl}allConferences`, {headers: this.headers} );
+    return this.http.get<Conference[]>(`${this.baseUrl}/conferences`, {headers: this.headers} );
   }
 
   getSchoolsByConference(name: string): Observable<School[]>{
-    return this.http.get<School[]>(`${this.baseUrl}conference/${name}/schools`, {headers: this.headers} );
+    return this.http.get<School[]>(`${this.baseUrl}/conferences/${name}/schools`, {headers: this.headers} );
   }
 
-  getSuggestedOpponent(id: number): Observable<SuggestedGameResponse>{
-    return this.http.get<SuggestedGameResponse>(`${this.baseUrl}school/${id}/suggestgame`)
+  getSuggestedOpponent(tgid: number): Observable<SuggestedGameResponse>{
+    return this.http.get<SuggestedGameResponse>(`${this.baseUrl}/schools/${tgid}/suggest-game`)
   }
 
   setScheduleFile(schedule: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    formData.append('file', schedule); // what doees this do?
+    formData.append('file', schedule);
 
-    return this.http.post<HttpEvent<any>>(`${this.baseUrl}setScheduleFile`, formData);
+    return this.http.post<HttpEvent<any>>(`${this.baseUrl}/schedule/set-by-file`, formData);
   }
 
   setAlignmentFile(alignment: File): Observable<HttpEvent<any>> {
     const formData: FormData = new FormData();
-    formData.append('file', alignment); // what doees this do?
+    formData.append('file', alignment);
 
-    return this.http.post<HttpEvent<any>>(`${this.baseUrl}setAlignmentFile`, formData);
+    return this.http.post<HttpEvent<any>>(`${this.baseUrl}/conferences/set-by-file`, formData);
   }
 
   saveScheduleToExcel(): Observable<any> {
-    return this.http.get(`${this.baseUrl}schedule/download`, {responseType: 'blob'} );
+    return this.http.get(`${this.baseUrl}/schedule/download`, {responseType: 'blob'} );
   }
 
 }

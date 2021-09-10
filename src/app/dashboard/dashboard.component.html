@@ -1,8 +1,12 @@
 <div class="dashboard-buttons-container">
-    <input #xlsxInputSchedule hidden="true" type="file" onclick="this.value=null" (change)="xlsxScheduleChange($event)" accept=".xlsx"/>
-    <button mat-flat-button color="primary" class="dashboard-buttons" (click)="xlsxInputSchedule.click()">Choose Schedule File</button>
-    <input #xlsxInputAlignment hidden="true" type="file" onclick="this.value=null" (change)="xlsxAlignmentChange($event)" accept=".xlsx"/>
-    <button mat-flat-button color="primary" class="dashboard-buttons" (click)="xlsxInputAlignment.click()">Choose Conference Alignment File</button>
+    <div class="dashboard-inputs" style="border-bottom-style: ridge">
+        <h1 style="margin-top: revert">Setup (Do these first)</h1>
+        <input #xlsxInputSchedule hidden="true" type="file" onclick="this.value=null" (change)="xlsxScheduleChange($event)" accept=".xlsx"/>
+        <button mat-flat-button color="primary" class="dashboard-buttons" (click)="xlsxInputSchedule.click()">Choose Schedule File</button>
+        <input #xlsxInputAlignment hidden="true" type="file" onclick="this.value=null" (change)="xlsxAlignmentChange($event)" accept=".xlsx"/>
+        <button mat-flat-button color="primary" class="dashboard-buttons" (click)="xlsxInputAlignment.click()">Choose Conference Alignment File</button>
+    </div>
+    <h1 style="margin-top: revert">Quick Editing Tools</h1>
     <button mat-flat-button color="primary" class="dashboard-buttons" (click)="removeAllFcsGames()">Remove All FCS Games</button>
     <button mat-flat-button color="primary" class="dashboard-buttons" (click)="removeAllOocGamesNonRivalry()">Remove All OOC Games (non-rivalry)</button>
     <button mat-flat-button color="primary" class="dashboard-buttons" (click)="removeAllOocGames()">Remove All OOC Games</button>

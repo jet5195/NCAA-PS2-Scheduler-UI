@@ -4,11 +4,11 @@ import { ScheduleService } from '../schedule.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { School } from '../school';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AddGameRequest } from '../addGameRequest';
 import { SuggestedGameResponse } from '../suggestedGameResponse';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { SnackBarService } from '../snackBar.service';
 
 
 @Component({
@@ -46,7 +46,7 @@ export class SchoolScheduleComponent implements OnInit {
   dataSource = new MatTableDataSource(this.schedule);
   expandedGame: Game | null | undefined;
 
-  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private _snackBar: MatSnackBar) { }
+  constructor(private scheduleService: ScheduleService, private snackBarService: SnackBarService, private route: ActivatedRoute) { }
 
   async add() {
 
@@ -73,14 +73,11 @@ export class SchoolScheduleComponent implements OnInit {
   async delete(game: Game) {
     this.schedule = this.schedule.filter(g => g !== game);
     await this.scheduleService.deleteGame(this.school.tgid, game.week);
-    // await sleep(1000);
     this.setData();
     this.setAddGameData();
-    //this.dataSource.setData(this.displayedColumns);
   }
 
   changeWeek(): void {
-    //this.selectedOpponent = undefined;
     this.scheduleService.getAvailableOpponents(this.tgid, this.selectedWeek).subscribe((data: School[]) => {
       console.log(data);
       this.availableOpponents = data;
@@ -93,7 +90,6 @@ export class SchoolScheduleComponent implements OnInit {
       this.setData();
       this.setAddGameData();
     });
-    //this.setData();
   }
 
   setData(): void {
@@ -101,16 +97,13 @@ export class SchoolScheduleComponent implements OnInit {
     this.scheduleService.getSchoolByTgid(tgid).subscribe((data: School) => {
       console.log(data);
       this.school = data;
-    })
+    });
     this.scheduleService.getSchoolSchedule(tgid).subscribe((data: Game[]) => {
       console.log(data);
       this.schedule = data;
       this.dataSource = new MatTableDataSource(this.schedule);
       this.dataSource.sort = this.sort;
-    })
-    // this.selectedOpponent = undefined;
-    // this.selectedWeek = undefined;
-    // this.isHomeTeam = undefined;
+    });
   }
 
   setAddGameData(): void {
@@ -134,14 +127,10 @@ export class SchoolScheduleComponent implements OnInit {
         this.isHomeTeam = this.suggestedGame.homeGame;
 
       } else {
-        this.openSnackBar("No suggested games found", "dismiss");
+        this.snackBarService.openSnackBar("No suggested games found", "dismiss");
       }
     })
 
-  }
-
-  openSnackBar(message: string, action: string) {
-    this._snackBar.open(message, action, {duration: 5000});
   }
 
   compareSchools(s1: School, s2: School): boolean {

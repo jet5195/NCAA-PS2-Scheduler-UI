@@ -30,13 +30,13 @@
             <td mat-cell *matCellDef="let game; let i = dataIndex">{{i + 1}}</td>
         </ng-container>
 
-        <!-- Game Column -->
+        <!-- Week Column -->
         <ng-container matColumnDef="week">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Week </th>
             <td mat-cell *matCellDef="let game"> {{game.week}} </td>
         </ng-container>
 
-        <!-- Name Column -->
+        <!-- Opponent Column -->
         <ng-container matColumnDef="opponent">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Opponent </th>
             <td mat-cell *matCellDef="let game"> {{school.name! === game.homeTeam.name ? "vs ": "@ "}}
@@ -49,19 +49,7 @@
             </td>
         </ng-container>
 
-        <!-- Name Column -->
-        <!-- <ng-container matColumnDef="homeTeam">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Home Team </th>
-        <td mat-cell *matCellDef="let game"> {{game.homeTeam.name}} </td>
-    </ng-container> -->
-
-        <!-- Weight Column -->
-        <!-- <ng-container matColumnDef="awayTeam">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Away Team </th>
-        <td mat-cell *matCellDef="let game"> {{game.awayTeam.name}} </td>
-    </ng-container> -->
-
-        <!-- Symbol Column -->
+        <!-- ConferenceGame Column -->
         <ng-container matColumnDef="conferenceGame">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Conference Game </th>
             <td mat-cell *matCellDef="let game"> {{game.conferenceGame}} </td>
@@ -87,16 +75,6 @@
                     </div>
                     <button mat-stroked-button color="primary" class="opponent-button" (click)="delete(game)">Remove
                         Game</button>
-                    <!-- <div class="game-diagram">
-          <div class="game-week"> {{game.week}} </div>
-          <div class="homeTeam-name"> {{game.homeTeam.name}} </div>
-          <div class="awayTeam-name"> {{game.awayTeam.name}} </div>
-          <div class="game-conferenceGame"> {{game.conferenceGame}} </div>
-        </div> -->
-                    <!-- <div class="game-description">
-          {{game.day}}
-          <span class="game-description-attribution"> -- Jared's Excel Spreadsheet </span> -->
-                    <!-- </div> -->
                 </div>
             </td>
         </ng-container>
