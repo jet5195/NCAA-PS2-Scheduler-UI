@@ -54,7 +54,7 @@
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let game"> 
                 <!-- {{game.conferenceGame}}  -->
-                <div class="in-cell-school-logo-container">
+                <div *ngIf="game.conferenceGame" class="in-cell-school-logo-container">
                     <img class="in-cell-school-logo" src="{{game.homeTeam.conference.logo}}">
                 </div>
             </td>
