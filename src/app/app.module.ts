@@ -25,6 +25,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { EditConferencesComponent } from './edit-conferences/edit-conferences.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     SchoolDetailComponent,
     SchoolScheduleComponent,
     AddGameComponent,
-    DashboardComponent
+    DashboardComponent,
+    EditConferencesComponent
   ],
   imports: [
     BrowserModule,
