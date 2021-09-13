@@ -55,7 +55,7 @@
             <td mat-cell *matCellDef="let game"> 
                 <!-- {{game.conferenceGame}}  -->
                 <div *ngIf="game.conferenceGame" class="in-cell-school-logo-container">
-                    <img class="in-cell-school-logo" src="{{game.homeTeam.conference.logo}}">
+                    <img class="in-cell-conference-logo" src="{{game.homeTeam.conference.logo}}">
                 </div>
             </td>
         </ng-container>
@@ -78,7 +78,7 @@
                             game.homeTeam.division}}</span>
 
                     </div>
-                    <button *ngIf="!game.conferenceGame" mat-stroked-button color="primary" class="opponent-button" (click)="delete(game)">Remove
+                    <button *ngIf="!game.conferenceGame" mat-stroked-button color="primary" class="remove-button" (click)="delete(game)">Remove
                         Game</button>
                 </div>
             </td>

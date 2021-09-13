@@ -49,6 +49,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   margin-top: -30px;
 }
 
+.opponent-expanded-detail {
+  margin-left: 20px;
+  margin-right: 20px
+}
+
 .opponent-logo {
   height: 50%;
   padding-top: 35px;
@@ -123,7 +128,7 @@ tr.game-row:not(.game-expanded-row):active {
   padding-left: 10px;
 }
 
-.opponent-button {
+.remove-button {
   margin-top: 10px !important;
   margin-bottom: 10px !important;
   margin-left: 40px !important;
@@ -135,6 +140,14 @@ tr.game-row:not(.game-expanded-row):active {
   vertical-align: middle;
   object-fit: contain;
 }
+
+.in-cell-conference-logo {
+  max-height: 20px !important;
+  max-width: 40px;
+  vertical-align: middle;
+  object-fit: contain;
+}
+
 
 .in-cell-school-logo-container {
   display: inline-block;

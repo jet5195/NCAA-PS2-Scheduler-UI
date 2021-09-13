@@ -4,7 +4,8 @@ import { ScheduleService } from '../schedule.service';
 import * as fileSaver from 'file-saver';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnackBarService } from '../snackBar.service';
-//@types/file-saver --save-dev
+//npm install @types/file-saver --save-dev
+//if that doesn't work, npm install --save @types/filesaver
 
 @Component({
   selector: 'app-dashboard',
