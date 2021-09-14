@@ -8,6 +8,16 @@ import { School } from './school';
 })
 export class ConferenceService {
 
+  private selectedSchool?: School;
+
+  setSelectedSchool(school: School | undefined){
+    this.selectedSchool = school;
+  }
+
+  getSelectedSchool(): School | undefined {
+    return this.selectedSchool;
+  }
+
   constructor(private http: HttpClient) { }
 
   private baseUrl = "http://localhost:8080/conferences";

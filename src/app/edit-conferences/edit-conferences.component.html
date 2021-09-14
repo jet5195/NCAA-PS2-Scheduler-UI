@@ -1,1 +1,1 @@
-<app-conference *ngFor="let conference of conferences" [conference]=this.conference></app-conference>
+<app-conference *ngFor="let conference of conferences" [conference]=this.conference (updated)="onUpdated($event)" ></app-conference>

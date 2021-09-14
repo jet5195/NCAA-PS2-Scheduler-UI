@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Conference } from '../conference';
 import { ConferenceService } from '../conference.service';
 import { ScheduleService } from '../schedule.service';
 import { School } from '../school';
+import { ConferenceComponent } from '../conference/conference.component';
 
 @Component({
   selector: 'app-edit-conferences',
@@ -12,6 +13,8 @@ import { School } from '../school';
 export class EditConferencesComponent implements OnInit {
   conferences: Conference[] = [];
   schools: School[] = [];
+
+  @ViewChildren(ConferenceComponent) children!: QueryList<ConferenceComponent>;
 
   constructor(private scheduleService: ScheduleService, private conferenceService: ConferenceService) { }
 
@@ -33,6 +36,12 @@ export class EditConferencesComponent implements OnInit {
         schools = data;
       });
       return schools;
+  }
+
+  onUpdated(updated: boolean) {
+    this.children.forEach(child => {
+      child.loadSchools();
+    });
   }
 
 }
