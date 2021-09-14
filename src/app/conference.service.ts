@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { School } from './school';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class ConferenceService {
 
   constructor(private http: HttpClient) { }
 
-  private baseUrl = "http://localhost:8080/conference";
+  private baseUrl = "http://localhost:8080/conferences";
   private headers = new HttpHeaders({'Access-Control-Allow-Origin' : '*'})
 
   swapSchools(tgid1: number, tgid2: number): Observable<any>{
@@ -22,6 +23,10 @@ export class ConferenceService {
 
   renameDivision(name: string, divisionName: string, newName: string): Observable<any>{
     return this.http.put<any>(`${this.baseUrl}/${name}/division/${divisionName}/rename/${newName}`, {headers: this.headers} );
+  }
+
+  getSchoolsByDivision(name: string, division: string): Observable<School[]>{
+    return this.http.get<School[]>(`${this.baseUrl}/${name}/division/${division}/schools`, {headers: this.headers} );
   }
 
 }

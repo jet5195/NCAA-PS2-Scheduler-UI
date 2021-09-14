@@ -1,6 +1,1 @@
-<div class="conferences" *ngFor="let conference of conferences">
-    {{conference.name}}
-     <!-- <app-school-detail *ngFor="let school of getSchoolsByConference(conference.name)" [school]=this.school>
-            
-    </app-school-detail>  -->
-</div>
+<app-conference *ngFor="let conference of conferences" [conference]=this.conference></app-conference>

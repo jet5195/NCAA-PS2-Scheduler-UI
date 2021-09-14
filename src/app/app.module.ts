@@ -26,6 +26,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EditConferencesComponent } from './edit-conferences/edit-conferences.component';
+import { ConferenceComponent } from './conference/conference.component';
+import { DragDropModule } from '@angular/cdk/drag-drop'
 
 @NgModule({
   declarations: [
@@ -35,7 +37,8 @@ import { EditConferencesComponent } from './edit-conferences/edit-conferences.co
     SchoolScheduleComponent,
     AddGameComponent,
     DashboardComponent,
-    EditConferencesComponent
+    EditConferencesComponent,
+    ConferenceComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { EditConferencesComponent } from './edit-conferences/edit-conferences.co
     MatSelectModule,
     MatRadioModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,20 @@
+<div class="conferences">
+    {{conference.name}}
+    <div cdkDropList [cdkDropListData]="divSchools[i]" *ngFor="let div of conference.divisions; let i = index" (cdkDropListDropped)="drop($event)" class="draggable-list">
+        {{div}}
+        <!-- <app-school-detail cdkDrag *ngFor="let school of divSchools[i]" [school]=this.school>
+            
+        </app-school-detail> -->
+        <div class="draggable-box" *ngFor="let school of divSchools[i]" cdkDrag>{{school.name}}</div>
+        <!-- <app-school-detail *ngFor="let school of divSchools" [school]=this.school>
+            
+        </app-school-detail> -->
+
+    </div>
+    <div *ngIf="conference.divisions === null">
+        <app-school-detail *ngFor="let school of confSchools" [school]=this.school>
+            
+        </app-school-detail>
+    </div>
+     
+</div>
