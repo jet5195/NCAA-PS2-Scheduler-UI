@@ -11,25 +11,28 @@
                         </mat-panel-description> -->
     </mat-expansion-panel-header>
     <div class="expansion-panel-data">
-        
-        <div class="school-quick-info">
+
+        <div class="conference-schools">
 
             <div class="school-card-container" *ngFor="let div of conference.divisions; let i = index">
-                {{div}}
-                <mat-card *ngFor="let school of divSchools[i]" (click)="onClick(this.school)" class="school-card"
-                 style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
-                    {{school.name}} {{school.nickname}}
-                </mat-card>
+                <div class="division-schools-container">
+                    {{div}}
+                    <mat-card *ngFor="let school of divSchools[i]" (click)="onClick(this.school)"
+                        class="school-card"
+                        [class.selected-school-card]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid"
+                        style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
+                        {{school.name}} {{school.nickname}}
+                    </mat-card>
+                </div>
             </div>
-            <!-- [class.selected-school-card]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid" -->
+            <!--  -->
             <div class="school-card-container" *ngIf="conference.divisions === null">
-                <mat-card *ngFor="let school of confSchools" (click)="onClick(this.school)" 
-                
-                [class.mat-elevation-z8]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid"
-                 class="school-card"
-                 style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
-                    {{school.name}} {{school.nickname}}
-                </mat-card>
+                    <mat-card *ngFor="let school of confSchools" (click)="onClick(this.school)"
+                        [class.selected-school-card]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid"
+                        class="school-card"
+                        style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
+                        {{school.name}} {{school.nickname}}
+                    </mat-card>
             </div>
 
         </div>

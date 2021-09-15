@@ -221,6 +221,14 @@ tr.game-row:not(.game-expanded-row):active {
     margin: auto;
 }
 
+.conference-schools {
+  align-self: center;
+  margin: auto;
+  display: flex;
+  flex-flow: wrap;
+  place-content: center;
+}
+
 .schedule-button {
     float: right;
 }
@@ -247,10 +255,6 @@ tr.game-row:not(.game-expanded-row):active {
   margin-top: 25px;
 }
 
-.hidden-option {
-  display: none !important;
-}
-
 .school-card {
   margin: 10px;
   cursor: pointer;
@@ -268,10 +272,12 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .selected-school-card {
-  font-weight: 500;
+  /* font-weight: 500;
   font-size: x-large;
   width: 350px;
-  height: 25px;
+  height: 25px; */
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%) !important;
+  top: -5px
 }
 
 .school-card-container {

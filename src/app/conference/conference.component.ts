@@ -1,4 +1,4 @@
-import { Component, EventEmitter,Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 // import { EventEmitter } from 'stream';
 import { Conference } from '../conference';
 import { ConferenceService } from '../conference.service';
@@ -55,10 +55,13 @@ export class ConferenceComponent implements OnInit {
 
   onClick(selectedSchool: School): void {
     if (this.conferenceService.getSelectedSchool() !== undefined) {
-      if (this.conferenceService.getSelectedSchool() !== selectedSchool) {
-        this.swap(selectedSchool)
-      } else {
+      if (this.conferenceService.getSelectedSchool() === selectedSchool) {
         this.conferenceService.setSelectedSchool(undefined);
+      } else if (this.conferenceService.getSelectedSchool()?.conference.name === selectedSchool.conference.name && this.conferenceService.getSelectedSchool()?.division === selectedSchool.division) {
+        this.conferenceService.setSelectedSchool(selectedSchool);
+      }
+      else {
+        this.swap(selectedSchool)
       }
     } else {
       this.conferenceService.setSelectedSchool(selectedSchool);
