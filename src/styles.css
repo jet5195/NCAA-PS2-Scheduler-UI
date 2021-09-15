@@ -201,6 +201,11 @@ tr.game-row:not(.game-expanded-row):active {
     margin: 10px;
 }
 
+.conference-detail {
+  margin: 10px;
+  width: 350px;
+}
+
 .school-detail-logo {
     max-height: 75px;
     max-width: 75px;
@@ -268,7 +273,7 @@ tr.game-row:not(.game-expanded-row):active {
   border-radius: inherit;
   transition: height 225ms;
   height: 20px;
-  width: 300px;
+  width: 250px;
 }
 
 .selected-school-card {

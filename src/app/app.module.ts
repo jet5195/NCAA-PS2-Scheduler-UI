@@ -27,7 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { EditConferencesComponent } from './edit-conferences/edit-conferences.component';
 import { ConferenceComponent } from './conference/conference.component';
-import { DragDropModule } from '@angular/cdk/drag-drop'
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
