@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../schedule.service';
 import { School } from '../school';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { Conference } from '../conference';
-import { Observable, Subject } from 'rxjs';
-import {
-  debounceTime, distinctUntilChanged, switchMap
-} from 'rxjs/operators';
 
 @Component({
   selector: 'app-schools',
@@ -30,7 +25,7 @@ export class SchoolsComponent implements OnInit {
     this.scheduleService.getAllConferences().subscribe((data: Conference[]) => {
       console.log(data);
       this.conferences = data;
-    })
+    });
   }
 
   getSchoolsByConference(): void {

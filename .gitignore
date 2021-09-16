@@ -43,3 +43,6 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# Output
+/ncaa-ps2-scheduler-ui-win32-x64

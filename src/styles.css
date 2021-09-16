@@ -201,6 +201,11 @@ tr.game-row:not(.game-expanded-row):active {
     margin: 10px;
 }
 
+.conference-detail {
+  margin: 10px;
+  width: 350px;
+}
+
 .school-detail-logo {
     max-height: 75px;
     max-width: 75px;
@@ -219,6 +224,14 @@ tr.game-row:not(.game-expanded-row):active {
 .school-quick-info {
     align-self: center;
     margin: auto;
+}
+
+.conference-schools {
+  align-self: center;
+  margin: auto;
+  display: flex;
+  flex-flow: wrap;
+  place-content: center;
 }
 
 .schedule-button {
@@ -247,6 +260,34 @@ tr.game-row:not(.game-expanded-row):active {
   margin-top: 25px;
 }
 
-.hidden-option {
-  display: none !important;
+.school-card {
+  margin: 10px;
+  cursor: pointer;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0 24px;
+  border-radius: inherit;
+  transition: height 225ms;
+  height: 20px;
+  width: 250px;
+}
+
+.selected-school-card {
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%) !important;
+  top: -5px
+}
+
+.school-card-container {
+  display: flex !important;
+  flex-flow: wrap !important;
+  margin-top: 10px;
+  justify-content: center;
+}
+
+.active-button {
+  background-color: #5965bd;
 }

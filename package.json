@@ -1,8 +1,10 @@
 {
   "name": "ncaa-ps2-scheduler-ui",
   "version": "0.0.0",
+  "main": "main.js",
   "scripts": {
     "ng": "ng",
+    "start:electron": "ng build --base-href ./ && electron .",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
@@ -25,7 +27,8 @@
     "file-saver": "^2.0.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4"
+    "zone.js": "~0.11.4",
+    "tree-kill": "^1.2.2"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.3",
@@ -34,6 +37,8 @@
     "@types/file-saver": "^2.0.3",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
+    "electron": "^14.0.1",
+    "electron-packager": "^15.4.0",
     "jasmine-core": "~3.8.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",

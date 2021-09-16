@@ -1,0 +1,40 @@
+<mat-expansion-panel *ngIf="conference" class="school-expansion-panel" style="border-bottom: solid;"
+    (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            <div class="school-detail-logo-container">
+                <img *ngIf="conference" class="school-detail-logo" src="{{conference.logo}}">
+            </div>
+        </mat-panel-title>
+        <!-- <mat-panel-description>
+                            <mat-icon></mat-icon>
+                        </mat-panel-description> -->
+    </mat-expansion-panel-header>
+    <div class="expansion-panel-data">
+
+        <div class="conference-schools">
+
+            <div class="school-card-container" *ngFor="let div of conference.divisions; let i = index">
+                <div class="division-schools-container">
+                    {{div}}
+                    <mat-card *ngFor="let school of divSchools[i]" (click)="onClick(this.school)"
+                        class="school-card"
+                        [class.selected-school-card]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid"
+                        style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
+                        {{school.name}} {{school.nickname}}
+                    </mat-card>
+                </div>
+            </div>
+            <!--  -->
+            <div class="school-card-container" *ngIf="conference.divisions === null">
+                    <mat-card *ngFor="let school of confSchools" (click)="onClick(this.school)"
+                        [class.selected-school-card]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid"
+                        class="school-card"
+                        style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
+                        {{school.name}} {{school.nickname}}
+                    </mat-card>
+            </div>
+
+        </div>
+    </div>
+</mat-expansion-panel>

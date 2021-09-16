@@ -1,0 +1,3 @@
+<div class="schools-accordian">
+<app-conference *ngFor="let conference of conferences" class="conference-detail" [conference]=this.conference (updated)="onUpdated($event)" ></app-conference>
+</div>
