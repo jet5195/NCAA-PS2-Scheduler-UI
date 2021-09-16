@@ -1,4 +1,5 @@
 //run this to build
+//npm run start:electron
 //npx electron-packager . --overwrite
 
 const {
