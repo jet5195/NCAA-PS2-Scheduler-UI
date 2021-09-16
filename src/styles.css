@@ -47,8 +47,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   /* padding-top: 10px; */
   padding-left: 10px;
   margin-top: -30px;
-  -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
-  filter:drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+  -webkit-filter: drop-shadow(1px 1px 0 black) 
+                    drop-shadow(-1px -1px 0 white);
+  filter:drop-shadow(1px 1px 0 black) 
+           drop-shadow(-1px -1px 0 white);
 }
 
 .opponent-expanded-detail {
@@ -216,8 +218,10 @@ tr.game-row:not(.game-expanded-row):active {
     margin-top: 0px;
     vertical-align: middle;
     object-fit: contain;
-    -webkit-filter: drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
-    filter:drop-shadow(1px 1px 0 white) drop-shadow(-1px -1px 0 white);
+    -webkit-filter: drop-shadow(1px 1px 0 black) 
+                    drop-shadow(-1px -1px 0 white);
+    filter:drop-shadow(1px 1px 0 black) 
+           drop-shadow(-1px -1px 0 white);
 }
 
 .expansion-panel-data {
