@@ -17,7 +17,7 @@
         </div>
     </div>
 
-
+    
     <table mat-table multiTemplateDataRows [dataSource]="dataSource" matSort matSortActive="week" matSortDirection="asc"
         class="mat-elevation-z8 schedule-table">
 
@@ -78,7 +78,8 @@
                             game.homeTeam.division}}</span>
 
                     </div>
-                    <button *ngIf="!game.conferenceGame" mat-stroked-button color="primary" class="remove-button" (click)="delete(game)">Remove
+                    <button *ngIf="!game.conferenceGame" mat-stroked-button color="primary" class="remove-button"
+                        (click)="delete(game)">Remove
                         Game</button>
                 </div>
             </td>
