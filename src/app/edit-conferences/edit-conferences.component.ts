@@ -4,6 +4,7 @@ import { ConferenceService } from '../conference.service';
 import { ScheduleService } from '../schedule.service';
 import { School } from '../school';
 import { ConferenceComponent } from '../conference/conference.component';
+import * as fileSaver from 'file-saver';
 
 @Component({
   selector: 'app-edit-conferences',
@@ -42,6 +43,18 @@ export class EditConferencesComponent implements OnInit {
     this.children.forEach(child => {
       child.loadSchools();
     });
+  }
+
+  downloadSwapFile(): void {
+    this.conferenceService.saveSwapToExcel().subscribe((response: any) => { 
+			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
+			const url = window.URL.createObjectURL(blob);
+			//window.open(url);
+			//window.location.href = response.url;
+		  fileSaver.saveAs(blob, 'swap.xlsx');
+		//}), error => console.log('Error downloading the file'),
+		}), (error: any) => console.log('Error downloading the file'), 
+                 () => console.info('File downloaded successfully');
   }
 
 }

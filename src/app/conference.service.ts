@@ -39,4 +39,8 @@ export class ConferenceService {
     return this.http.get<School[]>(`${this.baseUrl}/${name}/division/${division}/schools`, {headers: this.headers} );
   }
 
+  saveSwapToExcel(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/download`, {responseType: 'blob'} );
+  }
+
 }

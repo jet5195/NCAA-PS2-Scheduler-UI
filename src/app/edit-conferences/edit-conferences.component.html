@@ -1,3 +1,7 @@
 <div class="schools-accordian">
 <app-conference *ngFor="let conference of conferences" class="conference-detail" [conference]=this.conference (updated)="onUpdated($event)" ></app-conference>
 </div>
+
+<button mat-fab color="accent" class="save-button save-swap" matTooltip="Downloads swap to Excel file" (click)="downloadSwapFile()">
+    <mat-icon>save</mat-icon>
+</button>

@@ -304,3 +304,10 @@ tr.game-row:not(.game-expanded-row):active {
   height: inherit;
   background-color: rgba(255, 255, 255, 0.25);
 }
+
+.save-swap {
+  position: fixed !important;
+  right: 100px;
+  top: 625px;
+  z-index: 9999;
+}

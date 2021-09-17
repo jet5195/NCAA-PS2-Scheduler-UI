@@ -16,6 +16,6 @@
     <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Fills schedule with random games"(click)="autoAddGamesRandom()">Auto Fill Schedule (randomly)</button>
     <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes games from any school with > 12 games" (click)="fixSchedule()">Remove Extra Games</button>
 </div>
-<button mat-fab color="accent" class="save-button" (click)="downloadFile()">
+<button mat-fab color="accent" class="save-button" matTooltip="Downloads schedule to Excel file" (click)="downloadFile()">
     <mat-icon>save</mat-icon>
 </button>

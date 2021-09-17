@@ -93,12 +93,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  saveToFile(): void {
-    this.scheduleService.saveToFile().subscribe((data: any) => {
-      console.log(data);
-    });
-  }
-
   selectedSchedule!: File;
   selectedAlignment!: File;
 
