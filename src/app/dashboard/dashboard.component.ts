@@ -13,13 +13,16 @@ import { SnackBarService } from '../snackBar.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  year: number = 0;
 
   constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
 
   activatedRoute = new ActivatedRoute;
 
   ngOnInit(): void {
+    this.getYear();
   }
+
 
   autoAddGames(): void {
     this.scheduleService.autoAddGames().subscribe((data: number) => {
@@ -93,6 +96,24 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  removeAllGames(): void {
+    this.scheduleService.removeAllGames().subscribe((data: number) => {
+      console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error removing all games", "Dismiss");
+    });
+  }
+
+  addConferenceGames(): void {
+    this.scheduleService.addConferenceGames('big east').subscribe((data: number) => {
+      console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error adding conf games", "Dismiss");
+    });
+  }
+
   selectedSchedule!: File;
   selectedAlignment!: File;
 
@@ -125,15 +146,28 @@ export class DashboardComponent implements OnInit {
   }
 
   downloadFile(): void {
-    this.scheduleService.saveScheduleToExcel().subscribe((response: any) => { 
-			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
-			const url = window.URL.createObjectURL(blob);
-			//window.open(url);
-			//window.location.href = response.url;
-		  fileSaver.saveAs(blob, 'new_sched.xlsx');
-		//}), error => console.log('Error downloading the file'),
-		}), (error: any) => console.log('Error downloading the file'), 
-                 () => console.info('File downloaded successfully');
+    this.scheduleService.saveScheduleToExcel().subscribe((response: any) => {
+      let blob: any = new Blob([response], { type: 'text/json; charset=utf-8' });
+      const url = window.URL.createObjectURL(blob);
+      //window.open(url);
+      //window.location.href = response.url;
+      fileSaver.saveAs(blob, 'new_sched.xlsx');
+      //}), error => console.log('Error downloading the file'),
+    }), (error: any) => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully');
+  }
+
+  getYear(): void {
+    this.scheduleService.getYear().subscribe((data: number) => {
+      console.log(data);
+      this.year = data;
+    });
+  }
+
+  setYear(year: number): void {
+    this.scheduleService.setYear(year).subscribe((data: any) => {
+      console.log(data);
+    });
   }
 
 }

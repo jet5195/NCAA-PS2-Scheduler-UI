@@ -28,6 +28,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { EditConferencesComponent } from './edit-conferences/edit-conferences.component';
 import { ConferenceComponent } from './conference/conference.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatRadioModule,
     MatSnackBarModule,
     MatTooltipModule,
-    DragDropModule
+    DragDropModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]

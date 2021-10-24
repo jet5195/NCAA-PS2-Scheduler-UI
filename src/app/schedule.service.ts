@@ -86,6 +86,14 @@ export class ScheduleService {
     return this.http.delete<number>(`${this.baseUrl}/schedule/remove-all-fcs-games`);
   }
 
+  removeAllGames() {
+    return this.http.put<number>(`${this.baseUrl}/schedule/remove-all-games`, null, {headers: this.headers});
+  }
+
+  addConferenceGames(name: String) {
+    return this.http.put<number>(`${this.baseUrl}/schedule/conference/${name}/set-schedule`, null, {headers: this.headers});
+  }
+
   saveToFile(): Observable<any>{
     return this.http.post<any>(`${this.baseUrl}/schedule/save-to-file`, null);
   }
@@ -99,7 +107,7 @@ export class ScheduleService {
   }
 
   getSuggestedOpponent(tgid: number): Observable<SuggestedGameResponse>{
-    return this.http.get<SuggestedGameResponse>(`${this.baseUrl}/schools/${tgid}/suggest-game`)
+    return this.http.get<SuggestedGameResponse>(`${this.baseUrl}/schools/${tgid}/suggest-game`);
   }
 
   setScheduleFile(schedule: File): Observable<HttpEvent<any>> {
@@ -118,6 +126,14 @@ export class ScheduleService {
 
   saveScheduleToExcel(): Observable<any> {
     return this.http.get(`${this.baseUrl}/schedule/download`, {responseType: 'blob'} );
+  }
+
+  getYear(): Observable<number>{
+    return this.http.get<number>(`${this.baseUrl}/schedule/year`);
+  }
+
+  setYear(year: number) {
+    return this.http.put<number>(`${this.baseUrl}/schedule/year/${year}`, null, {headers: this.headers});
   }
 
 }
