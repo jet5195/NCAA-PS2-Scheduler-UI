@@ -77,7 +77,7 @@
                             game.homeTeam.division}}</span>
 
                     </div>
-                    <button *ngIf="!game.conferenceGame" mat-stroked-button color="primary" class="remove-button"
+                    <button *ngIf="!game.conferenceGame || school.conference.name === 'Independent'" mat-stroked-button color="primary" class="remove-button"
                         (click)="delete(game)">Remove
                         Game</button>
                 </div>
