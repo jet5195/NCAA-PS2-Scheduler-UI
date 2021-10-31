@@ -311,3 +311,7 @@ tr.game-row:not(.game-expanded-row):active {
   top: 625px;
   z-index: 9999;
 }
+
+.schedule-table {
+  width: 100%;
+}

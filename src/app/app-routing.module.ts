@@ -4,14 +4,16 @@ import { SchoolsComponent } from './schools/schools.component';
 import { SchoolScheduleComponent } from './school-schedule/school-schedule.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditConferencesComponent } from './edit-conferences/edit-conferences.component';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full'},
   { path: 'dashboard', component: DashboardComponent},
-  { path: 'schools', component: SchoolsComponent },
+  { path: 'schools/:conf', component: SchoolsComponent },
   { path: 'school/:tgid/schedule', component: SchoolScheduleComponent},
-  { path: 'edit-conferences', component: EditConferencesComponent}
+  { path: 'conferences', component: EditConferencesComponent},
+  { path: 'schedule/:week', component: ScheduleComponent}
 ];
 
 

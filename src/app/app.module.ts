@@ -29,6 +29,7 @@ import { EditConferencesComponent } from './edit-conferences/edit-conferences.co
 import { ConferenceComponent } from './conference/conference.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatInputModule } from '@angular/material/input';
+import { ScheduleComponent } from './schedule/schedule.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { MatInputModule } from '@angular/material/input';
     AddGameComponent,
     DashboardComponent,
     EditConferencesComponent,
-    ConferenceComponent
+    ConferenceComponent,
+    ScheduleComponent
   ],
   imports: [
     BrowserModule,

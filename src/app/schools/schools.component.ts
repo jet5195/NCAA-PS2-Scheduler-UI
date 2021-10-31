@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ScheduleService } from '../schedule.service';
 import { School } from '../school';
 import { Conference } from '../conference';
+import { ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-schools',
@@ -17,14 +18,17 @@ export class SchoolsComponent implements OnInit {
   conferences: Conference[] = [];
   selectedConference: string = "All";
 
-  constructor(private scheduleService: ScheduleService) { }
+  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.getSchoolsByConference();
-    //this.allSchools = this.schools;
-    this.scheduleService.getAllConferences().subscribe((data: Conference[]) => {
-      console.log(data);
-      this.conferences = data;
+    this.route.params.subscribe(params => {
+      this.selectedConference = params['conf'];
+      this.getSchoolsByConference();
+      //this.allSchools = this.schools;
+      this.scheduleService.getAllConferences().subscribe((data: Conference[]) => {
+        console.log(data);
+        this.conferences = data;
+      });
     });
   }
 
@@ -45,6 +49,10 @@ export class SchoolsComponent implements OnInit {
 
   onSelect(school: School): void {
     this.selectedSchool = school;
+  }
+
+  updateRoute() {
+    this.router.navigate(['/schools/' + this.selectedConference]);
   }
 
 }

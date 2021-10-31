@@ -18,6 +18,10 @@ export class ScheduleService {
 
   constructor(private http: HttpClient) { }
 
+  getScheduleByWeek(week: number) {
+    return this.http.get<Game[]>(`${this.baseUrl}/schedule/week/${week}`, {headers: this.headers} );
+  }
+
   getSchools(): Observable<School[]>{
     return this.http.get<School[]>(`${this.baseUrl}/schools`, {headers: this.headers} );
   }

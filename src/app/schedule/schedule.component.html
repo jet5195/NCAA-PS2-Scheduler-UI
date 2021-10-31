@@ -1,0 +1,110 @@
+<div class="conference-select-container">
+    <mat-form-field appearance="fill" class="conference-select">
+        <mat-label>Week</mat-label>
+        <mat-select [(ngModel)]="week" class="conference-select2" name="conference"
+            (selectionChange)="updateRoute()">
+            <mat-option *ngFor="let weekOption of weeks" [value]="weekOption">
+                {{weekOption}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div class="school-schedule-container">
+
+    <!-- <div *ngIf="school" class="schedule-header mat-elevation-z8" style="background-color: {{school.color}}">
+        <div class="school-info-container">
+            <div class="school-logo-div">
+                <img *ngIf="school" class="school-logo" src="{{school.logo}}">
+                <div class="school-info">
+                    <span *ngIf="school" class="school-name" style="color: {{school.altColor}}"><b>{{school.name}}</b>
+                        {{school.nickname}}</span>
+                    <br>
+                    <span *ngIf="school" style="color:white"><b>{{school.conference.name}}</b></span>
+                    <span *ngIf="school.division" style="color:white"> {{school.division}}</span>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <table mat-table multiTemplateDataRows [dataSource]="dataSource" matSort matSortActive="week" matSortDirection="asc"
+        class="mat-elevation-z8 schedule-table">
+
+        <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Game Column -->
+        <ng-container matColumnDef="game">
+            <th mat-header-cell *matHeaderCellDef> Game </th>
+            <td mat-cell *matCellDef="let game; let i = dataIndex">{{i + 1}}</td>
+        </ng-container>
+
+        <!-- Away Team Column -->
+        <ng-container matColumnDef="awayTeam">
+            <th mat-header-cell *matHeaderCellDef> Away Team </th>
+            <td mat-cell *matCellDef="let game"> 
+                <div class="in-cell-school-logo-container">
+                    <img class="in-cell-school-logo"
+                        src="{{game.awayTeam.logo}}"
+                        routerLink="/school/{{game.awayTeam.tgid}}/schedule">
+                </div>
+                {{game.awayTeam.name}}
+            </td>
+        </ng-container>
+
+        <!-- Home Team Column -->
+        <ng-container matColumnDef="homeTeam">
+            <th mat-header-cell *matHeaderCellDef> Home Team </th>
+            <td mat-cell *matCellDef="let game"> 
+                @
+                <div class="in-cell-school-logo-container">
+                    <img class="in-cell-school-logo"
+                        src="{{game.homeTeam.logo}}"
+                        routerLink="/school/{{game.homeTeam.tgid}}/schedule">
+                </div>
+                {{game.homeTeam.name}}
+            </td>
+        </ng-container>
+
+        <!-- ConferenceGame Column -->
+        <ng-container matColumnDef="conferenceGame">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let game"> 
+                <!-- {{game.conferenceGame}}  -->
+                <div *ngIf="game.conferenceGame" class="in-cell-school-logo-container">
+                    <img class="in-cell-conference-logo" src="{{game.homeTeam.conference.logo}}">
+                </div>
+            </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+            <td mat-cell *matCellDef="let game" [attr.colspan]="displayedColumns.length">
+                <div class="game-detail" [@detailExpand]="game == expandedGame? 'expanded' : 'collapsed'">
+                    <div class="school-logo">
+                        <img *ngIf="game" class="opponent-logo"
+                            src="{{game.homeTeam.logo}}">
+                    </div>
+                    <div class="opponent-expanded-detail">
+                        <span>{{game.homeTeam.name}}</span>
+                        <span> {{game.homeTeam.nickname}}</span>
+                        <span><br>{{game.homeTeam.conference.name}}</span>
+                        <span> {{game.homeTeam.division}}</span>
+
+                    </div>
+                    <!-- <button *ngIf="!game.conferenceGame || school.conference.name === 'Independent'" mat-stroked-button color="primary" class="remove-button"
+                        (click)="delete(game)">Remove
+                        Game</button> -->
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let game; columns: displayedColumns;" class="game-row"
+            [class.example-expanded-row]="expandedGame === game"
+            (click)="expandedGame = expandedGame === game ? null : game">
+        </tr>
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="game-detail-row"></tr>
+
+    </table>
+
+</div>

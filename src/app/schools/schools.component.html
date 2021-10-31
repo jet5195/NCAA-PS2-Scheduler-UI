@@ -1,10 +1,9 @@
 <div class="container">
-
     <div class="conference-select-container">
         <mat-form-field appearance="fill" class="conference-select">
             <mat-label>Conference</mat-label>
             <mat-select [(ngModel)]="selectedConference" class="conference-select2" name="conference"
-                (selectionChange)="getSchoolsByConference()">
+                (selectionChange)="updateRoute()">
                 <mat-option [value]="'All'">
                     All
                 </mat-option>
