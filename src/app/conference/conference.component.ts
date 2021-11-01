@@ -57,17 +57,17 @@ export class ConferenceComponent implements OnInit {
   removeConferenceGames(): void {
     this.conferenceService.removeConferenceGames(this.conference.name).subscribe((data: void) => {
       console.log(data);
-      this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
+      this.snackBarService.openSnackBar("Conference games have been removed successfully", "Dismiss");
     }, error => {
-      this.snackBarService.openSnackBar("Error removing conf games", "Dismiss");
+      this.snackBarService.openSnackBar("Error removing conference games", "Dismiss");
     });
   }
 
   addConferenceGames(): void {
     this.conferenceService.addConferenceGames(this.conference.name).subscribe((data: void) => {
-      console.log(data);this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
+      console.log(data);this.snackBarService.openSnackBar("Conference games have been added succesfully", "Dismiss");
     }, error => {
-      this.snackBarService.openSnackBar("Error adding conf games", "Dismiss");
+      this.snackBarService.openSnackBar("Error adding conference games", "Dismiss");
     });
   }
 

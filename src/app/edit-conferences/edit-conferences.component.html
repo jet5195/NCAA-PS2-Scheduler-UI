@@ -1,3 +1,4 @@
+Adding and removing conference games is currently in beta. Currently only conferences with fewer than 10 schools are bug free. But preliminary support for 12 team conferences is included (fixes for home/away games and 14 team conferences coming!)
 <div class="schools-accordian">
 <app-conference *ngFor="let conference of conferences" class="conference-detail" [conference]=this.conference (updated)="onUpdated($event)" ></app-conference>
 </div>
