@@ -4,6 +4,7 @@ import { Conference } from '../conference';
 import { ConferenceService } from '../conference.service';
 import { ScheduleService } from '../schedule.service';
 import { School } from '../school';
+import { SnackBarService } from '../snackBar.service';
 
 @Component({
   selector: 'app-conference',
@@ -18,7 +19,7 @@ export class ConferenceComponent implements OnInit {
   confSchools: School[] = [];
   divSchools: School[][] = [];
 
-  constructor(private scheduleService: ScheduleService, public conferenceService: ConferenceService) { }
+  constructor(private scheduleService: ScheduleService, public conferenceService: ConferenceService, private snackBarService: SnackBarService) { }
 
   panelOpenState = false;
 
@@ -50,6 +51,23 @@ export class ConferenceComponent implements OnInit {
     this.conferenceService.getSchoolsByDivision(this.conference.name, this.conference.divisions[1]).subscribe((data: School[]) => {
       console.log(data);
       this.divSchools[1] = data;
+    });
+  }
+
+  removeConferenceGames(): void {
+    this.conferenceService.removeConferenceGames(this.conference.name).subscribe((data: void) => {
+      console.log(data);
+      this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error removing conf games", "Dismiss");
+    });
+  }
+
+  addConferenceGames(): void {
+    this.conferenceService.addConferenceGames(this.conference.name).subscribe((data: void) => {
+      console.log(data);this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error adding conf games", "Dismiss");
     });
   }
 

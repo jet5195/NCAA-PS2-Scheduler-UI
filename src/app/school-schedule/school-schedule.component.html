@@ -77,7 +77,7 @@
                             game.homeTeam.division}}</span>
 
                     </div>
-                    <button *ngIf="!game.conferenceGame || school.conference.name === 'Independent'" mat-stroked-button color="primary" class="remove-button"
+                    <button mat-stroked-button color="primary" class="remove-button"
                         (click)="delete(game)">Remove
                         Game</button>
                 </div>
@@ -115,6 +115,9 @@
             <mat-select [(value)]="selectedOpponent" [compareWith]="compareSchools" name="availableOpponent">
                 <mat-option *ngFor="let availableOpponent of availableOpponents" [value]="availableOpponent">
                     {{availableOpponent.name}}
+                    <div *ngIf="availableOpponent.conference.name === school.conference.name" class="in-cell-school-logo-container">
+                        <img class="in-cell-conference-logo" src="{{school.conference.logo}}">
+                    </div>
                 </mat-option>
             </mat-select>
 

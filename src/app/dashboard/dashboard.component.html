@@ -3,8 +3,9 @@
         <h1 style="margin-top: revert">Import Setup</h1>
         <mat-form-field>
             <input matInput placeholder="Year" [(ngModel)]="year">
-            <button mat-flat-button color="primary" (click)="setYear(year)">set</button>
+            
         </mat-form-field>
+        <button mat-flat-button color="primary" (click)="setYear(year)">set</button>
         
         <input #xlsxInputSchedule hidden="true" type="file" onclick="this.value=null"
             (change)="xlsxScheduleChange($event)" accept=".xlsx" />

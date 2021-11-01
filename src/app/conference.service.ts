@@ -43,4 +43,11 @@ export class ConferenceService {
     return this.http.get(`${this.baseUrl}/download`, {responseType: 'blob'} );
   }
 
+  addConferenceGames(name: string) {
+    return this.http.put<any>(`${this.baseUrl}/${name}/add-games`, {headers: this.headers});
+  }
+  removeConferenceGames(name: string) {
+    return this.http.put<any>(`${this.baseUrl}/${name}/remove-games`, {headers: this.headers});
+  }
+
 }
