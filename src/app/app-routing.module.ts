@@ -5,6 +5,7 @@ import { SchoolScheduleComponent } from './school-schedule/school-schedule.compo
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditConferencesComponent } from './edit-conferences/edit-conferences.component';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { EditGameComponent } from './edit-game/edit-game.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'schools/:conf', component: SchoolsComponent },
   { path: 'school/:tgid/schedule', component: SchoolScheduleComponent},
   { path: 'conferences', component: EditConferencesComponent},
-  { path: 'schedule/:week', component: ScheduleComponent}
+  { path: 'schedule/:week', component: ScheduleComponent},
+  { path: 'game/:week/:gameNumber', component: EditGameComponent}
 ];
 
 

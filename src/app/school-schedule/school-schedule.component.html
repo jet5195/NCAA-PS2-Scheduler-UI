@@ -51,7 +51,7 @@
         <!-- ConferenceGame Column -->
         <ng-container matColumnDef="conferenceGame">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let game"> 
+            <td mat-cell *matCellDef="let game">
                 <!-- {{game.conferenceGame}}  -->
                 <div *ngIf="game.conferenceGame" class="in-cell-school-logo-container">
                     <img class="in-cell-conference-logo" src="{{game.homeTeam.conference.logo}}">
@@ -63,7 +63,7 @@
         <ng-container matColumnDef="expandedDetail">
             <td mat-cell *matCellDef="let game" [attr.colspan]="displayedColumns.length">
                 <div class="game-detail" [@detailExpand]="game == expandedGame? 'expanded' : 'collapsed'">
-                    <div class="school-logo">
+                    <!-- <div class="school-logo">
                         <img *ngIf="game" class="opponent-logo"
                             src="{{school.name! === game.homeTeam.name ? game.awayTeam.logo : game.homeTeam.logo}}">
                     </div>
@@ -76,10 +76,14 @@
                         <span> {{school.name! === game.homeTeam.name ? game.awayTeam.division :
                             game.homeTeam.division}}</span>
 
-                    </div>
-                    <button mat-stroked-button color="primary" class="remove-button"
-                        (click)="delete(game)">Remove
-                        Game</button>
+                    </div> -->
+                    <button mat-stroked-button color="primary" class="remove-button" 
+                    routerLink="/game/{{game.week}}/{{game.gameNumber}}">
+                        Edit Game
+                    </button>
+                    <button mat-stroked-button color="primary" class="remove-button" (click)="delete(game)">
+                        Remove Game
+                    </button>
                 </div>
             </td>
         </ng-container>
@@ -115,7 +119,8 @@
             <mat-select [(value)]="selectedOpponent" [compareWith]="compareSchools" name="availableOpponent">
                 <mat-option *ngFor="let availableOpponent of availableOpponents" [value]="availableOpponent">
                     {{availableOpponent.name}}
-                    <div *ngIf="availableOpponent.conference.name === school.conference.name" class="in-cell-school-logo-container">
+                    <div *ngIf="availableOpponent.conference.name === school.conference.name"
+                        class="in-cell-school-logo-container">
                         <img class="in-cell-conference-logo" src="{{school.conference.logo}}">
                     </div>
                 </mat-option>

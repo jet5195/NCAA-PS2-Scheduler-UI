@@ -140,4 +140,12 @@ export class ScheduleService {
     return this.http.put<number>(`${this.baseUrl}/schedule/year/${year}`, null, {headers: this.headers});
   }
 
+  getGame(week: number, gameNumber: number): Observable<Game> {
+    return this.http.get<Game>(`${this.baseUrl}/schedule/week/${week}/${gameNumber}`);
+  }
+
+  saveGame(game: Game): Observable<any> {
+    return this.http.post<Game>(`${this.baseUrl}/schedule/game`, game, {headers: this.headers});
+  }
+
 }

@@ -30,6 +30,7 @@ import { ConferenceComponent } from './conference/conference.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatInputModule } from '@angular/material/input';
 import { ScheduleComponent } from './schedule/schedule.component';
+import { EditGameComponent } from './edit-game/edit-game.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { ScheduleComponent } from './schedule/schedule.component';
     DashboardComponent,
     EditConferencesComponent,
     ConferenceComponent,
-    ScheduleComponent
+    ScheduleComponent,
+    EditGameComponent
   ],
   imports: [
     BrowserModule,
