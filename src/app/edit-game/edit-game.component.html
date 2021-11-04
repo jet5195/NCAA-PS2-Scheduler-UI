@@ -1,1 +1,23 @@
-<p>edit-game works!</p>
+<div>
+    <img src="{{game.awayTeam.logo}}">
+    {{game.awayTeam.name}}
+</div>
+
+
+<div>
+    <img src="{{game.homeTeam.logo}}">
+    {{game.homeTeam.name}}
+</div>
+
+<mat-form-field fxFlex>
+    <input [(ngModel)]="game.gameResult.homeScore" autocomplete="off" matInput placeholder="Home Score">
+</mat-form-field>
+<mat-form-field fxFlex>
+    <input [(ngModel)]="game.gameResult.awayScore" autocomplete="off" matInput placeholder="Away Score">
+</mat-form-field>
+<mat-form-field fxFlex>
+    <input [(ngModel)]="game.day" autocomplete="off" matInput placeholder="Game Day">
+</mat-form-field>
+<mat-form-field fxFlex>
+    <input [(ngModel)]="game.time" autocomplete="off" matInput placeholder="Game Time">
+</mat-form-field>

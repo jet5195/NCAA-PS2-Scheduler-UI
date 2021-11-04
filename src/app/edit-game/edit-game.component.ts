@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { DataService } from '../data.service';
 import { Game } from '../game';
 
 @Component({
@@ -8,16 +11,26 @@ import { Game } from '../game';
 })
 export class EditGameComponent implements OnInit {
 
-  game?: Game;
+  gameFormGroup!: FormGroup
+  game!: Game;
+  week!: number;
+  gameNumber!: number;
 
-  constructor() { }
+  constructor(private data: DataService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loadGame();
+    this.route.params.subscribe(params => {
+      this.week = parseInt(this.route.snapshot.paramMap.get('week')!, 10);
+      this.gameNumber = parseInt(this.route.snapshot.paramMap.get('gameNumber')!, 10);
+      this.loadGame();
+    });
   }
 
   loadGame(): void {
-    
+    this.data.getGame(this.week, this.gameNumber).subscribe((data: Game) => {
+      console.log(data);
+      this.game = data;
+    });
   }
 
 }
