@@ -11,12 +11,22 @@ import { SuggestedGameResponse } from './suggestedGameResponse';
 @Injectable({
   providedIn: 'root'
 })
-export class ScheduleService {
+export class DataService {
 
   private baseUrl = "http://localhost:8080";
   private headers = new HttpHeaders({'Access-Control-Allow-Origin' : '*'})
 
   constructor(private http: HttpClient) { }
+
+  private selectedSchool?: School;
+
+  setSelectedSchool(school: School | undefined){
+    this.selectedSchool = school;
+  }
+
+  getSelectedSchool(): School | undefined {
+    return this.selectedSchool;
+  }
 
   getScheduleByWeek(week: number) {
     return this.http.get<Game[]>(`${this.baseUrl}/schedule/week/${week}`, {headers: this.headers} );
@@ -43,59 +53,55 @@ export class ScheduleService {
   }
 
   async deleteGame(tgid: number, week: number): Promise<School>{
-    return await this.http.delete<School>(`${this.baseUrl}/schools/${tgid}/week/${week}/remove-game`).toPromise();
+    return await this.http.post<School>(`${this.baseUrl}/schools/${tgid}/schedule/week/${week}/remove-game`, null).toPromise();
   }
 
   async addGame(game: AddGameRequest): Promise<Game>{
-    return this.http.post<Game>(`${this.baseUrl}/schedule/add-game`, game).toPromise();
+    return this.http.post<Game>(`${this.baseUrl}/schedule/add-game`, game, {headers: this.headers}).toPromise();
   }
 
   getAvailableOpponents(tgid: number, week: number): Observable<School[]>{
-    return this.http.get<School[]>(`${this.baseUrl}/schools/${tgid}/week/${week}/available-opponents`, {headers: this.headers} );
+    return this.http.get<School[]>(`${this.baseUrl}/schools/${tgid}/schedule/week/${week}/available-opponents`, {headers: this.headers} );
   }
 
   getEmptyWeeks(tgid: number): Observable<number[]>{
-    return this.http.get<number[]>(`${this.baseUrl}/schools/${tgid}/empty-weeks`, {headers: this.headers} );
+    return this.http.get<number[]>(`${this.baseUrl}/schools/${tgid}/schedule/empty-weeks`, {headers: this.headers} );
   }
 
   autoAddGames(): Observable<number>{
-    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games`, null, {headers: this.headers});
+    return this.http.post<number>(`${this.baseUrl}/schedule/auto-add-games`, null, {headers: this.headers});
   }
 
   autoAddGamesRandomly(): Observable<number>{
-    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games-random`, null, {headers: this.headers});
+    return this.http.post<number>(`${this.baseUrl}/schedule/auto-add-games-random`, null, {headers: this.headers});
   }
 
   autoAddGamesRivals(): Observable<number>{
-    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games-rivals`, null, {headers: this.headers});
+    return this.http.post<number>(`${this.baseUrl}/schedule/auto-add-games-rivals`, null, {headers: this.headers});
   }
 
   autoAddGamesAggressive(): Observable<number>{
-    return this.http.put<number>(`${this.baseUrl}/schedule/auto-add-games-aggressive`, null, {headers: this.headers})
+    return this.http.post<number>(`${this.baseUrl}/schedule/auto-add-games-aggressive`, null, {headers: this.headers})
   }
 
   fixSchedule(): Observable<number>{
-    return this.http.put<number>(`${this.baseUrl}/schedule/fix`, null, {headers: this.headers});
+    return this.http.post<number>(`${this.baseUrl}/schedule/fix`, null, {headers: this.headers});
   }
 
   removeAllOocGamesNonRivalry(): Observable<number>{
-    return this.http.delete<number>(`${this.baseUrl}/schedule/remove-all-ooc-games-but-rivalry`);
+    return this.http.post<number>(`${this.baseUrl}/schedule/remove-all-ooc-games-but-rivalry`, null);
   }
 
   removeAllOocGames(): Observable<number>{
-    return this.http.delete<number>(`${this.baseUrl}/schedule/remove-all-ooc-games`);
+    return this.http.post<number>(`${this.baseUrl}/schedule/remove-all-ooc-games`, null);
   }
 
   removeAllFcsGames(): Observable<number>{
-    return this.http.delete<number>(`${this.baseUrl}/schedule/remove-all-fcs-games`);
+    return this.http.post<number>(`${this.baseUrl}/schedule/remove-all-fcs-games`, null);
   }
 
   removeAllGames() {
-    return this.http.put<number>(`${this.baseUrl}/schedule/remove-all-games`, null, {headers: this.headers});
-  }
-
-  addConferenceGames(name: String) {
-    return this.http.put<number>(`${this.baseUrl}/schedule/conference/${name}/set-schedule`, null, {headers: this.headers});
+    return this.http.post<number>(`${this.baseUrl}/schedule/remove-all-games`, null, {headers: this.headers});
   }
 
   saveToFile(): Observable<any>{
@@ -137,7 +143,7 @@ export class ScheduleService {
   }
 
   setYear(year: number) {
-    return this.http.put<number>(`${this.baseUrl}/schedule/year/${year}`, null, {headers: this.headers});
+    return this.http.post<number>(`${this.baseUrl}/schedule/year/${year}`, null, {headers: this.headers});
   }
 
   getGame(week: number, gameNumber: number): Observable<Game> {
@@ -146,6 +152,33 @@ export class ScheduleService {
 
   saveGame(game: Game): Observable<any> {
     return this.http.post<Game>(`${this.baseUrl}/schedule/game`, game, {headers: this.headers});
+  }
+
+  swapSchools(tgid1: number, tgid2: number): Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/conferences/swap-schools/${tgid1}/${tgid2}`, {headers: this.headers} );
+  }
+
+  renameConference(name: string, newName: string): Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/conferences/${name}/rename/${newName}`, {headers: this.headers} );
+  }
+
+  renameDivision(name: string, divisionName: string, newName: string): Observable<any>{
+    return this.http.post<any>(`${this.baseUrl}/conferences/${name}/division/${divisionName}/rename/${newName}`, {headers: this.headers} );
+  }
+
+  getSchoolsByDivision(name: string, division: string): Observable<School[]>{
+    return this.http.get<School[]>(`${this.baseUrl}/conferences/${name}/division/${division}/schools`, {headers: this.headers} );
+  }
+
+  saveSwapToExcel(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/conferences/download`, {responseType: 'blob'} );
+  }
+
+  addConferenceGames(name: string) {
+    return this.http.post<any>(`${this.baseUrl}/conferences/${name}/add-games`, {headers: this.headers});
+  }
+  removeConferenceGames(name: string) {
+    return this.http.post<any>(`${this.baseUrl}/conferences/${name}/remove-games`, {headers: this.headers});
   }
 
 }

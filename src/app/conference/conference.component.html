@@ -22,7 +22,7 @@
                     {{div}}
                     <mat-card *ngFor="let school of divSchools[i]" (click)="onClick(this.school)"
                         class="school-card"
-                        [class.selected-school-card]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid"
+                        [class.selected-school-card]="dataService.getSelectedSchool() !== undefined && this.school.tgid === dataService.getSelectedSchool()!.tgid"
                         style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
                         {{school.name}} {{school.nickname}}
                     </mat-card>
@@ -31,7 +31,7 @@
             <!--  -->
             <div class="school-card-container" *ngIf="conference.divisions === null">
                     <mat-card *ngFor="let school of confSchools" (click)="onClick(this.school)"
-                        [class.selected-school-card]="conferenceService.getSelectedSchool() !== undefined && this.school.tgid === conferenceService.getSelectedSchool()!.tgid"
+                        [class.selected-school-card]="dataService.getSelectedSchool() !== undefined && this.school.tgid === dataService.getSelectedSchool()!.tgid"
                         class="school-card"
                         style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
                         {{school.name}} {{school.nickname}}

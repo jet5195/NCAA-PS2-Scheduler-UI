@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from '../game';
-import { ScheduleService } from '../schedule.service';
+import { DataService } from '../data.service';
 import { SnackBarService } from '../snackBar.service';
 
 @Component({
@@ -31,7 +31,7 @@ export class ScheduleComponent implements OnInit {
   dataSource = new MatTableDataSource(this.schedule);
   expandedGame: Game | null | undefined;
 
-  constructor(private scheduleService: ScheduleService, private snackBarService: SnackBarService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private dataService: DataService, private snackBarService: SnackBarService, private route: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit() {
@@ -43,7 +43,7 @@ export class ScheduleComponent implements OnInit {
   }
 
   getScheduleByWeek(week: number): void {
-    this.scheduleService.getScheduleByWeek(week).subscribe((data: Game[]) => {
+    this.dataService.getScheduleByWeek(week).subscribe((data: Game[]) => {
       console.log(data);
       this.schedule = data;
       this.dataSource = new MatTableDataSource(this.schedule);

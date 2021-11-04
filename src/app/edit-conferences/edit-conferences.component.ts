@@ -1,7 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Conference } from '../conference';
-import { ConferenceService } from '../conference.service';
-import { ScheduleService } from '../schedule.service';
+import { DataService } from '../data.service';
 import { School } from '../school';
 import { ConferenceComponent } from '../conference/conference.component';
 import * as fileSaver from 'file-saver';
@@ -17,14 +16,14 @@ export class EditConferencesComponent implements OnInit {
 
   @ViewChildren(ConferenceComponent) children!: QueryList<ConferenceComponent>;
 
-  constructor(private scheduleService: ScheduleService, private conferenceService: ConferenceService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
-    this.scheduleService.getAllConferences().subscribe((data: Conference[]) => {
+    this.dataService.getAllConferences().subscribe((data: Conference[]) => {
       console.log(data);
       this.conferences = data;
     });
-    this.scheduleService.getSchools().subscribe((data: School[]) => {
+    this.dataService.getSchools().subscribe((data: School[]) => {
       console.log(data);
       this.schools = data;
     });
@@ -32,7 +31,7 @@ export class EditConferencesComponent implements OnInit {
 
   getSchoolsByConference(conference: string): School[] {
     var schools!: School[];
-      this.scheduleService.getSchoolsByConference(conference).subscribe((data: School[]) => {
+      this.dataService.getSchoolsByConference(conference).subscribe((data: School[]) => {
         console.log(data);
         schools = data;
       });
@@ -46,7 +45,7 @@ export class EditConferencesComponent implements OnInit {
   }
 
   downloadSwapFile(): void {
-    this.conferenceService.saveSwapToExcel().subscribe((response: any) => { 
+    this.dataService.saveSwapToExcel().subscribe((response: any) => { 
 			let blob:any = new Blob([response], { type: 'text/json; charset=utf-8' });
 			const url = window.URL.createObjectURL(blob);
 			//window.open(url);

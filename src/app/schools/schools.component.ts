@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleService } from '../schedule.service';
+import { DataService } from '../data.service';
 import { School } from '../school';
 import { Conference } from '../conference';
 import { ActivatedRoute, Router} from '@angular/router';
@@ -18,14 +18,14 @@ export class SchoolsComponent implements OnInit {
   conferences: Conference[] = [];
   selectedConference: string = "All";
 
-  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.selectedConference = params['conf'];
       this.getSchoolsByConference();
       //this.allSchools = this.schools;
-      this.scheduleService.getAllConferences().subscribe((data: Conference[]) => {
+      this.dataService.getAllConferences().subscribe((data: Conference[]) => {
         console.log(data);
         this.conferences = data;
       });
@@ -37,7 +37,7 @@ export class SchoolsComponent implements OnInit {
       this.schools = this.allSchools!;
     }
     else {
-      this.scheduleService.getSchoolsByConference(this.selectedConference!).subscribe((data: School[]) => {
+      this.dataService.getSchoolsByConference(this.selectedConference!).subscribe((data: School[]) => {
         console.log(data);
         this.schools = data;
         if (this.selectedConference === "All"){

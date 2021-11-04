@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ScheduleService } from '../schedule.service';
+import { DataService } from '../data.service';
 import * as fileSaver from 'file-saver';
 import { HttpErrorResponse } from '@angular/common/http';
 import { SnackBarService } from '../snackBar.service';
@@ -15,7 +15,7 @@ import { SnackBarService } from '../snackBar.service';
 export class DashboardComponent implements OnInit {
   year: number = 0;
 
-  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
 
   activatedRoute = new ActivatedRoute;
 
@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
 
   autoAddGames(): void {
-    this.scheduleService.autoAddGames().subscribe((data: number) => {
+    this.dataService.autoAddGames().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
     }, error => {
@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
   }
 
   autoAddGamesAggressive(): void {
-    this.scheduleService.autoAddGamesAggressive().subscribe((data: number) => {
+    this.dataService.autoAddGamesAggressive().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been modified (some may have been removed)", "Dismiss");
     }, error => {
@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   }
 
   autoAddGamesRivals(): void {
-    this.scheduleService.autoAddGamesRivals().subscribe((data: number) => {
+    this.dataService.autoAddGamesRivals().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
     }, error => {
@@ -52,7 +52,7 @@ export class DashboardComponent implements OnInit {
   }
 
   autoAddGamesRandom(): void {
-    this.scheduleService.autoAddGamesRandomly().subscribe((data: number) => {
+    this.dataService.autoAddGamesRandomly().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
     }, error => {
@@ -61,7 +61,7 @@ export class DashboardComponent implements OnInit {
   }
 
   fixSchedule(): void {
-    this.scheduleService.fixSchedule().subscribe((data: number) => {
+    this.dataService.fixSchedule().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " extra games have been removed", "Dismiss");
     }, error => {
@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
   }
 
   removeAllFcsGames(): void {
-    this.scheduleService.removeAllFcsGames().subscribe((data: number) => {
+    this.dataService.removeAllFcsGames().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
     }, error => {
@@ -79,7 +79,7 @@ export class DashboardComponent implements OnInit {
   }
 
   removeAllOocGames(): void {
-    this.scheduleService.removeAllOocGames().subscribe((data: number) => {
+    this.dataService.removeAllOocGames().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
     }, error => {
@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
   }
 
   removeAllOocGamesNonRivalry(): void {
-    this.scheduleService.removeAllOocGamesNonRivalry().subscribe((data: number) => {
+    this.dataService.removeAllOocGamesNonRivalry().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
     }, error => {
@@ -97,7 +97,7 @@ export class DashboardComponent implements OnInit {
   }
 
   removeAllGames(): void {
-    this.scheduleService.removeAllGames().subscribe((data: number) => {
+    this.dataService.removeAllGames().subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been removed", "Dismiss");
     }, error => {
@@ -106,7 +106,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addConferenceGames(): void {
-    this.scheduleService.addConferenceGames('big east').subscribe((data: number) => {
+    this.dataService.addConferenceGames('big east').subscribe((data: number) => {
       console.log(data);
       this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
     }, error => {
@@ -121,7 +121,7 @@ export class DashboardComponent implements OnInit {
     console.log(fileInputEvent.target.files[0]);
     this.selectedSchedule = fileInputEvent.target.files[0];
 
-    this.scheduleService.setScheduleFile(this.selectedSchedule).subscribe((data: any) => {
+    this.dataService.setScheduleFile(this.selectedSchedule).subscribe((data: any) => {
       console.log(data);
       this.snackBarService.openSnackBar("Schedule has been set successfully", "Dismiss");
     }, error => {
@@ -137,7 +137,7 @@ export class DashboardComponent implements OnInit {
     console.log(fileInputEvent.target.files[0]);
     this.selectedAlignment = fileInputEvent.target.files[0];
 
-    this.scheduleService.setAlignmentFile(this.selectedAlignment).subscribe((data: any) => {
+    this.dataService.setAlignmentFile(this.selectedAlignment).subscribe((data: any) => {
       console.log(data);
       this.snackBarService.openSnackBar("Conferences have been set successfully", "Dismiss");
     }, error => {
@@ -146,7 +146,7 @@ export class DashboardComponent implements OnInit {
   }
 
   downloadFile(): void {
-    this.scheduleService.saveScheduleToExcel().subscribe((response: any) => {
+    this.dataService.saveScheduleToExcel().subscribe((response: any) => {
       let blob: any = new Blob([response], { type: 'text/json; charset=utf-8' });
       const url = window.URL.createObjectURL(blob);
       //window.open(url);
@@ -158,14 +158,14 @@ export class DashboardComponent implements OnInit {
   }
 
   getYear(): void {
-    this.scheduleService.getYear().subscribe((data: number) => {
+    this.dataService.getYear().subscribe((data: number) => {
       console.log(data);
       this.year = data;
     });
   }
 
   setYear(year: number): void {
-    this.scheduleService.setYear(year).subscribe((data: any) => {
+    this.dataService.setYear(year).subscribe((data: any) => {
       console.log(data);
     });
   }

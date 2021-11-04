@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ScheduleService } from '../schedule.service';
+import { DataService } from '../data.service';
 import { School } from '../school';
 import { AddGameRequest } from '../addGameRequest';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -25,12 +25,12 @@ export class AddGameComponent implements OnInit {
 
 
 
-  constructor(private scheduleService: ScheduleService, private route: ActivatedRoute, private schoolScheduleComponent: SchoolScheduleComponent) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private schoolScheduleComponent: SchoolScheduleComponent) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
-      this.scheduleService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
+      this.dataService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
         console.log(data);
         this.availableWeeks = data;
       })
@@ -44,7 +44,7 @@ export class AddGameComponent implements OnInit {
         awayId: this.selectedOpponent.tgid,
         week: this.selectedWeek
       };
-      await this.scheduleService.addGame(addGameRequest);
+      await this.dataService.addGame(addGameRequest);
     }
     else if (!this.isHomeTeam) {
       const addGameRequest: AddGameRequest = {
@@ -52,7 +52,7 @@ export class AddGameComponent implements OnInit {
         homeId: this.selectedOpponent.tgid,
         week: this.selectedWeek
       };
-      await this.scheduleService.addGame(addGameRequest);
+      await this.dataService.addGame(addGameRequest);
     }
 
     this.schoolScheduleComponent.setData()
@@ -60,7 +60,7 @@ export class AddGameComponent implements OnInit {
 
   changeWeek(): void {
     //this.selectedOpponent = undefined;
-    this.scheduleService.getAvailableOpponents(this.tgid, this.selectedWeek).subscribe((data: School[]) => {
+    this.dataService.getAvailableOpponents(this.tgid, this.selectedWeek).subscribe((data: School[]) => {
       console.log(data);
       this.availableOpponents = data;
     })

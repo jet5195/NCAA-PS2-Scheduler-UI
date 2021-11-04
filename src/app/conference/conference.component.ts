@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 // import { EventEmitter } from 'stream';
 import { Conference } from '../conference';
-import { ConferenceService } from '../conference.service';
-import { ScheduleService } from '../schedule.service';
+import { DataService } from '../data.service';
 import { School } from '../school';
 import { SnackBarService } from '../snackBar.service';
 
@@ -19,7 +18,7 @@ export class ConferenceComponent implements OnInit {
   confSchools: School[] = [];
   divSchools: School[][] = [];
 
-  constructor(private scheduleService: ScheduleService, public conferenceService: ConferenceService, private snackBarService: SnackBarService) { }
+  constructor(public dataService: DataService, private snackBarService: SnackBarService) { }
 
   panelOpenState = false;
 
@@ -37,52 +36,52 @@ export class ConferenceComponent implements OnInit {
   }
 
   getSchoolsByConference(): void {
-    this.scheduleService.getSchoolsByConference(this.conference.name).subscribe((data: School[]) => {
+    this.dataService.getSchoolsByConference(this.conference.name).subscribe((data: School[]) => {
       console.log(data);
       this.confSchools = data;
     });
   }
 
   getSchoolsByDivision(): void {
-    this.conferenceService.getSchoolsByDivision(this.conference.name, this.conference.divisions[0]).subscribe((data: School[]) => {
+    this.dataService.getSchoolsByDivision(this.conference.name, this.conference.divisions[0]).subscribe((data: School[]) => {
       console.log(data);
       this.divSchools[0] = data;
     });
-    this.conferenceService.getSchoolsByDivision(this.conference.name, this.conference.divisions[1]).subscribe((data: School[]) => {
+    this.dataService.getSchoolsByDivision(this.conference.name, this.conference.divisions[1]).subscribe((data: School[]) => {
       console.log(data);
       this.divSchools[1] = data;
     });
   }
 
   removeConferenceGames(): void {
-    this.conferenceService.removeConferenceGames(this.conference.name).subscribe((data: void) => {
+    this.dataService.removeConferenceGames(this.conference.name).subscribe((data: void) => {
       console.log(data);
       this.snackBarService.openSnackBar("Conference games have been removed successfully", "Dismiss");
-    }, error => {
+    }, (error: any) => {
       this.snackBarService.openSnackBar("Error removing conference games", "Dismiss");
     });
   }
 
   addConferenceGames(): void {
-    this.conferenceService.addConferenceGames(this.conference.name).subscribe((data: void) => {
+    this.dataService.addConferenceGames(this.conference.name).subscribe((data: void) => {
       console.log(data);this.snackBarService.openSnackBar("Conference games have been added succesfully", "Dismiss");
-    }, error => {
+    }, (error: any) => {
       this.snackBarService.openSnackBar("Error adding conference games", "Dismiss");
     });
   }
 
   onClick(selectedSchool: School): void {
-    if (this.conferenceService.getSelectedSchool() !== undefined) {
-      if (this.conferenceService.getSelectedSchool() === selectedSchool) {
-        this.conferenceService.setSelectedSchool(undefined);
-      } else if (this.conferenceService.getSelectedSchool()?.conference.name === selectedSchool.conference.name && this.conferenceService.getSelectedSchool()?.division === selectedSchool.division) {
-        this.conferenceService.setSelectedSchool(selectedSchool);
+    if (this.dataService.getSelectedSchool() !== undefined) {
+      if (this.dataService.getSelectedSchool() === selectedSchool) {
+        this.dataService.setSelectedSchool(undefined);
+      } else if (this.dataService.getSelectedSchool()?.conference.name === selectedSchool.conference.name && this.dataService.getSelectedSchool()?.division === selectedSchool.division) {
+        this.dataService.setSelectedSchool(selectedSchool);
       }
       else {
         this.swap(selectedSchool)
       }
     } else {
-      this.conferenceService.setSelectedSchool(selectedSchool);
+      this.dataService.setSelectedSchool(selectedSchool);
     }
   }
 
@@ -95,18 +94,18 @@ export class ConferenceComponent implements OnInit {
     tempDiv = selectedSchool.division;
     tempNcaaDiv = selectedSchool.ncaaDivision;
 
-    selectedSchool.conference = this.conferenceService.getSelectedSchool()!.conference;
-    selectedSchool.division = this.conferenceService.getSelectedSchool()!.division;
-    selectedSchool.ncaaDivision = this.conferenceService.getSelectedSchool()!.ncaaDivision;
+    selectedSchool.conference = this.dataService.getSelectedSchool()!.conference;
+    selectedSchool.division = this.dataService.getSelectedSchool()!.division;
+    selectedSchool.ncaaDivision = this.dataService.getSelectedSchool()!.ncaaDivision;
 
-    this.conferenceService.getSelectedSchool()!.conference = tempConf;
-    this.conferenceService.getSelectedSchool()!.division = tempDiv;
-    this.conferenceService.getSelectedSchool()!.ncaaDivision = tempNcaaDiv;
+    this.dataService.getSelectedSchool()!.conference = tempConf;
+    this.dataService.getSelectedSchool()!.division = tempDiv;
+    this.dataService.getSelectedSchool()!.ncaaDivision = tempNcaaDiv;
 
-    this.conferenceService.swapSchools(this.conferenceService.getSelectedSchool()!.tgid, selectedSchool.tgid).subscribe((data: any) => {
+    this.dataService.swapSchools(this.dataService.getSelectedSchool()!.tgid, selectedSchool.tgid).subscribe((data: any) => {
       console.log(data);
       this.updated.emit(true);
-      this.conferenceService.setSelectedSchool(undefined);
+      this.dataService.setSelectedSchool(undefined);
       //this.loadSchools();
     })
   }

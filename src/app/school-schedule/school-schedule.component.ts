@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Game } from '../game';
-import { ScheduleService } from '../schedule.service';
+import { DataService } from '../data.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { School } from '../school';
@@ -46,7 +46,7 @@ export class SchoolScheduleComponent implements OnInit {
   dataSource = new MatTableDataSource(this.schedule);
   expandedGame: Game | null | undefined;
 
-  constructor(private scheduleService: ScheduleService, private snackBarService: SnackBarService, private route: ActivatedRoute) { }
+  constructor(private dataService: DataService, private snackBarService: SnackBarService, private route: ActivatedRoute) { }
 
   async add() {
 
@@ -56,7 +56,7 @@ export class SchoolScheduleComponent implements OnInit {
         awayId: this.selectedOpponent.tgid,
         week: this.selectedWeek
       };
-      await this.scheduleService.addGame(addGameRequest);
+      await this.dataService.addGame(addGameRequest);
     }
     else if (this.isHomeTeam === false) {
       const addGameRequest: AddGameRequest = {
@@ -64,7 +64,7 @@ export class SchoolScheduleComponent implements OnInit {
         awayId: this.tgid,
         week: this.selectedWeek
       };
-      await this.scheduleService.addGame(addGameRequest);
+      await this.dataService.addGame(addGameRequest);
     }
     this.setData()
     this.setAddGameData();
@@ -72,13 +72,13 @@ export class SchoolScheduleComponent implements OnInit {
 
   async delete(game: Game) {
     this.schedule = this.schedule.filter(g => g !== game);
-    await this.scheduleService.deleteGame(this.school.tgid, game.week);
+    await this.dataService.deleteGame(this.school.tgid, game.week);
     this.setData();
     this.setAddGameData();
   }
 
   changeWeek(): void {
-    this.scheduleService.getAvailableOpponents(this.tgid, this.selectedWeek).subscribe((data: School[]) => {
+    this.dataService.getAvailableOpponents(this.tgid, this.selectedWeek).subscribe((data: School[]) => {
       console.log(data);
       this.availableOpponents = data;
     })
@@ -94,11 +94,11 @@ export class SchoolScheduleComponent implements OnInit {
 
   setData(): void {
     const tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
-    this.scheduleService.getSchoolByTgid(tgid).subscribe((data: School) => {
+    this.dataService.getSchoolByTgid(tgid).subscribe((data: School) => {
       console.log(data);
       this.school = data;
     });
-    this.scheduleService.getSchoolSchedule(tgid).subscribe((data: Game[]) => {
+    this.dataService.getSchoolSchedule(tgid).subscribe((data: Game[]) => {
       console.log(data);
       this.schedule = data;
       this.dataSource = new MatTableDataSource(this.schedule);
@@ -108,7 +108,7 @@ export class SchoolScheduleComponent implements OnInit {
 
   setAddGameData(): void {
     this.tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
-    this.scheduleService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
+    this.dataService.getEmptyWeeks(this.tgid).subscribe((data: number[]) => {
       console.log(data);
       this.availableWeeks = data;
     })
@@ -116,7 +116,7 @@ export class SchoolScheduleComponent implements OnInit {
 
   getSuggestedGame(): void {
     this.tgid = parseInt(this.route.snapshot.paramMap.get('tgid')!, 10);
-    this.scheduleService.getSuggestedOpponent(this.tgid).subscribe((data: SuggestedGameResponse) => {
+    this.dataService.getSuggestedOpponent(this.tgid).subscribe((data: SuggestedGameResponse) => {
       console.log(data);
       this.suggestedGame = data;
       if (this.suggestedGame !== null) {
