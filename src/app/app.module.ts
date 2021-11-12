@@ -31,6 +31,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatInputModule } from '@angular/material/input';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
+import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { EditGameComponent } from './edit-game/edit-game.component';
     EditConferencesComponent,
     ConferenceComponent,
     ScheduleComponent,
-    EditGameComponent
+    EditGameComponent,
+    MinutesAfterMidnightToTimePipe
   ],
   imports: [
     BrowserModule,
