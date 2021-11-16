@@ -10,19 +10,12 @@ export class MinutesAfterMidnightToTimePipe implements PipeTransform {
       var output: String = '';
       var hoursAfterMidnight: number;
       var minutes: number;
-      var extention: String = '';
 
       hoursAfterMidnight = value / 60;
       minutes = value % 60;
 
-      if(hoursAfterMidnight >= 12) {
-        extention = 'PM';
-      } else {
-        extention = 'AM';
-      }
-
-
-      output = ~~hoursAfterMidnight + ':' + minutes + ' ' + extention;
+      output = hoursAfterMidnight < 10 ? '0' + ~~hoursAfterMidnight: '' + ~~hoursAfterMidnight;
+      output += hoursAfterMidnight < 10 ? '0' + ~~hoursAfterMidnight: '' + ~~hoursAfterMidnight;
     }
     else return null
 
