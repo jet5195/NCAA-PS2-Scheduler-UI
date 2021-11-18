@@ -33,4 +33,14 @@ export class EditGameComponent implements OnInit {
     });
   }
 
+  save(): void {
+    let time = this.game.time;
+    console.log(time);
+    this.timeToMinutesAfterMidnight(time);
+  }
+
+  timeToMinutesAfterMidnight(time: any): void {
+
+  }
+
 }
