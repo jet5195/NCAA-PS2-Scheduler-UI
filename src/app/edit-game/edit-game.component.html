@@ -1,4 +1,4 @@
-<mat-card class="mat-elevation-z8 schedule-table">
+<mat-card *ngIf="game" class="mat-elevation-z8 schedule-table">
     <div fxLayout="row">
         <div>
             <img class="medium-team-logo" src="{{game.awayTeam.logo}}">
