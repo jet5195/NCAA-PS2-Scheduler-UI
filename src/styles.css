@@ -319,4 +319,5 @@ tr.game-row:not(.game-expanded-row):active {
 .medium-team-logo {
   max-height: 75px;
   max-width: 75px;
+  object-fit: contain;
 }

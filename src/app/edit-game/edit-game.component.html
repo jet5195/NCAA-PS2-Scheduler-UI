@@ -1,23 +1,24 @@
 <mat-card *ngIf="game" class="mat-elevation-z8 schedule-table">
-    <div fxLayout="row">
-        <div>
+    <div class="team-info-containers">
+        <div class="team1-info-container">
             <img class="medium-team-logo" src="{{game.awayTeam.logo}}">
-            {{game.awayTeam.name}}
+            <div>{{game.awayTeam.name}}</div>
         </div>
         <div>
+            <mat-form-field>
+                <input [(ngModel)]="game.gameResult.homeScore" autocomplete="off" matInput placeholder="Home Score">
+            </mat-form-field>
+            <mat-form-field>
+                <input [(ngModel)]="game.gameResult.awayScore" autocomplete="off" matInput placeholder="Away Score">
+            </mat-form-field>
+        </div>
+        <div class="team2-info-container">
             <img class="medium-team-logo" src="{{game.homeTeam.logo}}">
-            {{game.homeTeam.name}}
+            <div>{{game.homeTeam.name}}</div>
         </div>
     </div>
-    <div>
-        <mat-form-field>
-            <input [(ngModel)]="game.gameResult.homeScore" autocomplete="off" matInput placeholder="Home Score">
-        </mat-form-field>
-        <mat-form-field>
-            <input [(ngModel)]="game.gameResult.awayScore" autocomplete="off" matInput placeholder="Away Score">
-        </mat-form-field>
-    </div>
-    <div>
+    
+    <div class="game-info-container">
         <mat-form-field>
             <input [(ngModel)]="game.day" autocomplete="off" matInput placeholder="Game Day">
         </mat-form-field>
