@@ -32,6 +32,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
 import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -67,9 +68,10 @@ import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTi
     MatSnackBarModule,
     MatTooltipModule,
     DragDropModule,
-    MatInputModule
+    MatInputModule,
+    FlexLayoutModule
   ],
-  providers: [],
+  providers: [MinutesAfterMidnightToTimePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

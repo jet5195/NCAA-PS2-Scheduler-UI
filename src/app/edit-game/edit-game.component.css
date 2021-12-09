@@ -11,15 +11,15 @@
   }
 
   .team1-info-container {
-    display: flex;
+    /* display: flex; */
     margin-right: auto;
   }
 
   .team2-info-container {
-    display: flex;
+    /* display: flex; */
     margin-left: auto;
   }
 
   .game-info-container {
-    display: flex;
+    /* display: flex; */
   }
