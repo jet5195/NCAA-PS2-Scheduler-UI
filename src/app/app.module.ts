@@ -33,6 +33,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
 import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DayOfWeekToStringPipe } from './pipes/dayOfWeekToString.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ConferenceComponent,
     ScheduleComponent,
     EditGameComponent,
-    MinutesAfterMidnightToTimePipe
+    MinutesAfterMidnightToTimePipe,
+    DayOfWeekToStringPipe
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatInputModule,
     FlexLayoutModule
   ],
-  providers: [MinutesAfterMidnightToTimePipe],
+  providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,6 +6,7 @@ import { Game } from '../game';
 import { Location } from '@angular/common';
 import { School } from '../school';
 import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
+import { DayOfWeekToStringPipe } from '../pipes/dayOfWeekToString.pipe';
 
 @Component({
   selector: 'app-edit-game',
@@ -17,6 +18,7 @@ export class EditGameComponent implements OnInit {
   gameFormGroup!: FormGroup
   game!: Game;
   gameTime!: string;
+  gameDay!: string;
   week!: number;
   gameNumber!: number;
   availableHomeSchools!: School[];
@@ -26,7 +28,8 @@ export class EditGameComponent implements OnInit {
   homeTeam!: School;
   awayTeam!: School;
 
-  constructor(private data: DataService, private route: ActivatedRoute, private location: Location, private mtmToTime: MinutesAfterMidnightToTimePipe) { }
+  constructor(private data: DataService, private route: ActivatedRoute, private location: Location, 
+    private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -85,6 +88,7 @@ export class EditGameComponent implements OnInit {
       this.getAvailableHomeSchools();
       this.getAvailableAwaySchools();
       this.gameTime = this.mtmToTime.transform(data.time);
+      this.gameDay = this.dowToString.transform(data.day, true);
     });
   }
 
