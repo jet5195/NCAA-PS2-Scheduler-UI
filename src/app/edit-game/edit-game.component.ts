@@ -18,7 +18,7 @@ export class EditGameComponent implements OnInit {
   gameFormGroup!: FormGroup
   game!: Game;
   gameTime!: string;
-  gameDay!: string;
+  gameDay!: any;
   week!: number;
   gameNumber!: number;
   availableHomeSchools!: School[];
@@ -27,16 +27,82 @@ export class EditGameComponent implements OnInit {
   initialAwayTeam!: School;
   homeTeam!: School;
   awayTeam!: School;
+  is5Sat!: boolean;
+  dayList!: any[];
 
   constructor(private data: DataService, private route: ActivatedRoute, private location: Location, 
     private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe) { }
 
   ngOnInit(): void {
+    this.createDayList(true);
     this.route.params.subscribe(params => {
       this.week = parseInt(this.route.snapshot.paramMap.get('week')!, 10);
       this.gameNumber = parseInt(this.route.snapshot.paramMap.get('gameNumber')!, 10);
       this.loadGame();
     });
+    
+    
+  }
+  createDayList(is5Sat: boolean) {
+    if(is5Sat){
+      this.dayList = [{
+        value: 'Monday',
+        key: 0
+      },
+      {
+        value: 'Tuesday',
+        key: 1
+      },
+      {
+        value: 'Wednesday',
+        key: 2
+      },
+      {
+        value: 'Thursday',
+        key: 3
+      },
+      {
+        value: 'Friday',
+        key: 4
+      },
+      {
+        value: 'Saturday',
+        key: 5
+      },
+      {
+        value: 'Sunday',
+        key: 6
+      }];
+    } else {
+      this.dayList = [{
+        value: 'Monday',
+        key: 4
+      },
+      {
+        value: 'Tuesday',
+        key: 5
+      },
+      {
+        value: 'Wednesday',
+        key: 6
+      },
+      {
+        value: 'Thursday',
+        key: 0
+      },
+      {
+        value: 'Friday',
+        key: 1
+      },
+      {
+        value: 'Saturday',
+        key: 2
+      },
+      {
+        value: 'Sunday',
+        key: 3
+      }];
+    }
   }
 
   getAvailableSchools(tgid:number): School[] {
@@ -88,13 +154,23 @@ export class EditGameComponent implements OnInit {
       this.getAvailableHomeSchools();
       this.getAvailableAwaySchools();
       this.gameTime = this.mtmToTime.transform(data.time);
-      this.gameDay = this.dowToString.transform(data.day, true);
+      //this.gameDay = this.dowToString.transform(data.day, true);
+      this.gameDay = this.dayList.find(day => day.key === data.day);
     });
   }
 
   save(): void {
     console.log(this.game.time);
-    let time: number = this.timeToMinutesAfterMidnight();
+    this.game.homeTeam = this.homeTeam;
+    this.game.awayTeam = this.awayTeam;
+    this.game.time = this.timeToMinutesAfterMidnight();
+    this.game.day = this.gameDay.key;
+
+    this.data.saveGame(this.game).subscribe({
+      next: () => {
+        this.location.back();
+      }
+    });
   }
 
   cancel(): void {
@@ -123,6 +199,13 @@ export class EditGameComponent implements OnInit {
 
   compareSchools(s1: School, s2: School): boolean {
     if (s1.tgid === s2.tgid) {
+      return true;
+    }
+    return false;
+  }
+
+  compareDays(d1: any, d2: any): boolean {
+    if (d1.key === d2.key) {
       return true;
     }
     return false;
