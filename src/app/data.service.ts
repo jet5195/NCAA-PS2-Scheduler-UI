@@ -68,6 +68,11 @@ export class DataService {
     return this.http.get<number[]>(`${this.baseUrl}/schools/${tgid}/schedule/empty-weeks`, {headers: this.headers} );
   }
 
+  getEmptyWeeksTwoTeams(tgid: number, tgid2: number): Observable<number[]>{
+    return this.http.get<number[]>(`${this.baseUrl}/schools/${tgid}/schedule/empty-weeks/${tgid2}`, {headers: this.headers} );
+
+  }
+
   autoAddGames(): Observable<number>{
     return this.http.post<number>(`${this.baseUrl}/schedule/auto-add-games`, null, {headers: this.headers});
   }

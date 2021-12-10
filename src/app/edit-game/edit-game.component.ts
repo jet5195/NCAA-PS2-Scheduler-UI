@@ -29,6 +29,8 @@ export class EditGameComponent implements OnInit {
   awayTeam!: School;
   is5Sat!: boolean;
   dayList!: any[];
+  emptyWeeks!: number[];
+  gameWeek!: number;
 
   constructor(private data: DataService, private route: ActivatedRoute, private location: Location, 
     private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe) { }
@@ -105,17 +107,8 @@ export class EditGameComponent implements OnInit {
     }
   }
 
-  getAvailableSchools(tgid:number): School[] {
-    let schoolList!: School[];
-    this.data.getAvailableOpponents(tgid, this.week).subscribe((data: School[]) => {
-      console.log(data);
-      schoolList = data;
-      return schoolList;
-    })
-    return schoolList;
-  }
-
   getAvailableHomeSchools(): void {
+    this.getEmptyWeeks();
     this.data.getAvailableOpponents(this.awayTeam.tgid, this.week).subscribe((data: School[]) => {
       console.log(data);
       this.availableHomeSchools = data;
@@ -128,7 +121,16 @@ export class EditGameComponent implements OnInit {
     });
   }
 
+  getEmptyWeeks(): void {
+    this.data.getEmptyWeeksTwoTeams(this.awayTeam.tgid, this.week).subscribe((data: number[]) => {
+      console.log(data);
+      this.emptyWeeks = data;
+      this.emptyWeeks.unshift(this.gameWeek);
+    });
+  }
+
   getAvailableAwaySchools(): void {
+    this.getEmptyWeeks();
     this.data.getAvailableOpponents(this.homeTeam.tgid, this.week).subscribe((data: School[]) => {
       console.log(data);
       this.availableAwaySchools = data;
@@ -153,6 +155,8 @@ export class EditGameComponent implements OnInit {
       // this.availableAwaySchools = this.getAvailableSchools(data.awayTeam.tgid);
       this.getAvailableHomeSchools();
       this.getAvailableAwaySchools();
+      this.gameWeek = data.week;
+      this.getEmptyWeeks();
       this.gameTime = this.mtmToTime.transform(data.time);
       //this.gameDay = this.dowToString.transform(data.day, true);
       this.gameDay = this.dayList.find(day => day.key === data.day);

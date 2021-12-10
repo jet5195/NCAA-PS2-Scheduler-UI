@@ -16,6 +16,14 @@
         <div fxLayout="column" fxLayoutAlign="center center">
             <div class="game-info-container" fxLayout fxLayout="row" fxLayoutGap="10px">
                 <mat-form-field>
+                    <mat-label>Week</mat-label>
+                    <mat-select [(ngModel)]="gameWeek">
+                        <mat-option *ngFor="let week of emptyWeeks" [value]="week">
+                            {{week}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
                     <mat-label>Day</mat-label>
                     <mat-select [(ngModel)]="gameDay" [compareWith]="compareDays">
                         <mat-option *ngFor="let day of dayList" [value]="day">
