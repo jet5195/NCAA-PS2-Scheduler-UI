@@ -5,7 +5,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from '../game';
 import { DataService } from '../data.service';
-import { SnackBarService } from '../snackBar.service';
 
 @Component({
   selector: 'app-schedule',
@@ -27,16 +26,16 @@ export class ScheduleComponent implements OnInit {
   week: number = 0;
   weeks: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9 ,10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
   activatedRoute = new ActivatedRoute;
-  displayedColumns: string[] = ['game', 'awayTeam', 'homeTeam', 'conferenceGame'];
+  displayedColumns: string[] = ['game', 'awayTeam', 'homeTeam', 'time', 'day','conferenceGame', 'result'];
   dataSource = new MatTableDataSource(this.schedule);
   expandedGame: Game | null | undefined;
 
-  constructor(private dataService: DataService, private snackBarService: SnackBarService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
 
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-
+      this.week = parseInt(this.route.snapshot.paramMap.get('week')!, 10);
       this.getScheduleByWeek(this.week);
 
     });

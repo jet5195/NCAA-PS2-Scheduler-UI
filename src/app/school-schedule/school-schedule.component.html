@@ -48,6 +48,38 @@
             </td>
         </ng-container>
 
+        <!-- Time Column -->
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef> Time </th>
+            <td mat-cell *matCellDef="let game">
+                {{game.time | minutesAfterMidnightToTime:false}}
+            </td>
+        </ng-container>
+
+        <!-- Day Column -->
+        <ng-container matColumnDef="day">
+            <th mat-header-cell *matHeaderCellDef> Day </th>
+            <td mat-cell *matCellDef="let game">
+                {{game.day | dayOfWeekToString:true}}
+            </td>
+        </ng-container>
+
+        <!-- Result Column -->
+        <ng-container matColumnDef="result">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let game">
+                <!-- {{game.conferenceGame}}  -->
+                <div *ngIf="game.gameResult.homeScore > game.gameResult.awayScore">
+                    {{game.homeTeam.name}} {{game.gameResult.homeScore}} - {{game.awayTeam.name}}
+                    {{game.gameResult.awayScore}}
+                </div>
+                <div *ngIf="game.gameResult.awayScore > game.gameResult.homeScore">
+                    {{game.awayTeam.name}} {{game.gameResult.awayScore}} - {{game.homeTeam.name}}
+                    {{game.gameResult.homeScore}}
+                </div>
+            </td>
+        </ng-container>
+
         <!-- ConferenceGame Column -->
         <ng-container matColumnDef="conferenceGame">
             <th mat-header-cell *matHeaderCellDef></th>
@@ -77,8 +109,8 @@
                             game.homeTeam.division}}</span>
 
                     </div> -->
-                    <button mat-stroked-button color="primary" class="remove-button" 
-                    routerLink="/game/{{game.week}}/{{game.gameNumber}}">
+                    <button mat-stroked-button color="primary" class="remove-button"
+                        routerLink="/game/{{game.week}}/{{game.gameNumber}}">
                         Edit Game
                     </button>
                     <button mat-stroked-button color="primary" class="remove-button" (click)="delete(game)">

@@ -42,7 +42,7 @@ export class SchoolScheduleComponent implements OnInit {
   availableWeeks: number[] = [];
   isHomeTeam!: boolean;
 
-  displayedColumns: string[] = ['game', 'week', 'opponent', 'conferenceGame'];
+  displayedColumns: string[] = ['game', 'week', 'opponent', 'time', 'day', 'conferenceGame', 'result'];
   dataSource = new MatTableDataSource(this.schedule);
   expandedGame: Game | null | undefined;
 

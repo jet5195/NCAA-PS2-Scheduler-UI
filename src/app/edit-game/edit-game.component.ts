@@ -123,7 +123,7 @@ export class EditGameComponent implements OnInit {
   }
 
   getEmptyWeeks(): void {
-    this.data.getEmptyWeeksTwoTeams(this.awayTeam.tgid, this.week).subscribe((data: number[]) => {
+    this.data.getEmptyWeeksTwoTeams(this.awayTeam.tgid, this.homeTeam.tgid).subscribe((data: number[]) => {
       console.log(data);
       this.emptyWeeks = data;
       this.emptyWeeks.unshift(this.gameWeek);
@@ -158,7 +158,7 @@ export class EditGameComponent implements OnInit {
       this.getAvailableAwaySchools();
       this.gameWeek = data.week;
       this.getEmptyWeeks();
-      this.gameTime = this.mtmToTime.transform(data.time);
+      this.gameTime = this.mtmToTime.transform(data.time, true);
       //this.gameDay = this.dowToString.transform(data.day, true);
       this.gameDay = this.dayList.find(day => day.key === data.day);
     });
