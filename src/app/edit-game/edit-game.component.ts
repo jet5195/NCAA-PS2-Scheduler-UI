@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { School } from '../school';
 import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
 import { DayOfWeekToStringPipe } from '../pipes/dayOfWeekToString.pipe';
+import { AddGameRequest } from '../addGameRequest';
 
 @Component({
   selector: 'app-edit-game',
@@ -163,18 +164,30 @@ export class EditGameComponent implements OnInit {
     });
   }
 
-  save(): void {
+  async save(): Promise<void> {
+    //change this to remove, then add a game... that should work.
     console.log(this.game.time);
+
+
+    await this.data.deleteGame(this.game.homeTeam.tgid, this.game.week);
+
     this.game.homeTeam = this.homeTeam;
     this.game.awayTeam = this.awayTeam;
     this.game.time = this.timeToMinutesAfterMidnight();
     this.game.day = this.gameDay.key;
 
-    this.data.saveGame(this.game).subscribe({
-      next: () => {
-        this.location.back();
-      }
-    });
+    const addGameRequest: AddGameRequest = {
+      homeId: this.homeTeam.tgid,
+      awayId: this.awayTeam.tgid,
+      week: this.game.week,
+      day: this.gameDay.key,
+      time: this.timeToMinutesAfterMidnight(),
+      gameResult: this.game.gameResult
+    };
+
+
+    await this.data.addGame(addGameRequest);
+    this.location.back();
   }
 
   cancel(): void {
