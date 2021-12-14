@@ -1,0 +1,25 @@
+.example-full-width {
+    width: 100%;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
+
+  .team-info-containers {
+    display: flex;
+  }
+
+  .team1-info-container {
+    /* display: flex; */
+    margin-right: auto;
+  }
+
+  .team2-info-container {
+    /* display: flex; */
+    margin-left: auto;
+  }
+
+  .game-info-container {
+    /* display: flex; */
+  }

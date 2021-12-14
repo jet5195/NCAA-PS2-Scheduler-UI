@@ -315,3 +315,9 @@ tr.game-row:not(.game-expanded-row):active {
 .schedule-table {
   width: 100%;
 }
+
+.medium-team-logo {
+  max-height: 75px;
+  max-width: 75px;
+  object-fit: contain;
+}

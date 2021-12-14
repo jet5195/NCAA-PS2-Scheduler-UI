@@ -31,6 +31,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatInputModule } from '@angular/material/input';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
+import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { DayOfWeekToStringPipe } from './pipes/dayOfWeekToString.pipe';
 
 @NgModule({
   declarations: [
@@ -43,7 +46,9 @@ import { EditGameComponent } from './edit-game/edit-game.component';
     EditConferencesComponent,
     ConferenceComponent,
     ScheduleComponent,
-    EditGameComponent
+    EditGameComponent,
+    MinutesAfterMidnightToTimePipe,
+    DayOfWeekToStringPipe
   ],
   imports: [
     BrowserModule,
@@ -65,9 +70,10 @@ import { EditGameComponent } from './edit-game/edit-game.component';
     MatSnackBarModule,
     MatTooltipModule,
     DragDropModule,
-    MatInputModule
+    MatInputModule,
+    FlexLayoutModule
   ],
-  providers: [],
+  providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

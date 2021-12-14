@@ -1,8 +1,7 @@
 <div class="conference-select-container">
     <mat-form-field appearance="fill" class="conference-select">
         <mat-label>Week</mat-label>
-        <mat-select [(ngModel)]="week" class="conference-select2" name="conference"
-            (selectionChange)="updateRoute()">
+        <mat-select [(ngModel)]="week" class="conference-select2" name="conference" (selectionChange)="updateRoute()">
             <mat-option *ngFor="let weekOption of weeks" [value]="weekOption">
                 {{weekOption}}
             </mat-option>
@@ -41,10 +40,9 @@
         <!-- Away Team Column -->
         <ng-container matColumnDef="awayTeam">
             <th mat-header-cell *matHeaderCellDef> Away Team </th>
-            <td mat-cell *matCellDef="let game"> 
+            <td mat-cell *matCellDef="let game">
                 <div class="in-cell-school-logo-container">
-                    <img class="in-cell-school-logo"
-                        src="{{game.awayTeam.logo}}"
+                    <img class="in-cell-school-logo" src="{{game.awayTeam.logo}}"
                         routerLink="/school/{{game.awayTeam.tgid}}/schedule">
                 </div>
                 {{game.awayTeam.name}}
@@ -54,21 +52,52 @@
         <!-- Home Team Column -->
         <ng-container matColumnDef="homeTeam">
             <th mat-header-cell *matHeaderCellDef> Home Team </th>
-            <td mat-cell *matCellDef="let game"> 
+            <td mat-cell *matCellDef="let game">
                 @
                 <div class="in-cell-school-logo-container">
-                    <img class="in-cell-school-logo"
-                        src="{{game.homeTeam.logo}}"
+                    <img class="in-cell-school-logo" src="{{game.homeTeam.logo}}"
                         routerLink="/school/{{game.homeTeam.tgid}}/schedule">
                 </div>
                 {{game.homeTeam.name}}
             </td>
         </ng-container>
 
+        <!-- Time Column -->
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef> Time </th>
+            <td mat-cell *matCellDef="let game">
+                {{game.time | minutesAfterMidnightToTime:false}}
+            </td>
+        </ng-container>
+
+        <!-- Day Column -->
+        <ng-container matColumnDef="day">
+            <th mat-header-cell *matHeaderCellDef> Day </th>
+            <td mat-cell *matCellDef="let game">
+                {{game.day | dayOfWeekToString:true}}
+            </td>
+        </ng-container>
+
+        <!-- Result Column -->
+        <ng-container matColumnDef="result">
+            <th mat-header-cell *matHeaderCellDef> Result </th>
+            <td mat-cell *matCellDef="let game">
+                <div *ngIf="game.gameResult.homeScore > game.gameResult.awayScore">
+                    {{game.homeTeam.name}} {{game.gameResult.homeScore}} - {{game.awayTeam.name}}
+                    {{game.gameResult.awayScore}}
+                </div>
+                <div *ngIf="game.gameResult.awayScore > game.gameResult.homeScore">
+                    {{game.awayTeam.name}} {{game.gameResult.awayScore}} - {{game.homeTeam.name}}
+                    {{game.gameResult.homeScore}}
+                </div>
+
+            </td>
+        </ng-container>
+
         <!-- ConferenceGame Column -->
         <ng-container matColumnDef="conferenceGame">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let game"> 
+            <td mat-cell *matCellDef="let game">
                 <!-- {{game.conferenceGame}}  -->
                 <div *ngIf="game.conferenceGame" class="in-cell-school-logo-container">
                     <img class="in-cell-conference-logo" src="{{game.homeTeam.conference.logo}}">
@@ -80,17 +109,10 @@
         <ng-container matColumnDef="expandedDetail">
             <td mat-cell *matCellDef="let game" [attr.colspan]="displayedColumns.length">
                 <div class="game-detail" [@detailExpand]="game == expandedGame? 'expanded' : 'collapsed'">
-                    <div class="school-logo">
-                        <img *ngIf="game" class="opponent-logo"
-                            src="{{game.homeTeam.logo}}">
-                    </div>
-                    <div class="opponent-expanded-detail">
-                        <span>{{game.homeTeam.name}}</span>
-                        <span> {{game.homeTeam.nickname}}</span>
-                        <span><br>{{game.homeTeam.conference.name}}</span>
-                        <span> {{game.homeTeam.division}}</span>
-
-                    </div>
+                    <button mat-stroked-button color="primary" class="remove-button"
+                        routerLink="/game/{{game.week}}/{{game.gameNumber}}">
+                        Edit Game
+                    </button>
                     <!-- <button *ngIf="!game.conferenceGame || school.conference.name === 'Independent'" mat-stroked-button color="primary" class="remove-button"
                         (click)="delete(game)">Remove
                         Game</button> -->
