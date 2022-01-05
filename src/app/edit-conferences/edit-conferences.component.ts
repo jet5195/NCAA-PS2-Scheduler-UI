@@ -50,7 +50,7 @@ export class EditConferencesComponent implements OnInit {
 			const url = window.URL.createObjectURL(blob);
 			//window.open(url);
 			//window.location.href = response.url;
-		  fileSaver.saveAs(blob, 'swap.xlsx');
+		  fileSaver.saveAs(blob, 'swap.csv');
 		//}), error => console.log('Error downloading the file'),
 		}), (error: any) => console.log('Error downloading the file'), 
                  () => console.info('File downloaded successfully');

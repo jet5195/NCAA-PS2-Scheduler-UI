@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
 import * as fileSaver from 'file-saver';
-import { HttpErrorResponse } from '@angular/common/http';
 import { SnackBarService } from '../snackBar.service';
 //npm install @types/file-saver --save-dev
 //if that doesn't work, npm install --save @types/filesaver
@@ -151,7 +150,7 @@ export class DashboardComponent implements OnInit {
       const url = window.URL.createObjectURL(blob);
       //window.open(url);
       //window.location.href = response.url;
-      fileSaver.saveAs(blob, 'new_sched.xlsx');
+      fileSaver.saveAs(blob, this.year + '_new_sched.csv');
       //}), error => console.log('Error downloading the file'),
     }), (error: any) => console.log('Error downloading the file'),
       () => console.info('File downloaded successfully');

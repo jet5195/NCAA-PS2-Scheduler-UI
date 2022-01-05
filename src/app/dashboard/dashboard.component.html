@@ -8,9 +8,9 @@
         <button mat-flat-button color="primary" (click)="setYear(year)">set</button>
         
         <input #xlsxInputSchedule hidden="true" type="file" onclick="this.value=null"
-            (change)="xlsxScheduleChange($event)" accept=".xlsx" />
+            (change)="xlsxScheduleChange($event)" accept=".csv, .xlsx" />
         <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Select Excel doc with schedule (this can be exported from your dynasty)"
+            matTooltip="Select CSV file with schedule (this can be exported from your dynasty)"
             (click)="xlsxInputSchedule.click()">Choose Schedule File</button>
         <input #xlsxInputAlignment hidden="true" type="file" onclick="this.value=null"
             (change)="xlsxAlignmentChange($event)" accept=".xlsx" />
