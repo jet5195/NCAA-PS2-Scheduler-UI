@@ -179,7 +179,7 @@ export class EditGameComponent implements OnInit {
     const addGameRequest: AddGameRequest = {
       homeId: this.homeTeam.tgid,
       awayId: this.awayTeam.tgid,
-      week: this.game.week,
+      week: this.gameWeek,
       day: this.gameDay.key,
       time: this.timeToMinutesAfterMidnight(),
       gameResult: this.game.gameResult
@@ -223,6 +223,13 @@ export class EditGameComponent implements OnInit {
 
   compareDays(d1: any, d2: any): boolean {
     if (d1.key === d2.key) {
+      return true;
+    }
+    return false;
+  }
+
+  compareWeeks(w1: number, w2: number): boolean {
+    if (w1 === w2) {
       return true;
     }
     return false;
