@@ -166,6 +166,9 @@ export class DashboardComponent implements OnInit {
   setYear(year: number): void {
     this.dataService.setYear(year).subscribe((data: any) => {
       console.log(data);
+      this.snackBarService.openSnackBar("Year has been set successfully", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error setting year, please try again in a few moments", "Dismiss");
     });
   }
 
