@@ -186,4 +186,11 @@ export class DataService {
     return this.http.post<any>(`${this.baseUrl}/conferences/${name}/remove-games`, {headers: this.headers});
   }
 
+  removeAllConferenceGames() {
+    return this.http.post<any>(`${this.baseUrl}/schedule/remove-conference-games`, {headers: this.headers});
+  }
+  addAllConferenceGames() {
+    return this.http.post<any>(`${this.baseUrl}/schedule/add-conference-games`, {headers: this.headers});
+  }
+
 }

@@ -172,4 +172,16 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  removeAllConferenceGames(): void {
+    this.dataService.removeAllConferenceGames().subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+
+  addAllConferenceGames(): void {
+    this.dataService.addAllConferenceGames().subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+
 }
