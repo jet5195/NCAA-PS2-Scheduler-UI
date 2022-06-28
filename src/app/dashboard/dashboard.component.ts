@@ -104,15 +104,6 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  addConferenceGames(): void {
-    this.dataService.addConferenceGames('big east').subscribe((data: number) => {
-      console.log(data);
-      this.snackBarService.openSnackBar(data + " games have been added", "Dismiss");
-    }, error => {
-      this.snackBarService.openSnackBar("Error adding conf games", "Dismiss");
-    });
-  }
-
   selectedSchedule!: File;
   selectedAlignment!: File;
 
@@ -175,12 +166,18 @@ export class DashboardComponent implements OnInit {
   removeAllConferenceGames(): void {
     this.dataService.removeAllConferenceGames().subscribe((data: any) => {
       console.log(data);
+      this.snackBarService.openSnackBar("Conference games have been removed successfully.", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error removing conference games.", "Dismiss");
     });
   }
 
   addAllConferenceGames(): void {
     this.dataService.addAllConferenceGames().subscribe((data: any) => {
       console.log(data);
+      this.snackBarService.openSnackBar("Conference games have been added successfully.", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error adding conference games.", "Dismiss");
     });
   }
 
