@@ -34,6 +34,8 @@ import { EditGameComponent } from './edit-game/edit-game.component';
 import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DayOfWeekToStringPipe } from './pipes/dayOfWeekToString.pipe';
+import { PlayoffComponent } from './playoff/playoff.component';
+import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { DayOfWeekToStringPipe } from './pipes/dayOfWeekToString.pipe';
     ScheduleComponent,
     EditGameComponent,
     MinutesAfterMidnightToTimePipe,
-    DayOfWeekToStringPipe
+    DayOfWeekToStringPipe,
+    PlayoffComponent,
+    PlayoffSchedulerComponent
   ],
   imports: [
     BrowserModule,
