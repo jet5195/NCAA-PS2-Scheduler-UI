@@ -13,15 +13,16 @@ import { SnackBarService } from '../snackBar.service';
 })
 export class DashboardComponent implements OnInit {
   year: number = 0;
+  activatedRoute = new ActivatedRoute;
+  selectedSchedule!: File;
+  selectedAlignment!: File;
+  selectedBowls!: File;
 
   constructor(private dataService: DataService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
-
-  activatedRoute = new ActivatedRoute;
 
   ngOnInit(): void {
     this.getYear();
   }
-
 
   autoAddGames(): void {
     this.dataService.autoAddGames().subscribe((data: number) => {
@@ -104,8 +105,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  selectedSchedule!: File;
-  selectedAlignment!: File;
+
 
   xlsxScheduleChange(fileInputEvent: any) {
     console.log(fileInputEvent.target.files[0]);
@@ -132,6 +132,18 @@ export class DashboardComponent implements OnInit {
       this.snackBarService.openSnackBar("Conferences have been set successfully", "Dismiss");
     }, error => {
       this.snackBarService.openSnackBar("Error setting conferences, try checking your file", "Dismiss");
+    });
+  }
+
+  xlsxBowlChange(fileInputEvent: any) {
+    console.log(fileInputEvent.target.files[0]);
+    this.selectedBowls = fileInputEvent.target.files[0];
+
+    this.dataService.setBowlFile(this.selectedBowls).subscribe((data: any) => {
+      console.log(data);
+      this.snackBarService.openSnackBar("Bowls have been set successfully", "Dismiss");
+    }, error => {
+      this.snackBarService.openSnackBar("Error setting bowls, try checking your file", "Dismiss");
     });
   }
 

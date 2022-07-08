@@ -7,6 +7,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { AddGameRequest } from './addGameRequest';
 import { Conference } from './conference';
 import { SuggestedGameResponse } from './suggestedGameResponse';
+import { Bowl } from './bowl';
 
 @Injectable({
   providedIn: 'root'
@@ -139,6 +140,13 @@ export class DataService {
     return this.http.post<HttpEvent<any>>(`${this.baseUrl}/conferences/set-by-file`, formData);
   }
 
+  setBowlFile(bowls: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', bowls);
+
+    return this.http.post<HttpEvent<any>>(`${this.baseUrl}/bowls/set-by-file`, formData);
+  }
+
   saveScheduleToExcel(): Observable<any> {
     return this.http.get(`${this.baseUrl}/schedule/download`, {responseType: 'blob'} );
   }
@@ -191,6 +199,14 @@ export class DataService {
   }
   addAllConferenceGames() {
     return this.http.post<any>(`${this.baseUrl}/schedule/add-conference-games`, {headers: this.headers});
+  }
+
+  getBowlList(): Observable<Bowl[]>{
+    return this.http.get<Bowl[]>(`${this.baseUrl}/bowls`, {headers: this.headers} );
+  }
+
+  setBowlList(bowlList: Bowl[]): Observable<Bowl[]>{
+    return this.http.put<any>(`${this.baseUrl}/bowls`, bowlList, {headers: this.headers} );
   }
 
 }

@@ -8,6 +8,7 @@ import { ScheduleComponent } from './schedule/schedule.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
 import { PlayoffComponent } from './playoff/playoff.component';
 import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler.component';
+import { BowlsComponent } from './bowls/bowls.component';
 
 
 const routes: Routes = [
@@ -19,7 +20,8 @@ const routes: Routes = [
   { path: 'schedule/:week', component: ScheduleComponent},
   { path: 'game/:week/:gameNumber', component: EditGameComponent},
   { path: 'playoffs', component: PlayoffComponent},
-  { path: 'playoffs/:teamCount', component: PlayoffSchedulerComponent}
+  { path: 'playoffs/:teamCount', component: PlayoffSchedulerComponent},
+  { path: 'bowls', component: BowlsComponent}
 ];
 
 

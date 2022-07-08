@@ -17,14 +17,14 @@
         <button mat-flat-button color="primary" class="dashboard-buttons"
             matTooltip="Select Excel doc with conference alignment" (click)="xlsxInputAlignment.click()">Choose
             Conference Alignment File</button>
+        <input #xlsxInputBowl hidden="true" type="file" onclick="this.value=null"
+            (change)="xlsxBowlChange($event)" accept=".csv, .xlsx" />
+        <button mat-flat-button color="primary" class="dashboard-buttons"
+            matTooltip="Select CSV file with bowls (bowl.csv exported from your dynasty)" (click)="xlsxInputBowl.click()">Choose
+            Bowl File</button>
     </div>
     <div class="dashboard-inputs" style="border-bottom-style: ridge">
         <h1 style="margin-top: revert">Quick Editing Tools</h1>
-        <!-- <h2 style="margin-top: revert">Conference Games</h2>
-    <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes all games vs FCS schools"
-        (click)="removeAllGames()">Remove All Games</button>
-    <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Add Conference games for Big East"
-        (click)="addConferenceGames()">Add Conference Games</button> -->
         <h2 style="margin-top: revert">Non-Conference Games</h2>
         <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes all games vs FCS schools"
             (click)="removeAllFcsGames()">Remove All FCS Games</button>
