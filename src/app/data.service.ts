@@ -207,25 +207,28 @@ export class DataService {
   //global functions
    //returns true if conference setup is valid for scheduler handling conference scheduler
    isConferenceValid(conf : Conference): boolean {
+    let isValid : boolean = true;
     if(conf.numOfSchools < 12 && conf.numOfSchools > 1){
       return true;
     } else if( conf.numOfSchools == 12){
       if(conf.divisions && conf.divisions.length == 2){
         return true;
-      } else return false;
+      } else isValid = false;
     } else if (conf.numOfSchools == 14){
       if(conf.divisions && conf.divisions.length == 2){
         if(conf.numOfConfGames == 8){
           return true;
-        } else return false;
-      } else return false;
-    } else return false;
+        } else isValid = false;
+      } else isValid = false;
+    } else isValid = false;
+    console.log(conf.name + ' is invalid!');
+    return isValid;
   }
 
   isConferenceListValid(): boolean {
     let response : boolean = true;
     this.conferenceList?.forEach((conf : Conference) => {
-      if(!this.isConferenceValid(conf)){
+      if( conf.isFbs && !this.isConferenceValid(conf)){
         response =  false;
       }
     })
