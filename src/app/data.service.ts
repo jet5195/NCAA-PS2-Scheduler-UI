@@ -15,6 +15,7 @@ export class DataService {
 
   private baseUrl = "http://localhost:8080";
   private headers = new HttpHeaders({'Access-Control-Allow-Origin' : '*'})
+  public conferenceList?: Conference[];
 
   constructor(private http: HttpClient) { }
 
@@ -113,7 +114,7 @@ export class DataService {
     return this.http.post<any>(`${this.baseUrl}/schedule/save-to-file`, null);
   }
 
-  getAllConferences(): Observable<Conference[]>{
+  private loadConferenceList(): Observable<Conference[]>{
     return this.http.get<Conference[]>(`${this.baseUrl}/conferences`, {headers: this.headers} );
   }
 
@@ -191,6 +192,44 @@ export class DataService {
   }
   addAllConferenceGames() {
     return this.http.post<any>(`${this.baseUrl}/schedule/add-conference-games`, {headers: this.headers});
+  }
+
+  loadAllConferences(): void {
+    this.loadConferenceList().subscribe((data: Conference[]) => {
+      console.log(data);
+      this.conferenceList = data;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+
+  //global functions
+   //returns true if conference setup is valid for scheduler handling conference scheduler
+   isConferenceValid(conf : Conference): boolean {
+    if(conf.numOfSchools < 12 && conf.numOfSchools > 1){
+      return true;
+    } else if( conf.numOfSchools == 12){
+      if(conf.divisions && conf.divisions.length == 2){
+        return true;
+      } else return false;
+    } else if (conf.numOfSchools == 14){
+      if(conf.divisions && conf.divisions.length == 2){
+        if(conf.numOfConfGames == 8){
+          return true;
+        } else return false;
+      } else return false;
+    } else return false;
+  }
+
+  isConferenceListValid(): boolean {
+    let response : boolean = true;
+    this.conferenceList?.forEach((conf : Conference) => {
+      if(!this.isConferenceValid(conf)){
+        response =  false;
+      }
+    })
+    return response;
   }
 
 }

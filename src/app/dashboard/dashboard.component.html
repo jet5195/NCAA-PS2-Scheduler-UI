@@ -50,9 +50,15 @@
     <div class="dashboard-inputs" style="border-bottom-style: ridge">
         <h1 style="margin-top: revert">Danger Zone</h1>
         <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes ALL conference games. Only use this if you're sure what you're doing."
-            (click)="removeAllConferenceGames()">Remove All Conference Games</button>
+            (click)="removeAllConferenceGames()"
+            [disabled]="!dataService.conferenceList || !dataService.isConferenceListValid()">
+            Remove All Conference Games
+            </button>
         <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Adds ALL conference games. Only use this if you're sure what you're doing."
-            (click)="addAllConferenceGames()">Schedule All Conference Games</button>
+            (click)="addAllConferenceGames()"
+            [disabled]="!dataService.conferenceList || !dataService.isConferenceListValid()">
+            Schedule All Conference Games
+        </button>
     </div>
 </div>
 <button mat-fab color="accent" class="save-button" matTooltip="Downloads schedule to Excel file"
