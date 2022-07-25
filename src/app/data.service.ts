@@ -228,7 +228,7 @@ export class DataService {
   isConferenceListValid(): boolean {
     let response : boolean = true;
     this.conferenceList?.forEach((conf : Conference) => {
-      if( conf.isFbs && !this.isConferenceValid(conf)){
+      if( conf.name.toLowerCase() !== 'independent' &&  conf.fbs && !this.isConferenceValid(conf)){
         response =  false;
       }
     })

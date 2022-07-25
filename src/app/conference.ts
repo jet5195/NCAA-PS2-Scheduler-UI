@@ -7,5 +7,5 @@ export interface Conference {
     logo: string;
     numOfConfGames: number;
     numOfSchools: number;
-    isFbs: boolean;
+    fbs: boolean;
 }
