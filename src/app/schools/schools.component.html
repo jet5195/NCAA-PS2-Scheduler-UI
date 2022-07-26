@@ -7,7 +7,7 @@
                 <mat-option [value]="'All'">
                     All
                 </mat-option>
-                <mat-option *ngFor="let conference of conferences" [value]="conference.name">
+                <mat-option *ngFor="let conference of dataService.conferenceList" [value]="conference.name">
                     {{conference.name}}
                 </mat-option>
             </mat-select>

@@ -10,8 +10,8 @@
                             <mat-icon></mat-icon>
                         </mat-panel-description> -->
     </mat-expansion-panel-header>
-    <button mat-stroked-button (click)="removeConferenceGames()" >Remove Games</button>
-    <button mat-stroked-button (click)="addConferenceGames()" >Add Games</button>
+    <button mat-stroked-button (click)="removeConferenceGames()" [disabled]="!dataService.isConferenceValid(conference)">Remove Games</button>
+    <button mat-stroked-button (click)="addConferenceGames()" [disabled]="!dataService.isConferenceValid(conference)">Add Games</button>
     <div class="expansion-panel-data">
  
 

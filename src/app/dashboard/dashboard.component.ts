@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../data.service';
 import * as fileSaver from 'file-saver';
 import { SnackBarService } from '../snackBar.service';
+import { Conference } from '../conference';
 //npm install @types/file-saver --save-dev
 //if that doesn't work, npm install --save @types/filesaver
 
@@ -14,7 +15,7 @@ import { SnackBarService } from '../snackBar.service';
 export class DashboardComponent implements OnInit {
   year: number = 0;
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
+  constructor(public dataService: DataService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
 
   activatedRoute = new ActivatedRoute;
 
@@ -130,6 +131,7 @@ export class DashboardComponent implements OnInit {
     this.dataService.setAlignmentFile(this.selectedAlignment).subscribe((data: any) => {
       console.log(data);
       this.snackBarService.openSnackBar("Conferences have been set successfully", "Dismiss");
+      this.dataService.loadAllConferences();
     }, error => {
       this.snackBarService.openSnackBar("Error setting conferences, try checking your file", "Dismiss");
     });
