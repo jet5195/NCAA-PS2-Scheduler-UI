@@ -48,3 +48,6 @@ Thumbs.db
 /ncaa-ps2-scheduler-ui-win32-x64
 ncaa-ps2-scheduler-ui-win32-x64.zip
 ncaa-ps2-scheduler-ui-win32-x64.7z
+
+# Angular Cache
+/.angular
