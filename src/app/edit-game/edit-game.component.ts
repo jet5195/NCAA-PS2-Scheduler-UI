@@ -8,6 +8,7 @@ import { School } from '../school';
 import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
 import { DayOfWeekToStringPipe } from '../pipes/dayOfWeekToString.pipe';
 import { AddGameRequest } from '../addGameRequest';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-edit-game',
@@ -32,9 +33,11 @@ export class EditGameComponent implements OnInit {
   dayList!: any[];
   emptyWeeks!: number[];
   gameWeek!: number;
+  validate: boolean = true;
 
-  constructor(private data: DataService, private route: ActivatedRoute, private location: Location, 
-    private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe) { }
+  constructor(private data: DataService, private route: ActivatedRoute, private location: Location,
+    private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe) {
+     }
 
   ngOnInit(): void {
     this.createDayList(true);
@@ -42,12 +45,15 @@ export class EditGameComponent implements OnInit {
       this.week = parseInt(this.route.snapshot.paramMap.get('week')!, 10);
       this.gameNumber = parseInt(this.route.snapshot.paramMap.get('gameNumber')!, 10);
       this.loadGame();
+      //if editing bowl games, don't force validation
+      if(this.week > 15){
+        this.validate = false;
+      }
     });
-    
-    
   }
-  createDayList(is5Sat: boolean) {
-    if(is5Sat){
+
+  createDayList(ncaa06: boolean): void  {
+    if (ncaa06) {
       this.dayList = [{
         value: 'Monday',
         key: 0
@@ -113,10 +119,10 @@ export class EditGameComponent implements OnInit {
     this.data.getAvailableOpponents(this.awayTeam.tgid, this.week).subscribe((data: School[]) => {
       console.log(data);
       this.availableHomeSchools = data;
-      if(!this.availableHomeSchools.includes(this.initialHomeTeam)){
+      if (!this.availableHomeSchools.includes(this.initialHomeTeam)) {
         this.availableHomeSchools.unshift(this.initialHomeTeam);
       }
-      if(!this.availableHomeSchools.includes(this.homeTeam)){
+      if (!this.availableHomeSchools.includes(this.homeTeam)) {
         this.availableHomeSchools.unshift(this.homeTeam);
       }
     });
@@ -130,47 +136,83 @@ export class EditGameComponent implements OnInit {
     });
   }
 
-  getAvailableAwaySchools(): void {
-    this.getEmptyWeeks();
-    this.data.getAvailableOpponents(this.homeTeam.tgid, this.week).subscribe((data: School[]) => {
-      console.log(data);
+  setListsToAllSchools(): void {
+    this.data.getSchools().subscribe((data: School[]) => {
       this.availableAwaySchools = data;
-      if(!this.availableAwaySchools.includes(this.initialAwayTeam)){
-        this.availableAwaySchools.unshift(this.initialAwayTeam);
-      }
-      if(!this.availableAwaySchools.includes(this.awayTeam)){
-        this.availableAwaySchools.unshift(this.awayTeam);
-      }
+      this.availableHomeSchools = data;
     });
+  }
+
+  getAvailableAwaySchools(): void {
+    if (this.validate) {
+      this.getEmptyWeeks();
+      this.data.getAvailableOpponents(this.homeTeam.tgid, this.week).subscribe((data: School[]) => {
+        console.log(data);
+        this.availableAwaySchools = data;
+        if (!this.availableAwaySchools.includes(this.initialAwayTeam)) {
+          this.availableAwaySchools.unshift(this.initialAwayTeam);
+        }
+        if (!this.availableAwaySchools.includes(this.awayTeam)) {
+          this.availableAwaySchools.unshift(this.awayTeam);
+        }
+      });
+    } else {
+      this.setListsToAllSchools();
+    }
+  }
+
+  setLists(validate: boolean): void {
+    if (validate) {
+      this.getAvailableHomeSchools();
+      this.getAvailableAwaySchools();
+      this.getEmptyWeeks();
+    } else {
+      this.setListsToAllSchools();
+      this.emptyWeeks = this.getAllWeeks();
+    }
   }
 
   loadGame(): void {
     this.data.getGame(this.week, this.gameNumber).subscribe((data: Game) => {
       console.log(data);
       this.game = data;
+      this.gameWeek = data.week;
       this.homeTeam = data.homeTeam;
       this.awayTeam = data.awayTeam;
       this.initialHomeTeam = data.homeTeam;
       this.initialAwayTeam = data.awayTeam;
-      // this.availableHomeSchools = this.getAvailableSchools(data.homeTeam.tgid);
-      // this.availableAwaySchools = this.getAvailableSchools(data.awayTeam.tgid);
-      this.getAvailableHomeSchools();
-      this.getAvailableAwaySchools();
-      this.gameWeek = data.week;
-      this.getEmptyWeeks();
+      this.setLists(this.validate);
       this.gameTime = this.mtmToTime.transform(data.time, true);
-      //this.gameDay = this.dowToString.transform(data.day, true);
       this.gameDay = this.dayList.find(day => day.key === data.day);
     });
   }
 
-  async save(): Promise<void> {
-    //change this to remove, then add a game... that should work.
-    console.log(this.game.time);
+  // async save(): Promise<void> {
+  //   console.log(this.game.time);
+
+  //   await this.data.deleteGame(this.game.homeTeam.tgid, this.game.week);
+
+  //   this.game.homeTeam = this.homeTeam;
+  //   this.game.awayTeam = this.awayTeam;
+  //   this.game.time = this.timeToMinutesAfterMidnight();
+  //   this.game.day = this.gameDay.key;
+
+  //   const addGameRequest: AddGameRequest = {
+  //     homeId: this.homeTeam.tgid,
+  //     awayId: this.awayTeam.tgid,
+  //     week: this.gameWeek,
+  //     day: this.gameDay.key,
+  //     time: this.timeToMinutesAfterMidnight(),
+  //     gameResult: this.game.gameResult
+  //   };
 
 
-    await this.data.deleteGame(this.game.homeTeam.tgid, this.game.week);
+  //   await this.data.addGame(addGameRequest);
+  //   this.location.back();
+  // }
 
+  editGame(): void {
+    //do we need this?
     this.game.homeTeam = this.homeTeam;
     this.game.awayTeam = this.awayTeam;
     this.game.time = this.timeToMinutesAfterMidnight();
@@ -185,9 +227,10 @@ export class EditGameComponent implements OnInit {
       gameResult: this.game.gameResult
     };
 
-
-    await this.data.addGame(addGameRequest);
-    this.location.back();
+    this.data.saveGame(addGameRequest, this.game.week, this.game.gameNumber).subscribe(data => {
+      console.log(data);
+      this.location.back();
+    });
   }
 
   cancel(): void {
@@ -196,8 +239,8 @@ export class EditGameComponent implements OnInit {
 
   timeToMinutesAfterMidnight(): number {
     console.log(this.gameTime);
-    let hour: number = +this.gameTime.slice(0,2);
-    let minutes: number = +this.gameTime.slice(3,5);
+    let hour: number = +this.gameTime.slice(0, 2);
+    let minutes: number = +this.gameTime.slice(3, 5);
     console.log(hour + ':' + minutes);
     let result: number = (hour * 60) + minutes;
     console.log(result);
@@ -208,7 +251,7 @@ export class EditGameComponent implements OnInit {
     let temp = this.homeTeam;
     this.homeTeam = this.awayTeam;
     this.awayTeam = temp;
-    
+
     let tempList = this.availableHomeSchools;
     this.availableHomeSchools = this.availableAwaySchools;
     this.availableAwaySchools = tempList;
@@ -233,6 +276,14 @@ export class EditGameComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  getAllWeeks(): number[] {
+    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+  }
+
+  onValidateSliderChange($event: MatSlideToggleChange): void {
+    this.setLists($event.checked);
   }
 
 }

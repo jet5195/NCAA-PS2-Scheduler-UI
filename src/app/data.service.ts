@@ -156,8 +156,8 @@ export class DataService {
     return this.http.get<Game>(`${this.baseUrl}/schedule/week/${week}/${gameNumber}`);
   }
 
-  saveGame(game: Game): Observable<any> {
-    return this.http.post<Game>(`${this.baseUrl}/schedule/game`, game, {headers: this.headers});
+  saveGame(addGameRequest: AddGameRequest, week: number, gameNumber: number): Observable<any> {
+    return this.http.post<Game>(`${this.baseUrl}/schedule/game/${week}/${gameNumber}`, addGameRequest, {headers: this.headers});
   }
 
   swapSchools(tgid1: number, tgid2: number): Observable<any>{
