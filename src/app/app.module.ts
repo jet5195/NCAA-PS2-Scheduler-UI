@@ -7,7 +7,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SchoolsComponent } from './schools/schools.component';
 import { SchoolDetailComponent } from './school-detail/school-detail.component';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSliderModule } from '@angular/material/slider';
@@ -77,7 +77,8 @@ import { BowlsComponent } from './bowls/bowls.component';
     MatTooltipModule,
     DragDropModule,
     MatInputModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatSlideToggleModule
   ],
   providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe],
   bootstrap: [AppComponent]

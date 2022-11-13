@@ -5,4 +5,7 @@ export interface Conference {
     // color: string;
     // altColor: string;
     logo: string;
+    numOfConfGames: number;
+    numOfSchools: number;
+    fbs: boolean;
 }

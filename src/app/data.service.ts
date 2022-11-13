@@ -16,6 +16,7 @@ export class DataService {
 
   private baseUrl = "http://localhost:8080";
   private headers = new HttpHeaders({'Access-Control-Allow-Origin' : '*'})
+  public conferenceList?: Conference[];
 
   constructor(private http: HttpClient) { }
 
@@ -114,7 +115,7 @@ export class DataService {
     return this.http.post<any>(`${this.baseUrl}/schedule/save-to-file`, null);
   }
 
-  getAllConferences(): Observable<Conference[]>{
+  private loadConferenceList(): Observable<Conference[]>{
     return this.http.get<Conference[]>(`${this.baseUrl}/conferences`, {headers: this.headers} );
   }
 
@@ -163,8 +164,8 @@ export class DataService {
     return this.http.get<Game>(`${this.baseUrl}/schedule/week/${week}/${gameNumber}`);
   }
 
-  saveGame(game: Game): Observable<any> {
-    return this.http.post<Game>(`${this.baseUrl}/schedule/game`, game, {headers: this.headers});
+  saveGame(addGameRequest: AddGameRequest, week: number, gameNumber: number): Observable<any> {
+    return this.http.post<Game>(`${this.baseUrl}/schedule/game/${week}/${gameNumber}`, addGameRequest, {headers: this.headers});
   }
 
   swapSchools(tgid1: number, tgid2: number): Observable<any>{
@@ -201,6 +202,47 @@ export class DataService {
     return this.http.post<any>(`${this.baseUrl}/schedule/add-conference-games`, {headers: this.headers});
   }
 
+  loadAllConferences(): void {
+    this.loadConferenceList().subscribe((data: Conference[]) => {
+      console.log(data);
+      this.conferenceList = data;
+    }, error => {
+      console.log(error);
+    });
+  }
+
+
+  //global functions
+   //returns true if conference setup is valid for scheduler handling conference scheduler
+   isConferenceValid(conf : Conference): boolean {
+    let isValid : boolean = true;
+    if(conf.numOfSchools < 12 && conf.numOfSchools > 1){
+      return true;
+    } else if( conf.numOfSchools == 12){
+      if(conf.divisions && conf.divisions.length == 2){
+        return true;
+      } else isValid = false;
+    } else if (conf.numOfSchools == 14){
+      if(conf.divisions && conf.divisions.length == 2){
+        if(conf.numOfConfGames == 8){
+          return true;
+        } else isValid = false;
+      } else isValid = false;
+    } else isValid = false;
+    console.log(conf.name + ' is invalid!');
+    return isValid;
+  }
+
+  isConferenceListValid(): boolean {
+    let response : boolean = true;
+    this.conferenceList?.forEach((conf : Conference) => {
+      if( conf.name.toLowerCase() !== 'independent' &&  conf.fbs && !this.isConferenceValid(conf)){
+        response =  false;
+      }
+    })
+    return response;
+  }
+
   getBowlList(): Observable<Bowl[]>{
     return this.http.get<Bowl[]>(`${this.baseUrl}/bowls`, {headers: this.headers} );
   }
@@ -208,5 +250,6 @@ export class DataService {
   setBowlList(bowlList: Bowl[]): Observable<Bowl[]>{
     return this.http.put<any>(`${this.baseUrl}/bowls`, bowlList, {headers: this.headers} );
   }
+
 
 }

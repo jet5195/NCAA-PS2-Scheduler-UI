@@ -5,9 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DayOfWeekToStringPipe implements PipeTransform {
 
-  transform(value: number | null, is5Sat: boolean): string {
-    if (value) {
-      if (!is5Sat){
+  transform(value: number | null, isNcaa06: boolean): string | undefined {
+    if (value !== null) {
+      if (!isNcaa06){
         value-=3;
         if(value < 0){
           value = 7 - value;
@@ -36,6 +36,6 @@ export class DayOfWeekToStringPipe implements PipeTransform {
         }
       
     }
-    return ''
+    return value?.toString();
   }
 }

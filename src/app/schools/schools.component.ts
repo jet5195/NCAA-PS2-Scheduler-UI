@@ -15,20 +15,20 @@ export class SchoolsComponent implements OnInit {
   allSchools?: School[] = [];
   selectedSchool?: School;
   panelOpenState = false;
-  conferences: Conference[] = [];
+  //conferences: Conference[] = [];
   selectedConference: string = "All";
 
-  constructor(private dataService: DataService, private route: ActivatedRoute, private router: Router) { }
+  constructor(public dataService: DataService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.selectedConference = params['conf'];
       this.getSchoolsByConference();
       //this.allSchools = this.schools;
-      this.dataService.getAllConferences().subscribe((data: Conference[]) => {
-        console.log(data);
-        this.conferences = data;
-      });
+      // this.dataService.getAllConferences().subscribe((data: Conference[]) => {
+      //   console.log(data);
+      //   this.conferences = data;
+      // });
     });
   }
 

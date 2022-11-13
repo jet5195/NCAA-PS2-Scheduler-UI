@@ -1,6 +1,6 @@
 # NCAA PS2 Scheduler
 
-This project allows you to edit the schedule for NCAA Football 06 (and probably other NCAA PS2 games) via an electronjs GUI. This program pulls data from 2 user chosen Excel files, your schedule, and your conference alignment. Included in the release are examples you can use. The program also pulls data from a School_Data.xlsx file for school names, rivalries, etc. but this is not chosen via the GUI. Feel free to modify that file or add more teams as needed (for any custom teams or FCS teams I haven't included yet).
+This project allows you to edit the schedule for NCAA Football 06 (and probably other NCAA PS2 games) via an electronjs GUI. This program pulls data from 2 user chosen Excel files, your schedule, and your conference alignment. Included in the release are examples you can use (these files are under resources/app/example excel docs). The program also pulls data from a School_Data.xlsx file for school names, rivalries, etc. but this is not chosen via the GUI. Feel free to modify that file or add more teams as needed (for any custom teams or FCS teams I haven't included yet).
 
 This program creates a new schedule file that can be converted to a csv file (I'd like to switch to using csv's instead of excel files at some point for simplicity) and then imported into PS2 NCAA Football dynasties at the beginning of seasons. (Pre-season is the only time I have attempted to modify the schedule) Be sure to make a backup of your dynasty before trying this. It works fine for me but I can't be sure it handles every possibility.
 
