@@ -26,13 +26,9 @@ export class MinutesAfterMidnightToTimePipe implements PipeTransform {
         output += ':' + (minutes < 10 ? '0' + minutes : minutes);
         output += ' ' + end;
       } else {
-
         output = hoursAfterMidnight < 10 ? '0' + ~~hoursAfterMidnight : '' + ~~hoursAfterMidnight;
         output += ':' + (minutes < 10 ? '0' + minutes : minutes);
       }
-
-
-
       return output;
     }
     else return null

@@ -13,8 +13,12 @@
                     <span *ngIf="school && school.conference" style="color:white"><b>{{school.conference.name}}</b></span>
                     <span *ngIf="school.division" style="color:white"> {{school.division}}</span>
                 </div>
+                <button mat-stroked-button style="align-self: right;" (click)="openScheduleSwapDialog()">
+                    Swap Schedule
+                </button>
             </div>
         </div>
+       
     </div>
 
     <table mat-table multiTemplateDataRows [dataSource]="dataSource" matSort matSortActive="week" matSortDirection="asc"
@@ -168,7 +172,5 @@
         <!-- <div>{{isHomeTeam}}</div> -->
         <!-- <span>{{selectedWeek}}</span> -->
         <button mat-stroked-button color="primary" class="add-game-button" (click)="add()">Add Game</button>
-
     </div>
-
 </div>

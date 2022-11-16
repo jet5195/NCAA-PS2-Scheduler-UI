@@ -14,7 +14,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SchoolScheduleComponent } from './school-schedule/school-schedule.component';
+import { SchoolScheduleComponent, SwapScheduleDialog } from './school-schedule/school-schedule.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { AppRoutingModule } from './app-routing.module';
@@ -32,11 +32,14 @@ import { MatInputModule } from '@angular/material/input';
 import { ScheduleComponent } from './schedule/schedule.component';
 import { EditGameComponent } from './edit-game/edit-game.component';
 import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
+import { ConferenceNamePipe } from './pipes/conferenceName';
+import { ConferenceLogoPipe } from './pipes/conferenceLogo';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DayOfWeekToStringPipe } from './pipes/dayOfWeekToString.pipe';
 import { PlayoffComponent } from './playoff/playoff.component';
 import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler.component';
 import { BowlsComponent } from './bowls/bowls.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -52,9 +55,12 @@ import { BowlsComponent } from './bowls/bowls.component';
     EditGameComponent,
     MinutesAfterMidnightToTimePipe,
     DayOfWeekToStringPipe,
+    ConferenceNamePipe,
+    ConferenceLogoPipe,
     PlayoffComponent,
     PlayoffSchedulerComponent,
-    BowlsComponent
+    BowlsComponent,
+    SwapScheduleDialog
   ],
   imports: [
     BrowserModule,
@@ -78,9 +84,10 @@ import { BowlsComponent } from './bowls/bowls.component';
     DragDropModule,
     MatInputModule,
     FlexLayoutModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatDialogModule
   ],
-  providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe],
+  providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe, ConferenceNamePipe, ConferenceLogoPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

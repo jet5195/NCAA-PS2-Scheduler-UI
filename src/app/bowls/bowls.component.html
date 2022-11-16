@@ -1,1 +1,94 @@
-<p>bowls works!</p>
+<div class="school-schedule-container">
+<mat-table class="bowl-table mat-elevation-z8" [dataSource]="dataSource">
+    <ng-container matColumnDef="conference1Id">
+        <th mat-header-cell *matHeaderCellDef>Conf 1</th>
+        <td mat-cell *matCellDef="let bowl">
+            <div class="in-cell-school-logo-container">
+                <img class="in-cell-conference-logo" src="{{bowl.conference1Id | conferenceLogo: dataService.conferenceList}}">
+            </div>
+        </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="conference1Rank">
+        <th mat-header-cell *matHeaderCellDef>Conf 1 Rank</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.conference1Rank}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="conference2Id">
+        <th mat-header-cell *matHeaderCellDef>Conf 2</th>
+        <td mat-cell *matCellDef="let bowl">
+            <div class="in-cell-school-logo-container">
+                <img class="in-cell-conference-logo" src="{{bowl.conference2Id | conferenceLogo: dataService.conferenceList}}">
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="conference2Rank">
+        <th mat-header-cell *matHeaderCellDef>Conf 2 Rank</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.conference2Id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bmfd">
+        <th mat-header-cell *matHeaderCellDef>BMFD</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.bmfd}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="stadiumId">
+        <th mat-header-cell *matHeaderCellDef>Stadium ID</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.stadiumId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="trophyId">
+        <th mat-header-cell *matHeaderCellDef>Trophy ID</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.trophyId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Time</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.time | minutesAfterMidnightToTime:false}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bowlName">
+        <th mat-header-cell *matHeaderCellDef>Bowl Name</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.bowlName}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="gameNumber">
+        <th mat-header-cell *matHeaderCellDef>Game Number</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.gameNumber}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bowlMonth">
+        <th mat-header-cell *matHeaderCellDef>Bowl Month</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.gameNumber}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="week">
+        <th mat-header-cell *matHeaderCellDef>Week</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.week}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bowlLogo">
+        <th mat-header-cell *matHeaderCellDef>Bowl Logo</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.bowlLogo}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bplo">
+        <th mat-header-cell *matHeaderCellDef>BPLO</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.bplo}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="bowlIndex">
+        <th mat-header-cell *matHeaderCellDef>Bowl Index</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.bowlIndex}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="day">
+        <th mat-header-cell *matHeaderCellDef>Day</th>
+        <td mat-cell *matCellDef="let bowl">{{bowl.day}}</td>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</mat-table>
+</div>

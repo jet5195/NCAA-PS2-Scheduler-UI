@@ -251,5 +251,8 @@ export class DataService {
     return this.http.put<any>(`${this.baseUrl}/bowls`, bowlList, {headers: this.headers} );
   }
 
+  swapSchedule(tgid1: number, tgid2: number): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/schedule/swap-schedule/${tgid1}/${tgid2}`, {headers: this.headers});
+  }
 
 }

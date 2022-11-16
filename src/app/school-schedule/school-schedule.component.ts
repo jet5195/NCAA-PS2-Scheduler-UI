@@ -9,6 +9,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import { AddGameRequest } from '../addGameRequest';
 import { SuggestedGameResponse } from '../suggestedGameResponse';
 import { SnackBarService } from '../snackBar.service';
+import { MatDialog } from '@angular/material/dialog';
 
 
 @Component({
@@ -46,7 +47,7 @@ export class SchoolScheduleComponent implements OnInit {
   dataSource = new MatTableDataSource(this.schedule);
   expandedGame: Game | null | undefined;
 
-  constructor(private dataService: DataService, private snackBarService: SnackBarService, private route: ActivatedRoute) { }
+  constructor(private dataService: DataService, private snackBarService: SnackBarService, private route: ActivatedRoute, public dialog: MatDialog) { }
 
   async add() {
 
@@ -98,6 +99,10 @@ export class SchoolScheduleComponent implements OnInit {
       console.log(data);
       this.school = data;
     });
+    this.loadSchoolSchedule(tgid);
+  }
+
+  loadSchoolSchedule(tgid: number): void {
     this.dataService.getSchoolSchedule(tgid).subscribe((data: Game[]) => {
       console.log(data);
       this.schedule = data;
@@ -129,9 +134,23 @@ export class SchoolScheduleComponent implements OnInit {
       } else {
         this.snackBarService.openSnackBar("No suggested games found", "Dismiss");
       }
-    })
-
+    });
   }
+
+  openScheduleSwapDialog(): void {
+    const dialogRef = this.dialog.open(SwapScheduleDialog);
+
+    dialogRef.afterClosed().subscribe((result: number) => {
+      if(result !== null){
+        this.dataService.swapSchedule(this.tgid, result).subscribe(data => {
+          console.log(data);
+          this.loadSchoolSchedule(this.tgid);
+        });
+      }
+    });
+  }
+
+
 
   compareSchools(s1: School, s2: School): boolean {
     if (s1.tgid === s2.tgid) {
@@ -140,4 +159,19 @@ export class SchoolScheduleComponent implements OnInit {
     return false;
   }
 
+}
+
+@Component({
+  selector: 'swap-schedule-dialog',
+  templateUrl: 'swap-schedule-dialog.html',
+})
+export class SwapScheduleDialog {
+  constructor(public dataService: DataService) {
+    this.dataService.getSchools().subscribe((data: School[]) => {
+      this.schoolList = data;
+    })
+   }
+
+  schoolList!: School[];
+  school2!: School;
 }

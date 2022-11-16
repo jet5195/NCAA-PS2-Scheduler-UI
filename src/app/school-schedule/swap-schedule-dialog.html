@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Swap Schedule</h2>
+<mat-dialog-content class="mat-typography">
+<mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
+    <mat-label>Schedule to Swap</mat-label>
+    <mat-select [(ngModel)]="school2" name="school2">
+        <mat-option *ngFor="let schoolOption of schoolList" [value]="schoolOption">
+            {{schoolOption.name}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button *ngIf="school2" [mat-dialog-close]="school2.tgid" cdkFocusInitial>OK</button>
+  </mat-dialog-actions>
+

@@ -8,4 +8,5 @@ export interface Conference {
     numOfConfGames: number;
     numOfSchools: number;
     fbs: boolean;
+    conferenceID: number;
 }
