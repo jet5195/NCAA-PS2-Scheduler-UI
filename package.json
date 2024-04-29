@@ -34,7 +34,6 @@
     "@angular-devkit/build-angular": "^15.2.11",
     "@angular/cli": "~15.2.11",
     "@angular/compiler-cli": "~15.2.10",
-    "@angular/flex-layout": "^14.0.0-beta.41",
     "@types/file-saver": "^2.0.3",
     "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
