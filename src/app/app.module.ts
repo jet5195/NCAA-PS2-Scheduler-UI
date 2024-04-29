@@ -34,7 +34,6 @@ import { EditGameComponent } from './edit-game/edit-game.component';
 import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
 import { ConferenceNamePipe } from './pipes/conferenceName';
 import { ConferenceLogoPipe } from './pipes/conferenceLogo';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { DayOfWeekToStringPipe } from './pipes/dayOfWeekToString.pipe';
 import { PlayoffComponent } from './playoff/playoff.component';
 import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler.component';
@@ -83,7 +82,6 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatTooltipModule,
     DragDropModule,
     MatInputModule,
-    FlexLayoutModule,
     MatSlideToggleModule,
     MatDialogModule
   ],
