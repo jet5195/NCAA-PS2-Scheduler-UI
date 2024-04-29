@@ -1,0 +1,19 @@
+<mat-card>
+    <mat-card-header>
+      <mat-card-title>Edit Conference</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-form-field>
+            <mat-label>Conference</mat-label>
+            <mat-select [(ngModel)]="selectedConference">
+              <mat-option *ngFor="let conference of conferences" [value]="conference">
+                  {{conference.name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div *ngIf="selectedConference">
+          <app-conference-map [conference]="selectedConference"></app-conference-map>
+        </div>
+    </mat-card-content>
+  </mat-card>
+  

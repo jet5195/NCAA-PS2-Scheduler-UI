@@ -40,6 +40,10 @@ import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler
 import { BowlsComponent } from './bowls/bowls.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DataService } from './data.service';
+import { ConferenceEditorComponent } from './conference-editor/conference-editor.component';
+import { MatList, MatListItem, MatListModule } from '@angular/material/list';
+import { NgxEchartsModule } from 'ngx-echarts';
+import { MapComponent } from './conference-editor/map/map.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +64,9 @@ import { DataService } from './data.service';
     PlayoffComponent,
     PlayoffSchedulerComponent,
     BowlsComponent,
-    SwapScheduleDialog
+    SwapScheduleDialog,
+    ConferenceEditorComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +90,11 @@ import { DataService } from './data.service';
     DragDropModule,
     MatInputModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatListModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    })
   ],
   providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe, ConferenceNamePipe, ConferenceLogoPipe, DataService],
   bootstrap: [AppComponent]

@@ -25,7 +25,9 @@
     "@angular/router": "~17.3.6",
     "@types/filesaver": "0.0.30",
     "angular-file-saver": "^1.1.3",
+    "echarts": "^5.5.0",
     "file-saver": "^2.0.5",
+    "ngx-echarts": "^17.1.0",
     "rxjs": "~6.6.0",
     "tree-kill": "^1.2.2",
     "tslib": "^2.3.0",
@@ -46,6 +48,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "resize-observer-polyfill": "^1.5.1",
     "typescript": "~5.4.5"
   }
 }
