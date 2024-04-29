@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "ncaa-ps2-scheduler-ui:build:production"
+              "buildTarget": "ncaa-ps2-scheduler-ui:build:production"
             },
             "development": {
-              "browserTarget": "ncaa-ps2-scheduler-ui:build:development"
+              "buildTarget": "ncaa-ps2-scheduler-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ncaa-ps2-scheduler-ui:build"
+            "buildTarget": "ncaa-ps2-scheduler-ui:build"
           }
         },
         "test": {

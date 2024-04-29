@@ -53,7 +53,7 @@
         <ng-container matColumnDef="homeTeam">
             <th mat-header-cell *matHeaderCellDef> Home Team </th>
             <td mat-cell *matCellDef="let game">
-                @
+                &#64;
                 <div class="in-cell-school-logo-container">
                     <img class="in-cell-school-logo" src="{{game.homeTeam.logo}}"
                         routerLink="/school/{{game.homeTeam.tgid}}/schedule">
