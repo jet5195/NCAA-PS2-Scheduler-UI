@@ -18,6 +18,7 @@ export class DashboardComponent implements OnInit {
   selectedSchedule!: File;
   selectedAlignment!: File;
   selectedBowls!: File;
+  conferences: Conference[] = [];
 
   constructor(public dataService: DataService, private route: ActivatedRoute, private snackBarService: SnackBarService) { }
 
@@ -131,7 +132,9 @@ export class DashboardComponent implements OnInit {
     this.dataService.setAlignmentFile(this.selectedAlignment).subscribe((data: any) => {
       console.log(data);
       this.snackBarService.openSnackBar("Conferences have been set successfully", "Dismiss");
-      this.dataService.loadAllConferences();
+      this.dataService.getConferenceList().subscribe(data => {
+        this.conferences = data;
+      });
     }, error => {
       this.snackBarService.openSnackBar("Error setting conferences, try checking your file", "Dismiss");
     });

@@ -1,6 +1,6 @@
 <div class="dashboard-buttons-container">
     <div class="dashboard-inputs" style="border-bottom-style: ridge">
-        <h1 style="margin-top: revert">Import Setup</h1>
+        <h1 class="mat-h1" style="margin-top: revert">Import Setup</h1>
         <mat-form-field>
             <input matInput type="number" placeholder="Year" [(ngModel)]="year">
 
@@ -51,12 +51,12 @@
         <h1 style="margin-top: revert">Danger Zone</h1>
         <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes ALL conference games. Only use this if you're sure what you're doing."
             (click)="removeAllConferenceGames()"
-            [disabled]="!dataService.conferenceList || !dataService.isConferenceListValid()">
+            [disabled]="!conferences || !dataService.isConferenceListValid(conferences)">
             Remove All Conference Games
             </button>
         <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Adds ALL conference games. Only use this if you're sure what you're doing."
             (click)="addAllConferenceGames()"
-            [disabled]="!dataService.conferenceList || !dataService.isConferenceListValid()">
+            [disabled]="!conferences || !dataService.isConferenceListValid(conferences)">
             Schedule All Conference Games
         </button>
     </div>

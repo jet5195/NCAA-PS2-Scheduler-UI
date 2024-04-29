@@ -20,7 +20,9 @@ export class BowlsComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBowlList();
-    this.conferenceList = this.dataService.conferenceList;
+    this.dataService.getConferenceList().subscribe(data => {
+      this.conferenceList = data;
+    });
   }
 
   getBowlList() {

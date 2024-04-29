@@ -1,7 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@use '@angular/material' as mat;
+@use '@angular/material-experimental' as matx;
+
+$light-theme: matx.define-theme((
+  color: (
+    theme-type: light,
+    primary: matx.$m3-violet-palette,
+  ),
+  density: (
+    scale: 0
+  )
+));
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Roboto;
+}
+
+:root {
+  // Apply the base theme at the root, so it will be inherited by the whole app.
+  @include mat.all-component-themes($light-theme);
+}
+
+
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .big_class {
     margin-left: auto;

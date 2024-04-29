@@ -19,10 +19,10 @@ export class EditConferencesComponent implements OnInit {
   constructor(public dataService: DataService) { }
 
   ngOnInit(): void {
-    // this.dataService.getAllConferences().subscribe((data: Conference[]) => {
-    //   console.log(data);
-    //   this.conferences = data;
-    // });
+    this.dataService.getConferenceList().subscribe((data: Conference[]) => {
+      console.log(data);
+      this.conferences = data;
+    });
     this.dataService.getSchools().subscribe((data: School[]) => {
       console.log(data);
       this.schools = data;

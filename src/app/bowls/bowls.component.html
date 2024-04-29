@@ -4,7 +4,7 @@
         <th mat-header-cell *matHeaderCellDef>Conf 1</th>
         <td mat-cell *matCellDef="let bowl">
             <div class="in-cell-school-logo-container">
-                <img class="in-cell-conference-logo" src="{{bowl.conference1Id | conferenceLogo: dataService.conferenceList}}">
+                <img class="in-cell-conference-logo" src="{{bowl.conference1Id | conferenceLogo: conferenceList}}">
             </div>
         </td>
     </ng-container>
@@ -18,7 +18,7 @@
         <th mat-header-cell *matHeaderCellDef>Conf 2</th>
         <td mat-cell *matCellDef="let bowl">
             <div class="in-cell-school-logo-container">
-                <img class="in-cell-conference-logo" src="{{bowl.conference2Id | conferenceLogo: dataService.conferenceList}}">
+                <img class="in-cell-conference-logo" src="{{bowl.conference2Id | conferenceLogo: conferenceList}}">
             </div>
         </td>
     </ng-container>

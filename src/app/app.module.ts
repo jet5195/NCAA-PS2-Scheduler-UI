@@ -39,6 +39,7 @@ import { PlayoffComponent } from './playoff/playoff.component';
 import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler.component';
 import { BowlsComponent } from './bowls/bowls.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { DataService } from './data.service';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatSlideToggleModule,
     MatDialogModule
   ],
-  providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe, ConferenceNamePipe, ConferenceLogoPipe],
+  providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe, ConferenceNamePipe, ConferenceLogoPipe, DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
