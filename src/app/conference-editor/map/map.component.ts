@@ -1,8 +1,13 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import * as echarts from 'echarts';
+import * as echarts from 'echarts/core';
 import { Conference } from 'src/app/conference';
 import { DataService } from 'src/app/data.service';
 import { School } from 'src/app/school';
+import * as usaMap from 'src/assets/USA.json';
+import { CanvasRenderer } from 'echarts/renderers';
+import { MapChart} from 'echarts/charts';
+import { TooltipComponent } from 'echarts/components';
+echarts.use([MapChart, CanvasRenderer, TooltipComponent]);
 
 @Component({
   selector: 'app-conference-map',
@@ -26,21 +31,69 @@ export class MapComponent implements OnChanges {
   }
 
   initMap(): void {
+    const usaMap = require('src/assets/USA.json');
+    echarts.registerMap('USA', usaMap, {
+      Alaska: {     
+        left: -124,
+        top: 24,
+        width: 20
+      },
+      Hawaii: {
+        left: -128,
+        top: 28,
+        width: 5
+      },
+      'Puerto Rico': {     
+        left: -76,
+        top: 26,
+        width: 2
+      }
+    });
+    const statesWithSchools = new Set(this.conferenceSchools.map(school => school.state));
+  
     const chart = echarts.init(document.getElementById('conference-map'));
     const option = {
       tooltip: {
         trigger: 'item',
         formatter: '{b}'
       },
+      visualMap: {
+        show: false, // Set to false to hide the visualMap component
+        min: 0,
+        max: 1,
+        inRange: {
+          color: ['#ccc', '#f00'] // Non-highlighted color and highlighted color
+        }
+      },
       series: [{
         type: 'map',
-        map: 'USA', // Assuming you're displaying a map of the USA
-        data: this.conferenceSchools.map(school => ({
-          name: school.name,
-          value: 1
-        }))
+        map: 'USA',
+        data: usaMap.features.map(feature => {
+          const isHighlighted = statesWithSchools.has(feature.properties.name);
+          return {
+            name: feature.properties.name,
+            value: isHighlighted // 1 to highlight, 0 to not
+          };
+        }),
+        // Define the visual aspects for highlighted/non-highlighted states
+        itemStyle: {
+          normal: {
+            borderColor: '#fff',
+            areaColor: '#ccc',
+          },
+          emphasis: {
+            areaColor: '#f00', // Highlight color
+            borderWidth: 1,
+            borderColor: '#fff',
+            label: {
+              show: true,
+              color: '#fff'
+            }
+          }
+        }        
       }]
     };
     chart.setOption(option);
   }
+  
 }
