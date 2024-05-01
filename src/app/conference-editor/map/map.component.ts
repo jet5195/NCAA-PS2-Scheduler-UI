@@ -6,8 +6,8 @@ import { School } from 'src/app/school';
 import * as usaMap from 'src/assets/USA.json';
 import { CanvasRenderer } from 'echarts/renderers';
 import { MapChart} from 'echarts/charts';
-import { TooltipComponent } from 'echarts/components';
-echarts.use([MapChart, CanvasRenderer, TooltipComponent]);
+import { TooltipComponent, VisualMapComponent } from 'echarts/components';
+echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
 
 @Component({
   selector: 'app-conference-map',
@@ -25,9 +25,8 @@ export class MapComponent implements OnChanges {
     this.dataService.getSchoolsByConference(this.conference.name).subscribe(data => {
       this.conferenceSchools = data;
       console.log("got schools for map");
+      this.initMap();
     })
-
-    this.initMap();
   }
 
   initMap(): void {
@@ -61,6 +60,7 @@ export class MapComponent implements OnChanges {
         show: false, // Set to false to hide the visualMap component
         min: 0,
         max: 1,
+        calculable: true,
         inRange: {
           color: ['#ccc', '#f00'] // Non-highlighted color and highlighted color
         }
@@ -70,9 +70,12 @@ export class MapComponent implements OnChanges {
         map: 'USA',
         data: usaMap.features.map(feature => {
           const isHighlighted = statesWithSchools.has(feature.properties.name);
+          if(isHighlighted){
+            console.log(feature.properties.name);
+          }
           return {
             name: feature.properties.name,
-            value: isHighlighted // 1 to highlight, 0 to not
+            value: isHighlighted ? 1 : 0 // 1 to highlight, 0 to not
           };
         }),
         // Define the visual aspects for highlighted/non-highlighted states

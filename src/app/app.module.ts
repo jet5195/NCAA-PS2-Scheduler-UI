@@ -43,7 +43,9 @@ import { DataService } from './data.service';
 import { ConferenceEditorComponent } from './conference-editor/conference-editor.component';
 import { MatList, MatListItem, MatListModule } from '@angular/material/list';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MapComponent } from './conference-editor/map/map.component';
+import { ConferenceSchoolListComponent } from './conference-editor/conference-school-list/conference-school-list.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { MapComponent } from './conference-editor/map/map.component';
     BowlsComponent,
     SwapScheduleDialog,
     ConferenceEditorComponent,
-    MapComponent
+    MapComponent,
+    ConferenceSchoolListComponent
   ],
   imports: [
     BrowserModule,
@@ -92,6 +95,7 @@ import { MapComponent } from './conference-editor/map/map.component';
     MatSlideToggleModule,
     MatDialogModule,
     MatListModule,
+    MatTabsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
     })
