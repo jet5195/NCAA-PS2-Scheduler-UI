@@ -1,12 +1,10 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import * as echarts from 'echarts/core';
-import { Conference } from 'src/app/conference';
-import { DataService } from 'src/app/data.service';
-import { School } from 'src/app/school';
-import * as usaMap from 'src/assets/USA.json';
-import { CanvasRenderer } from 'echarts/renderers';
-import { MapChart} from 'echarts/charts';
+import { MapChart } from 'echarts/charts';
 import { TooltipComponent, VisualMapComponent } from 'echarts/components';
+import * as echarts from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { Conference } from 'src/app/conference';
+import { School } from 'src/app/school';
 echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
 
 @Component({
@@ -16,23 +14,25 @@ echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
 })
 export class MapComponent implements OnChanges {
   @Input() conference!: Conference;
-  conferenceSchools: School[] = [];
+  @Input() conferenceSchools!: School[];
+  private isViewInit: boolean = false;
+  chartOptions;
 
-  constructor(private dataService: DataService){
+  ngAfterViewInit(): void {
+    this.isViewInit = true;
+    this.initMap();
   }
 
   ngOnChanges(): void {
-    this.dataService.getSchoolsByConference(this.conference.name).subscribe(data => {
-      this.conferenceSchools = data;
-      console.log("got schools for map");
+    if (this.isViewInit) {
       this.initMap();
-    })
+    }
   }
 
   initMap(): void {
     const usaMap = require('src/assets/USA.json');
     echarts.registerMap('USA', usaMap, {
-      Alaska: {     
+      Alaska: {
         left: -124,
         top: 24,
         width: 20
@@ -42,16 +42,14 @@ export class MapComponent implements OnChanges {
         top: 28,
         width: 5
       },
-      'Puerto Rico': {     
+      'Puerto Rico': {
         left: -76,
         top: 26,
         width: 2
       }
     });
     const statesWithSchools = new Set(this.conferenceSchools.map(school => school.state));
-  
-    const chart = echarts.init(document.getElementById('conference-map'));
-    const option = {
+    this.chartOptions = {
       tooltip: {
         trigger: 'item',
         formatter: '{b}'
@@ -70,7 +68,7 @@ export class MapComponent implements OnChanges {
         map: 'USA',
         data: usaMap.features.map(feature => {
           const isHighlighted = statesWithSchools.has(feature.properties.name);
-          if(isHighlighted){
+          if (isHighlighted) {
             console.log(feature.properties.name);
           }
           return {
@@ -93,10 +91,8 @@ export class MapComponent implements OnChanges {
               color: '#fff'
             }
           }
-        }        
+        }
       }]
     };
-    chart.setOption(option);
   }
-  
 }

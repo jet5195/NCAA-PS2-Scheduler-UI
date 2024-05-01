@@ -1,1 +1,38 @@
-<p>conference-school-list works!</p>
+<mat-grid-list cols="4" rowHeight="200px" gutterSize="10px">
+  <mat-grid-tile *ngFor="let school of conferenceSchools" [style.--team-primary-color]="school.color" [style.--team-alt-color]="school.altColor">
+    <mat-card class="team-card team-primary-color">
+      <mat-card-header>
+        <div mat-card-avatar class="team-logo" [ngStyle]="{'background-image': 'url(' + school.logo + ')'}"></div>
+        <mat-card-title class="school-name">{{ school.name }}</mat-card-title>
+        <mat-card-subtitle [ngStyle]="{'color': isDark(school.color) ? '#fff' : '#000'}">{{ school.nickname }}</mat-card-subtitle>
+
+      </mat-card-header>
+      <mat-card-content class="team-content">
+        <!-- Dynamic content about the team can go here -->
+      </mat-card-content>
+      <mat-card-actions class="team-actions">
+        <!-- Actions like 'View More' can be added here -->
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+
+  <mat-grid-tile>
+    <mat-card class="team-card add-school-card" (click)="openAddSchoolDialog()">
+      <mat-card-header>
+        <div mat-card-avatar class="team-logo add-school-logo">
+          <span class="material-icons add-icon">add_circle_outline</span>
+        </div>
+        <mat-card-title class="school-name">Add School</mat-card-title>
+        <mat-card-subtitle class="school-nickname"></mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content class="team-content">
+        <!-- Dynamic content about the team can go here -->
+      </mat-card-content>
+      <mat-card-actions class="team-actions">
+        <!-- Actions like 'View More' can be added here -->
+      </mat-card-actions>
+    </mat-card>
+  </mat-grid-tile>
+  
+
+</mat-grid-list>

@@ -46,6 +46,7 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MapComponent } from './conference-editor/map/map.component';
 import { ConferenceSchoolListComponent } from './conference-editor/conference-school-list/conference-school-list.component';
+import { AddSchoolDialogComponent } from './conference-editor/add-school-dialog/add-school-dialog.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ConferenceSchoolListComponent } from './conference-editor/conference-sc
     SwapScheduleDialog,
     ConferenceEditorComponent,
     MapComponent,
-    ConferenceSchoolListComponent
+    ConferenceSchoolListComponent,
+    AddSchoolDialogComponent
   ],
   imports: [
     BrowserModule,

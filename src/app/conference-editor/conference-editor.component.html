@@ -5,20 +5,20 @@
     <mat-card-content>
         <mat-form-field>
             <mat-label>Conference</mat-label>
-            <mat-select [(ngModel)]="selectedConference">
+            <mat-select [(ngModel)]="selectedConference" (selectionChange)="getSchoolsByConference()">
               <mat-option *ngFor="let conference of conferences" [value]="conference">
                   {{conference.name}}
               </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-tab-group *ngIf="selectedConference">
+        <mat-tab-group *ngIf="conferenceSchools">
+          <mat-tab label="Members">
+            <app-conference-school-list [conference]="selectedConference" [conferenceSchools]="conferenceSchools" [schools]="schools"></app-conference-school-list>
+          </mat-tab>
           <mat-tab label="Map">
             <div>
-              <app-conference-map [conference]="selectedConference"></app-conference-map>
+              <app-conference-map [conference]="selectedConference" [conferenceSchools]="conferenceSchools"></app-conference-map>
             </div>
-          </mat-tab>
-          <mat-tab label="Edit">
-            <app-conference-school-list></app-conference-school-list>
           </mat-tab>
         </mat-tab-group>
     </mat-card-content>

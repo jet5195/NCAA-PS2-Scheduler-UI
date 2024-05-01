@@ -1,0 +1,109 @@
+mat-grid-list {
+    height: 100%;
+  }
+  
+  mat-grid-tile {
+    background: transparent;
+    padding: 5px; /* Adjust padding as needed */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  mat-grid-tile:hover {
+    transform: scale(1.05);
+  }
+  
+  .team-card {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+    background: var(--team-primary-color);
+    color: var(--team-alt-color);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .team-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .team-logo {
+    height: 120px; /* Adjust based on your preference */
+    width: 120px; /* Adjust based on your preference */
+    background-size: contain;
+    overflow: visible !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 0%;
+    /* margin: -60px auto 0; */
+    /* border: 4px solid #fff; */
+     /* Adjust color based on your preference */
+  }
+  
+  /* Additional styles for content and actions */
+  .team-content {
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .team-actions {
+    margin-top: auto;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  /* Add your dynamic color styling here */
+  .team-primary-color {
+    background-color: var(--team-primary-color);
+  }
+  
+  .team-alt-color {
+    color: var(--team-alt-color);
+  }
+  
+  .school-name {
+    font-size: 24px; /* Adjust the size as needed */
+    font-weight: bold; /* Optional: if you want the title to be bold */
+  }
+  
+  .school-nickname {
+    font-size: 18px; /* Adjust the size as needed */
+  }
+  
+
+  .add-school-card {
+    background: #e0e0e0; /* Light grey background to differentiate the 'Add' card */
+    border: 2px dashed #9e9e9e; /* Dashed border for a 'placeholder' look */
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .add-school-card:hover {
+    background: #bdbdbd; /* Darker background on hover for interaction feedback */
+  }
+  
+  .add-school-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .add-icon {
+    font-size: 64px; /* Large '+' icon size */
+    color: #757575; /* Icon color */
+  }
+  
+  /* Adjust the existing .team-logo class to avoid affecting the 'Add School' logo */
+  .team-logo:not(.add-school-logo) {
+    /* Other styles remain the same */
+  }
+  
+  /* Add your dynamic color styling here */
+  .team-primary-color:not(.add-school-card) {
+    background-color: var(--team-primary-color);
+  }
+  
+  .team-alt-color:not(.add-school-card) {
+    color: var(--team-alt-color);
+  }
+  
