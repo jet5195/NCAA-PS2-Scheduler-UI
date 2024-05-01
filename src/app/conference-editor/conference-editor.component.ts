@@ -18,7 +18,6 @@ export class ConferenceEditorComponent implements OnInit {
   selectedSchool!: School;
   conferences: Conference[] = [];
   schools: School[] = [];
-  conferenceSchools?: School[];
   selectedConference!: Conference;
 
   ngOnInit(){
@@ -28,12 +27,6 @@ export class ConferenceEditorComponent implements OnInit {
 
     this.dataService.getSchools().subscribe(data => {
       this.schools = data;
-    });
-  }
-
-  getSchoolsByConference(){
-    this.dataService.getSchoolsByConference(this.selectedConference.name).subscribe(data => {
-      this.conferenceSchools = data;
     });
   }
 }

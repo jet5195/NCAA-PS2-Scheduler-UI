@@ -115,9 +115,9 @@ export class DataService {
     return this.http.get<Conference[]>(`${this.baseUrl}/conferences`, { headers: this.headers });
   }
 
-  getSchoolsByConference(name: string): Observable<School[]> {
-    return this.http.get<School[]>(`${this.baseUrl}/conferences/${name}/schools`, { headers: this.headers });
-  }
+  // getSchoolsByConference(name: string): Observable<School[]> {
+  //   return this.http.get<School[]>(`${this.baseUrl}/conferences/${name}/schools`, { headers: this.headers });
+  // }
 
   getSuggestedOpponent(tgid: number): Observable<SuggestedGameResponse> {
     return this.http.get<SuggestedGameResponse>(`${this.baseUrl}/schools/${tgid}/suggest-game`);

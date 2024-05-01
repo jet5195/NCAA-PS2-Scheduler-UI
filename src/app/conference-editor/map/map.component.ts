@@ -14,7 +14,6 @@ echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
 })
 export class MapComponent implements OnChanges {
   @Input() conference!: Conference;
-  @Input() conferenceSchools!: School[];
   private isViewInit: boolean = false;
   chartOptions;
 
@@ -48,7 +47,7 @@ export class MapComponent implements OnChanges {
         width: 2
       }
     });
-    const statesWithSchools = new Set(this.conferenceSchools.map(school => school.state));
+    const statesWithSchools = new Set(this.conference.schools.map(school => school.state));
     this.chartOptions = {
       tooltip: {
         trigger: 'item',

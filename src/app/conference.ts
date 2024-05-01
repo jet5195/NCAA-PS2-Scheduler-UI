@@ -1,3 +1,5 @@
+import { School } from "./school";
+
 export interface Conference {
     name: string;
     divisions: string[];
@@ -9,4 +11,5 @@ export interface Conference {
     numOfSchools: number;
     fbs: boolean;
     conferenceID: number;
+    schools: School[];
 }
