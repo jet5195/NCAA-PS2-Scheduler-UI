@@ -1,5 +1,5 @@
-<mat-grid-list cols="4" rowHeight="200px" gutterSize="10px">
-  <mat-grid-tile *ngFor="let school of conferenceSchools" [style.--team-primary-color]="school.color" [style.--team-alt-color]="school.altColor">
+<mat-grid-list cols="4" rowHeight="100px" gutterSize="10px">
+  <mat-grid-tile *ngFor="let school of conference.schools" [style.--team-primary-color]="school.color" [style.--team-alt-color]="school.altColor">
     <mat-card class="team-card team-primary-color">
       <mat-card-header>
         <div mat-card-avatar class="team-logo" [ngStyle]="{'background-image': 'url(' + school.logo + ')'}"></div>

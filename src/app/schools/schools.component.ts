@@ -10,49 +10,53 @@ import { Conference } from '../conference';
   styleUrls: ['./schools.component.css']
 })
 export class SchoolsComponent implements OnInit {
-  schools: School[] = [];
-  //for optimization
-  allSchools?: School[] = [];
+  allSchools: School[] = [];
   selectedSchool?: School;
   panelOpenState = false;
   conferences: Conference[] = [];
-  selectedConference: string = "All";
+  selectedConference?: Conference;
 
-  constructor(public dataService: DataService, private route: ActivatedRoute, private router: Router) { }
+  constructor(
+    public dataService: DataService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.selectedConference = params['conf'];
-      this.getSchoolsByConference();
-      this.allSchools = this.schools;
-      this.dataService.getConferenceList().subscribe((data: Conference[]) => {
-        console.log(data);
-        this.conferences = data;
+    this.dataService.getSchools().subscribe(data => {
+      this.allSchools = data;
+      this.initializeConferences();
+    });
+  }
+
+  initializeConferences(): void {
+    this.dataService.getConferenceList().subscribe((data: Conference[]) => {
+      let allConf = {} as Conference;
+      allConf.name = 'All';
+      allConf.schools = this.allSchools;
+      this.conferences = [
+        allConf,
+        ...data
+      ];
+      
+      this.route.params.subscribe(params => {
+        const confName = params['conf'];
+        this.selectedConference = this.conferences.find(conference => conference.name === confName) || this.conferences[0];
       });
     });
   }
 
-  getSchoolsByConference(): void {
-    if (this.allSchools!.length > 0 && this.selectedConference === 'All') {
-      this.schools = this.allSchools!;
-    }
-    else {
-      this.dataService.getSchoolsByConference(this.selectedConference!).subscribe((data: School[]) => {
-        console.log(data);
-        this.schools = data;
-        if (this.selectedConference === "All") {
-          this.allSchools = data;
-        }
-      });
-    }
+  findConferenceByName(name: string): Conference | undefined {
+    return this.conferences.find(conference => conference.name === name);
   }
 
   onSelect(school: School): void {
     this.selectedSchool = school;
   }
 
-  updateRoute() {
-    this.router.navigate(['/schools/' + this.selectedConference]);
+  updateRoute(): void {
+    if (this.selectedConference) {
+      this.router.navigate(['/schools/' + this.selectedConference.name]);
+    }
   }
-
 }

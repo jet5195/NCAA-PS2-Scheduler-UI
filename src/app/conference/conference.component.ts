@@ -15,7 +15,6 @@ export class ConferenceComponent implements OnInit {
   @Input() conference!: Conference;
   @Output() updated = new EventEmitter<boolean>();
 
-  confSchools: School[] = [];
   divSchools: School[][] = [];
 
   constructor(public dataService: DataService, private snackBarService: SnackBarService) { }
@@ -30,16 +29,6 @@ export class ConferenceComponent implements OnInit {
     if (this.conference.divisions !== null) {
       this.getSchoolsByDivision();
     }
-    else {
-      this.getSchoolsByConference();
-    }
-  }
-
-  getSchoolsByConference(): void {
-    this.dataService.getSchoolsByConference(this.conference.name).subscribe((data: School[]) => {
-      console.log(data);
-      this.confSchools = data;
-    });
   }
 
   getSchoolsByDivision(): void {

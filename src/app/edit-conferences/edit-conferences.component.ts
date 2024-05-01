@@ -29,15 +29,6 @@ export class EditConferencesComponent implements OnInit {
     });
   }
 
-  getSchoolsByConference(conference: string): School[] {
-    var schools!: School[];
-      this.dataService.getSchoolsByConference(conference).subscribe((data: School[]) => {
-        console.log(data);
-        schools = data;
-      });
-      return schools;
-  }
-
   onUpdated(updated: boolean) {
     this.children.forEach(child => {
       child.loadSchools();

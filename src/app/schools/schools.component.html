@@ -4,18 +4,15 @@
             <mat-label>Conference</mat-label>
             <mat-select [(ngModel)]="selectedConference" class="conference-select2" name="conference"
                 (selectionChange)="updateRoute()">
-                <mat-option [value]="'All'">
-                    All
-                </mat-option>
-                <mat-option *ngFor="let conference of conferences" [value]="conference.name">
+                <mat-option *ngFor="let conference of conferences" [value]="conference">
                     {{conference.name}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
     </div>
-    <!-- <mat-grid-list class="school-grid-list" cols="3" rowHeight="1:1"> -->
     <mat-accordion class="schools-accordian">
-        <app-school-detail class="school-detail" *ngFor="let school of schools" [school]=this.school
-            [class.selected]="school === selectedSchool" (click)="onSelect(school)"></app-school-detail>
+        <app-school-detail class="school-detail" *ngFor="let school of selectedConference?.schools" [school]="school"
+            [class.selected]="school === selectedSchool" (click)="onSelect(school)">
+        </app-school-detail>
     </mat-accordion>
 </div>

@@ -30,7 +30,7 @@
             </div>
             <!--  -->
             <div class="school-card-container" *ngIf="conference.divisions === null">
-                    <mat-card *ngFor="let school of confSchools" (click)="onClick(this.school)"
+                    <mat-card *ngFor="let school of conference.schools" (click)="onClick(this.school)"
                         [class.selected-school-card]="dataService.getSelectedSchool() !== undefined && this.school.tgid === dataService.getSelectedSchool()!.tgid"
                         class="school-card"
                         style="background-color: {{school.color}}; border-bottom: solid; border-bottom-color: {{school.altColor}}; color: {{getContrast(school.color)}}">
