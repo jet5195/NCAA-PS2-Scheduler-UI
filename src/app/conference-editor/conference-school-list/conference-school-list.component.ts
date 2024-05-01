@@ -27,9 +27,15 @@ export class ConferenceSchoolListComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       if(result != 'canceled'){
-        this.conference.schools.push(result);
+        this.moveSchool(result);
       }
     });
+  }
+
+  moveSchool(school: School) {
+    const currentConf = school.conference;
+    currentConf.schools = currentConf.schools.filter(s => school.tgid !== s.tgid);
+    this.conference.schools.push(school);
   }
 
   isDark(color: string): boolean {
