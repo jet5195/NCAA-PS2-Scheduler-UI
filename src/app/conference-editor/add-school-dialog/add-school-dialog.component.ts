@@ -1,5 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
 
 @Component({
@@ -9,7 +10,8 @@ import { School } from 'src/app/school';
   styleUrl: './add-school-dialog.component.css'
 })
 export class AddSchoolDialogComponent {
-  availableSchools: School[]; // Replace School with your actual school type
+  availableSchools: School[];
+  conference: Conference;
   selectedSchool: School;
 
   constructor(

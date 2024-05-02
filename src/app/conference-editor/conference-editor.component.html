@@ -11,9 +11,9 @@
               </mat-option>
             </mat-select>
         </mat-form-field>
-        <mat-tab-group *ngIf="selectedConference">
+        <mat-tab-group *ngIf="selectedConference" dynamicHeight>
           <mat-tab label="Members">
-            <app-conference-school-list [conference]="selectedConference" [schools]="schools"></app-conference-school-list>
+            <app-conference-school-list [conference]="selectedConference" [schools]="schools" [conferences]="conferences"></app-conference-school-list>
           </mat-tab>
           <mat-tab label="Map">
             <div>

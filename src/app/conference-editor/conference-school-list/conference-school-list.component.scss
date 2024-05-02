@@ -1,0 +1,95 @@
+mat-grid-list {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+mat-grid-tile {
+  overflow: visible;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Shared transition for hover effects */
+%hover-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Team card styles */
+.team-card {
+  @extend %hover-transition;
+  height: 100%;
+  width: 100%;
+  background: var(--team-primary-color);
+  color: var(--team-alt-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+}
+
+/* Team logo styles */
+.team-logo {
+  background-size: contain;
+  overflow: visible !important;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Content and actions */
+.team-content,
+.team-actions {
+  padding: 15px;
+  text-align: center;
+}
+
+.team-actions {
+  margin-top: auto;
+}
+
+/* Dynamic color styling */
+.team-primary-color {
+  background-color: var(--team-primary-color);
+}
+
+.team-alt-color {
+  color: var(--team-alt-color);
+}
+
+/* School name and nickname */
+.school-name {
+  font-size: 22px; // Adjust the size as needed
+  font-weight: bold; // Optional: if you want the title to be bold
+}
+
+.school-nickname {
+  font-size: 18px; // Adjust the size as needed
+}
+
+/* Add school card styles */
+.add-school-card {
+  @extend %hover-transition;
+  background: #e0e0e0; // Light grey background to differentiate the 'Add' card
+  border: 2px dashed #9e9e9e; // Dashed border for a 'placeholder' look
+
+  &:hover {
+    background: #bdbdbd; // Darker background on hover for interaction feedback
+  }
+}
+
+.add-school-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-icon {
+  font-size: 64px; // Large '+' icon size
+  color: #757575; // Icon color
+}
