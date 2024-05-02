@@ -6,7 +6,6 @@ export interface School {
     nickname: string;
     state: string;
     conferenceName: string;
-    conference: Conference;
     division: string;
     ncaaDivision: string;
     color: string;

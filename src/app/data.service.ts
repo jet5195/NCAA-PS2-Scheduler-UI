@@ -241,4 +241,8 @@ export class DataService {
     return this.http.post<any>(`${this.baseUrl}/schedule/swap-schedule/${tgid1}/${tgid2}`, { headers: this.headers });
   }
 
+  saveConferences(conferences: Conference[]): Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}/conferences`, conferences, { headers: this.headers});
+  }
+
 }

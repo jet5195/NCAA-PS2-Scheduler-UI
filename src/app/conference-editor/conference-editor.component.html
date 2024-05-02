@@ -1,11 +1,15 @@
 <mat-card>
-    <mat-card-header>
+    <mat-card-header class="edit-conference-card-header">
       <mat-card-title>Edit Conference</mat-card-title>
+      <div>
+        <button mat-button (click)="cancel()">Cancel</button>
+        <button mat-button (click)="save()">Save</button>
+      </div>
     </mat-card-header>
     <mat-card-content>
         <mat-form-field>
             <mat-label>Conference</mat-label>
-            <mat-select [(ngModel)]="selectedConference">
+            <mat-select [(ngModel)]="selectedConference" [compareWith]="compareConferences">
               <mat-option *ngFor="let conference of conferences" [value]="conference">
                   {{conference.name}}
               </mat-option>
@@ -13,7 +17,7 @@
         </mat-form-field>
         <mat-tab-group *ngIf="selectedConference" dynamicHeight>
           <mat-tab label="Members">
-            <app-conference-school-list [conference]="selectedConference" [schools]="schools" [conferences]="conferences"></app-conference-school-list>
+            <app-conference-school-list (conferenceUpdated)="conferenceUpdated($event)" [conference]="selectedConference" [schools]="schools" [conferences]="conferences"></app-conference-school-list>
           </mat-tab>
           <mat-tab label="Map">
             <div>

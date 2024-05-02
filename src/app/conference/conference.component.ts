@@ -63,41 +63,41 @@ export class ConferenceComponent implements OnInit {
     if (this.dataService.getSelectedSchool() !== undefined) {
       if (this.dataService.getSelectedSchool() === selectedSchool) {
         this.dataService.setSelectedSchool(undefined);
-      } else if (this.dataService.getSelectedSchool()?.conference.name === selectedSchool.conference.name && this.dataService.getSelectedSchool()?.division === selectedSchool.division) {
+      } else if (this.dataService.getSelectedSchool()?.conferenceName === selectedSchool.conferenceName && this.dataService.getSelectedSchool()?.division === selectedSchool.division) {
         this.dataService.setSelectedSchool(selectedSchool);
       }
       else {
-        this.swap(selectedSchool)
+        // this.swap(selectedSchool)
       }
     } else {
       this.dataService.setSelectedSchool(selectedSchool);
     }
   }
 
-  swap(selectedSchool: School): void {
-    let tempConf: Conference;
-    let tempDiv: string;
-    let tempNcaaDiv: string;
+  // swap(selectedSchool: School): void {
+  //   let tempConf: Conference;
+  //   let tempDiv: string;
+  //   let tempNcaaDiv: string;
 
-    tempConf = selectedSchool.conference;
-    tempDiv = selectedSchool.division;
-    tempNcaaDiv = selectedSchool.ncaaDivision;
+  //   tempConf = selectedSchool.conference;
+  //   tempDiv = selectedSchool.division;
+  //   tempNcaaDiv = selectedSchool.ncaaDivision;
 
-    selectedSchool.conference = this.dataService.getSelectedSchool()!.conference;
-    selectedSchool.division = this.dataService.getSelectedSchool()!.division;
-    selectedSchool.ncaaDivision = this.dataService.getSelectedSchool()!.ncaaDivision;
+  //   selectedSchool.conference = this.dataService.getSelectedSchool()!.conference;
+  //   selectedSchool.division = this.dataService.getSelectedSchool()!.division;
+  //   selectedSchool.ncaaDivision = this.dataService.getSelectedSchool()!.ncaaDivision;
 
-    this.dataService.getSelectedSchool()!.conference = tempConf;
-    this.dataService.getSelectedSchool()!.division = tempDiv;
-    this.dataService.getSelectedSchool()!.ncaaDivision = tempNcaaDiv;
+  //   this.dataService.getSelectedSchool()!.conference = tempConf;
+  //   this.dataService.getSelectedSchool()!.division = tempDiv;
+  //   this.dataService.getSelectedSchool()!.ncaaDivision = tempNcaaDiv;
 
-    this.dataService.swapSchools(this.dataService.getSelectedSchool()!.tgid, selectedSchool.tgid).subscribe((data: any) => {
-      console.log(data);
-      this.updated.emit(true);
-      this.dataService.setSelectedSchool(undefined);
-      //this.loadSchools();
-    })
-  }
+  //   this.dataService.swapSchools(this.dataService.getSelectedSchool()!.tgid, selectedSchool.tgid).subscribe((data: any) => {
+  //     console.log(data);
+  //     this.updated.emit(true);
+  //     this.dataService.setSelectedSchool(undefined);
+  //     //this.loadSchools();
+  //   })
+  // }
 
   getContrast: any = function (hexcolor: string) {
     if (hexcolor === '') {

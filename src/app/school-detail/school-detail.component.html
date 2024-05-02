@@ -1,35 +1,34 @@
 <!-- <div *ngIf="school"> -->
-            <mat-expansion-panel *ngIf="school" class="school-expansion-panel"
-             style="background-color: {{school.color}}; border-bottom: solid;
-             border-bottom-color: {{school.altColor}};" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                    <mat-panel-title style=" color: {{getContrast(school.color)}};">
-                        {{school.name}} {{school.nickname}}
-                    </mat-panel-title>
-                    <!-- <mat-panel-description>
+<mat-expansion-panel *ngIf="school" class="school-expansion-panel" style="background-color: {{school.color}}; border-bottom: solid;
+             border-bottom-color: {{school.altColor}};" (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false">
+    <mat-expansion-panel-header>
+        <mat-panel-title style=" color: {{getContrast(school.color)}};">
+            {{school.name}} {{school.nickname}}
+        </mat-panel-title>
+        <!-- <mat-panel-description>
                             <mat-icon></mat-icon>
                         </mat-panel-description> -->
-                </mat-expansion-panel-header>
-                <div class="expansion-panel-data">
-                    <div class="school-detail-logo-container">
-                        <img *ngIf="school" class="school-detail-logo" src="{{school.logo}}">
-                    </div>
-                    <div class="school-quick-info" style=" color: {{getContrast(school.color)}};">
-                        <div><span>Division: </span>{{school.ncaaDivision}}</div>
-                        <div *ngIf="school.conference">
-                            <span>Conference: </span>
-                            {{school.conference.name}}
-                        </div>
-                        <div *ngIf="school.division">
-                             <span>Division: </span>{{school.division}}
-                        </div>
-                        <div><span>State: </span>{{school.state}}</div>
-                    </div>
-                </div>
-                <!-- <button mat-raised-button color="primary" routerLink="/school/{{school.tgid}}/schedule">Schedule</button> -->
-                <button mat-fab style="background-color: {{school.altColor}};" class="schedule-button" routerLink="/school/{{school.tgid}}/schedule">
-                    <mat-icon style=" color: {{getContrast(school.altColor)}};">calendar_today</mat-icon>
-                </button>
-            </mat-expansion-panel>
+    </mat-expansion-panel-header>
+    <div class="expansion-panel-data">
+        <div class="school-detail-logo-container">
+            <img *ngIf="school" class="school-detail-logo" src="{{school.logo}}">
+        </div>
+        <div class="school-quick-info" style=" color: {{getContrast(school.color)}};">
+            <div><span>Division: </span>{{school.ncaaDivision}}</div>
+            <span>Conference: </span>
+            {{school.conferenceName}}
+            <div *ngIf="school.division">
+                <span>Division: </span>{{school.division}}
+            </div>
+            <div><span>State: </span>{{school.state}}</div>
+        </div>
+    </div>
+    <!-- <button mat-raised-button color="primary" routerLink="/school/{{school.tgid}}/schedule">Schedule</button> -->
+    <button mat-fab style="background-color: {{school.altColor}};" class="schedule-button"
+        routerLink="/school/{{school.tgid}}/schedule">
+        <mat-icon style=" color: {{getContrast(school.altColor)}};">calendar_today</mat-icon>
+    </button>
+</mat-expansion-panel>
 
 <!-- </div> -->

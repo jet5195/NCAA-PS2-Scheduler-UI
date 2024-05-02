@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
@@ -19,12 +19,16 @@ export class ConferenceSchoolListComponent {
 
   }
 
+  @Output() conferenceUpdated = new EventEmitter<Conference>();
+
   openAddSchoolDialog() {
     const dialogRef = this.dialog.open(AddSchoolDialogComponent, {
       width: '250px',
-      data: { availableSchools: this.schools.filter(school =>
-         !this.conference.schools.some(confSchool =>
-           confSchool.tgid === school.tgid)) } // Pass the list of schools
+      data: {
+        availableSchools: this.schools.filter(school =>
+          !this.conference.schools.some(confSchool =>
+            confSchool.tgid === school.tgid))
+      } // Pass the list of schools
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -39,7 +43,6 @@ export class ConferenceSchoolListComponent {
     const currentConfName: string = school.conferenceName;
     const currentConf: Conference = this.conferences.find(c => c.name === currentConfName);
 
-    school.conference = this.conference;
     school.conferenceName = this.conference.name;
 
     currentConf.schools = currentConf.schools.filter(s => school.tgid !== s.tgid);
@@ -48,6 +51,7 @@ export class ConferenceSchoolListComponent {
     if (index !== -1) {
       currentConf.schools.splice(index, 1);
     }
+    this.conferenceUpdated.emit(this.conference);
   }
 
   isDark(color: string): boolean {

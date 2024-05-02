@@ -7,7 +7,7 @@ import { School } from 'src/app/school';
   selector: 'app-add-school-dialog',
   standalone: false,
   templateUrl: './add-school-dialog.component.html',
-  styleUrl: './add-school-dialog.component.css'
+  styleUrl: './add-school-dialog.component.scss'
 })
 export class AddSchoolDialogComponent {
   availableSchools: School[];
@@ -20,4 +20,22 @@ export class AddSchoolDialogComponent {
   ) {
     this.availableSchools = data.availableSchools;
   }
+
+  filteredSchools: School[] = [];
+
+  filterSchools(event) {
+    const searchValue = event.value;
+    if (!searchValue) {
+      this.filteredSchools = this.availableSchools;
+    } else {
+      this.filteredSchools = this.availableSchools.filter(school =>
+        school.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }
+  }
+
+  ngOnInit() {
+    this.filteredSchools = this.availableSchools; // Initialize filtered schools
+  }
+
 }
