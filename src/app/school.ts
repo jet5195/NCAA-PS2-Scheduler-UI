@@ -12,5 +12,7 @@ export interface School {
     altColor: string;
     logo: string;
     userTeam: boolean;
+    rivals: number[];//tgid
+    xDivRival: number;//tgid
 
 }
