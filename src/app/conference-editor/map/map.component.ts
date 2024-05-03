@@ -3,6 +3,7 @@ import { MapChart } from 'echarts/charts';
 import { TooltipComponent, VisualMapComponent } from 'echarts/components';
 import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
+import { map } from 'rxjs/operators';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
 echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
@@ -47,51 +48,56 @@ export class MapComponent implements OnChanges {
         width: 2
       }
     });
-    const statesWithSchools = new Set(this.conference.schools.map(school => school.state));
+    // const statesWithSchools = new Set(this.conference.schools.map(school => school.state));
+
     this.chartOptions = {
       tooltip: {
         trigger: 'item',
         formatter: '{b}'
       },
       visualMap: {
-        show: false, // Set to false to hide the visualMap component
+        show: false,
         min: 0,
         max: 1,
         calculable: true,
         inRange: {
-          color: ['#ccc', '#f00'] // Non-highlighted color and highlighted color
+          color: ['#ccc', '#f00']
         }
       },
-      series: [{
-        type: 'map',
+      geo: {
         map: 'USA',
-        data: usaMap.features.map(feature => {
-          const isHighlighted = statesWithSchools.has(feature.properties.name);
-          if (isHighlighted) {
-            console.log(feature.properties.name);
-          }
-          return {
-            name: feature.properties.name,
-            value: isHighlighted ? 1 : 0 // 1 to highlight, 0 to not
-          };
-        }),
-        // Define the visual aspects for highlighted/non-highlighted states
-        itemStyle: {
-          normal: {
-            borderColor: '#fff',
-            areaColor: '#ccc',
+        roam: true,
+        zoom: 1.2,
+        // center
+      },
+      series: [
+        {
+          type: 'scatter',
+          map: 'USA',
+          coordinateSystem: 'geo',
+          layout: 'none',
+          data: this.conference.schools.map(school => ({
+            name: school.name,
+            value: [school.longitude, school.latitude],
+            symbol: 'image://' + school.logo,
+            symbolSize: [20, 20]
+          })),
+          label: {
+            normal: {
+              show: false
+            },
+            emphasis: {
+              show: true
+            }
           },
-          emphasis: {
-            areaColor: '#f00', // Highlight color
-            borderWidth: 1,
-            borderColor: '#fff',
-            label: {
-              show: true,
-              color: '#fff'
+          itemStyle: {
+            normal: {
+              borderColor: '#FFF',
+              areaColor: '#F06C00'
             }
           }
-        }
-      }]
+        }]
     };
   }
 }
+
