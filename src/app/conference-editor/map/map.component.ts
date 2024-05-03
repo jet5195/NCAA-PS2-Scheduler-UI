@@ -48,7 +48,7 @@ export class MapComponent implements OnChanges {
         width: 2
       }
     });
-    // const statesWithSchools = new Set(this.conference.schools.map(school => school.state));
+    const statesWithSchools = new Set(this.conference.schools.map(school => school.state));
 
     this.chartOptions = {
       tooltip: {
@@ -56,12 +56,12 @@ export class MapComponent implements OnChanges {
         formatter: '{b}'
       },
       visualMap: {
-        show: false,
+        show: true,
         min: 0,
         max: 1,
         calculable: true,
         inRange: {
-          color: ['#ccc', '#f00']
+          color: ['#eee', '#b6d8df']
         }
       },
       geo: {
@@ -75,27 +75,25 @@ export class MapComponent implements OnChanges {
           type: 'scatter',
           map: 'USA',
           coordinateSystem: 'geo',
-          layout: 'none',
           data: this.conference.schools.map(school => ({
             name: school.name,
             value: [school.longitude, school.latitude],
             symbol: 'image://' + school.logo,
-            symbolSize: [20, 20]
-          })),
-          label: {
-            normal: {
-              show: false
-            },
-            emphasis: {
-              show: true
-            }
-          },
-          itemStyle: {
-            normal: {
-              borderColor: '#FFF',
-              areaColor: '#F06C00'
-            }
-          }
+            symbolSize: [30, 30]
+          }))
+        },
+        // Map series for highlighting states
+        {
+          name: 'States',
+          type: 'map',
+          map: 'USA',
+          geoIndex: 0,
+          data: usaMap.features.map(feature => {
+            return {
+              name: feature.properties.name,
+              value: statesWithSchools.has(feature.properties.name) ? 1 : 0 // 1 to highlight, 0 to not
+            };
+          })
         }]
     };
   }
