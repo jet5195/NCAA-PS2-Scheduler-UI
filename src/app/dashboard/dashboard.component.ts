@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import * as fileSaver from 'file-saver';
 import { SnackBarService } from '../snackBar.service';
 import { Conference } from '../conference';

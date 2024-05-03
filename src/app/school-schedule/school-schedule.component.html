@@ -152,7 +152,7 @@
         <!-- <h4>Select Opponent</h4> -->
         <mat-form-field appearance="fill" class="add-game-dropdown">
             <mat-label>Select Opponent</mat-label>
-            <mat-select [(value)]="selectedOpponent" [compareWith]="compareSchools" name="availableOpponent">
+            <mat-select [(value)]="selectedOpponent" [compareWith]="compareService.compareSchools" name="availableOpponent">
                 <mat-option *ngFor="let availableOpponent of availableOpponents" [value]="availableOpponent">
                     {{availableOpponent.name}}
                     <div *ngIf="availableOpponent.conferenceName === school.conferenceName"

@@ -1,12 +1,12 @@
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddGameRequest } from './addGameRequest';
-import { Bowl } from './bowl';
-import { Conference } from './conference';
-import { Game } from './game';
-import { School } from './school';
-import { SuggestedGameResponse } from './suggestedGameResponse';
+import { AddGameRequest } from '../addGameRequest';
+import { Bowl } from '../bowl';
+import { Conference } from '../conference';
+import { Game } from '../game';
+import { School } from '../school';
+import { SuggestedGameResponse } from '../suggestedGameResponse';
 
 @Injectable()
 export class DataService {

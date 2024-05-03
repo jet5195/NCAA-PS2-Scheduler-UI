@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { School } from '../school';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { Conference } from '../conference';
 import { SnackBarService } from '../snackBar.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { CompareService } from '../services/compare.service';
 
 @Component({
   selector: 'app-conference-editor',
@@ -19,7 +20,7 @@ export class ConferenceEditorComponent implements OnInit {
   schools: School[] = [];
   selectedConference!: Conference;
 
-  constructor(private dataService: DataService, private snackBarService: SnackBarService) {}
+  constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService) {}
 
   ngOnInit() {
     this.loadData();
@@ -79,15 +80,5 @@ export class ConferenceEditorComponent implements OnInit {
    */
   conferenceUpdated(conf: Conference) {
     this.selectedConference = { ...conf };
-  }
-
-  /**
-   * Compares two conferences for equality.
-   * @param c1 The first conference.
-   * @param c2 The second conference.
-   * @returns True if the conferences are equal, false otherwise.
-   */
-  compareConferences(c1: Conference, c2: Conference): boolean {
-    return c1 && c2 ? c1.name === c2.name : c1 === c2;
   }
 }

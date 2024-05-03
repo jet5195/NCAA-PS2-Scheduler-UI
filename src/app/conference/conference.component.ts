@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 // import { EventEmitter } from 'stream';
 import { Conference } from '../conference';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { School } from '../school';
 import { SnackBarService } from '../snackBar.service';
 

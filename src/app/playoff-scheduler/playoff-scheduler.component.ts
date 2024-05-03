@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { School } from '../school';
+import { CompareService } from '../services/compare.service';
 
 @Component({
   selector: 'app-playoff-scheduler',
@@ -68,7 +69,7 @@ export class PlayoffSchedulerComponent implements OnInit {
 
   */
 
-  constructor(private dataService: DataService, private route: ActivatedRoute) { }
+  constructor(private dataService: DataService, private route: ActivatedRoute, public compareService: CompareService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -94,14 +95,4 @@ export class PlayoffSchedulerComponent implements OnInit {
       this.randomizeSelectedSchools();
     })
   }
-
-
-  compareSchools(s1: School, s2: School): boolean {
-    if (s1.tgid === s2.tgid) {
-      return true;
-    }
-    return false;
-  }
-
-
 }

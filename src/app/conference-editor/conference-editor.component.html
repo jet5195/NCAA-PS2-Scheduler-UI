@@ -9,7 +9,7 @@
     <mat-card-content>
         <mat-form-field>
             <mat-label>Conference</mat-label>
-            <mat-select [(ngModel)]="selectedConference" [compareWith]="compareConferences">
+            <mat-select [(ngModel)]="selectedConference" [compareWith]="compareService.compareConferences">
               <mat-option *ngFor="let conference of conferences" [value]="conference">
                   {{conference.name}}
               </mat-option>

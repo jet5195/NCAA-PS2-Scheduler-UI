@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { Game } from '../game';
 import { Location } from '@angular/common';
 import { School } from '../school';
@@ -9,6 +9,7 @@ import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToT
 import { DayOfWeekToStringPipe } from '../pipes/dayOfWeekToString.pipe';
 import { AddGameRequest } from '../addGameRequest';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { CompareService } from '../services/compare.service';
 
 @Component({
   selector: 'app-edit-game',
@@ -36,7 +37,8 @@ export class EditGameComponent implements OnInit {
   validate: boolean = true;
 
   constructor(private data: DataService, private route: ActivatedRoute, private location: Location,
-    private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe) {
+    private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe,
+  public compareService: CompareService) {
      }
 
   ngOnInit(): void {
@@ -255,27 +257,6 @@ export class EditGameComponent implements OnInit {
     let tempList = this.availableHomeSchools;
     this.availableHomeSchools = this.availableAwaySchools;
     this.availableAwaySchools = tempList;
-  }
-
-  compareSchools(s1: School, s2: School): boolean {
-    if (s1.tgid === s2.tgid) {
-      return true;
-    }
-    return false;
-  }
-
-  compareDays(d1: any, d2: any): boolean {
-    if (d1.key === d2.key) {
-      return true;
-    }
-    return false;
-  }
-
-  compareWeeks(w1: number, w2: number): boolean {
-    if (w1 === w2) {
-      return true;
-    }
-    return false;
   }
 
   getAllWeeks(): number[] {

@@ -39,7 +39,7 @@ import { PlayoffComponent } from './playoff/playoff.component';
 import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler.component';
 import { BowlsComponent } from './bowls/bowls.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { DataService } from './data.service';
+import { DataService } from './services/data.service';
 import { ConferenceEditorComponent } from './conference-editor/conference-editor.component';
 import { MatList, MatListItem, MatListModule } from '@angular/material/list';
 import { NgxEchartsModule } from 'ngx-echarts';
