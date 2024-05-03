@@ -20,24 +20,16 @@ export class CompareService {
     return c1 && c2 ? c1.name === c2.name : c1 === c2;
   }
 
-  compareSchools(s1: School, s2: School): boolean {
-    if (s1.tgid === s2.tgid) {
-      return true;
-    }
-    return false;
+  compareSchools(school1: School, school2: School): boolean {
+    return school1.tgid === school2.tgid;
   }
 
+
   compareDays(d1: any, d2: any): boolean {
-    if (d1.key === d2.key) {
-      return true;
-    }
-    return false;
+    return d1.key === d2.key;
   }
 
   compareWeeks(w1: number, w2: number): boolean {
-    if (w1 === w2) {
-      return true;
-    }
-    return false;
+    return w1 === w2;
   }
 }
