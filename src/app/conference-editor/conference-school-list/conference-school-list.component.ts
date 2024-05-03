@@ -28,7 +28,7 @@ export class ConferenceSchoolListComponent {
         availableSchools: this.schools.filter(school =>
           !this.conference.schools.some(confSchool =>
             confSchool.tgid === school.tgid))
-      } // Pass the list of schools
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
