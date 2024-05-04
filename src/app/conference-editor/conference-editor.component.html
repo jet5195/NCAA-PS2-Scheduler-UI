@@ -16,6 +16,9 @@
             </mat-select>
         </mat-form-field>
         <mat-tab-group *ngIf="selectedConference" dynamicHeight>
+          <mat-tab label="Info">
+            <app-conference-info [conference]="selectedConference"></app-conference-info>
+          </mat-tab>
           <mat-tab label="Members">
             <app-conference-school-list (conferenceUpdated)="conferenceUpdated($event)" [conference]="selectedConference" [schools]="schools" [conferences]="conferences"></app-conference-school-list>
           </mat-tab>
@@ -27,4 +30,3 @@
         </mat-tab-group>
     </mat-card-content>
   </mat-card>
-  

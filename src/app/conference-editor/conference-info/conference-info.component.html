@@ -1,0 +1,35 @@
+<form [formGroup]="conferenceForm" class="edit-form">
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Conference ID</mat-label>
+    <input matInput formControlName="conferenceId">
+  </mat-form-field>
+
+  <div class="radio-group">
+    <mat-radio-group formControlName="fbs">
+      <mat-radio-button [value]="true">FBS</mat-radio-button>
+      <mat-radio-button [value]="false">FCS</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-checkbox formControlName="powerConf">Power Conference</mat-checkbox>
+
+  <mat-form-field>
+    <mat-label>Number of Conference Games</mat-label>
+    <input matInput formControlName="numOfConfGames">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Conference Games Start Week</mat-label>
+    <input matInput formControlName="confGamesStartWeek">
+  </mat-form-field>
+
+  <div class="button-container">
+    <button mat-button color="primary" type="submit">Save</button>
+    <button mat-button type="button">Cancel</button>
+  </div>
+</form>

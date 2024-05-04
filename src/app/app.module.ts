@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -47,6 +47,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MapComponent } from './conference-editor/map/map.component';
 import { ConferenceSchoolListComponent } from './conference-editor/conference-school-list/conference-school-list.component';
 import { AddSchoolDialogComponent } from './conference-editor/add-school-dialog/add-school-dialog.component';
+import {ConferenceInfoComponent} from "./conference-editor/conference-info/conference-info.component";
+import {MatCheckbox} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -71,7 +73,8 @@ import { AddSchoolDialogComponent } from './conference-editor/add-school-dialog/
     ConferenceEditorComponent,
     MapComponent,
     ConferenceSchoolListComponent,
-    AddSchoolDialogComponent
+    AddSchoolDialogComponent,
+    ConferenceInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -100,7 +103,9 @@ import { AddSchoolDialogComponent } from './conference-editor/add-school-dialog/
     MatTabsModule,
     NgxEchartsModule.forRoot({
       echarts: () => import('echarts')
-    })
+    }),
+    ReactiveFormsModule,
+    MatCheckbox
   ],
   providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe, ConferenceNamePipe, ConferenceLogoPipe, DataService],
   bootstrap: [AppComponent]
