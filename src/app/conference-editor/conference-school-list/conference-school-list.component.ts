@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, Output, Renderer2} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Conference} from 'src/app/conference';
 import {School} from 'src/app/school';
@@ -14,12 +14,32 @@ export class ConferenceSchoolListComponent {
   @Input() conference!: Conference;
   @Input() schools!: School[];
   @Input() conferences!: Conference[];
+  @Output() conferenceUpdated: EventEmitter<Conference> = new EventEmitter<Conference>();
 
-  constructor(public dialog: MatDialog) {
+  public cols: number;
 
+  constructor(public dialog: MatDialog, private renderer: Renderer2) {
+    this.calculateColumns(window.innerWidth)
   }
 
-  @Output() conferenceUpdated = new EventEmitter<Conference>();
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.calculateColumns(event.target['innerWidth']);
+  }
+
+  calculateColumns(innerWidth: any) {
+    if (innerWidth < 800) {
+      this.cols = 1;
+    } else if (innerWidth < 1150) {
+      this.cols = 2;
+    } else if (innerWidth <= 1500) {
+      this.cols = 3;
+    } else {
+      this.cols = 4;
+    }
+    console.log(this.cols);
+  }
+
 
   openAddSchoolDialog() {
     const dialogRef = this.dialog.open(AddSchoolDialogComponent, {

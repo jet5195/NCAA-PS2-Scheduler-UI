@@ -19,6 +19,9 @@
       <mat-tab label="Info">
         <app-conference-info [conference]="selectedConference"></app-conference-info>
       </mat-tab>
+      <mat-tab label="Divisions">
+        <app-conference-divisions [conference]="selectedConference"></app-conference-divisions>
+      </mat-tab>
       <mat-tab label="Members">
         <app-conference-school-list (conferenceUpdated)="conferenceUpdated($event)" [conference]="selectedConference"
                                     [schools]="schools" [conferences]="conferences"></app-conference-school-list>

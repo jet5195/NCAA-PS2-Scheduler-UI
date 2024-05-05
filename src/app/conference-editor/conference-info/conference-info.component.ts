@@ -18,7 +18,9 @@ export class ConferenceInfoComponent implements OnChanges {
   ngOnChanges() {
     this.conferenceForm = this.fb.group({
       conferenceId: [this.conference.conferenceID],
-      name: [this.conference.shortName],
+      name: [this.conference.name],
+      shortName: [this.conference.shortName],
+      abbreviation: [this.conference.abbreviation],
       fbs: [this.conference.fbs],
       numOfConfGames: [this.conference.numOfConfGames],
       confGamesStartWeek: [this.conference.confGamesStartWeek],
