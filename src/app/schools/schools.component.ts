@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DataService } from '../services/data.service';
-import { School } from '../school';
-import { Conference } from '../conference';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {DataService} from '../services/data.service';
+import {School} from '../school';
+import {Conference} from '../conference';
 
 @Component({
   selector: 'app-schools',
@@ -20,7 +20,8 @@ export class SchoolsComponent implements OnInit {
     public dataService: DataService,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.dataService.getSchools().subscribe(data => {
@@ -32,22 +33,22 @@ export class SchoolsComponent implements OnInit {
   initializeConferences(): void {
     this.dataService.getConferenceList().subscribe((data: Conference[]) => {
       let allConf = {} as Conference;
-      allConf.name = 'All';
+      allConf.shortName = 'All';
       allConf.schools = this.allSchools;
       this.conferences = [
         allConf,
         ...data
       ];
-      
+
       this.route.params.subscribe(params => {
         const confName = params['conf'];
-        this.selectedConference = this.conferences.find(conference => conference.name === confName) || this.conferences[0];
+        this.selectedConference = this.conferences.find(conference => conference.shortName === confName) || this.conferences[0];
       });
     });
   }
 
   findConferenceByName(name: string): Conference | undefined {
-    return this.conferences.find(conference => conference.name === name);
+    return this.conferences.find(conference => conference.shortName === name);
   }
 
   onSelect(school: School): void {
@@ -56,7 +57,7 @@ export class SchoolsComponent implements OnInit {
 
   updateRoute(): void {
     if (this.selectedConference) {
-      this.router.navigate(['/schools/' + this.selectedConference.name]);
+      this.router.navigate(['/schools/' + this.selectedConference.shortName]);
     }
   }
 }

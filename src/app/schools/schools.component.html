@@ -1,18 +1,18 @@
 <div class="container">
-    <div class="conference-select-container">
-        <mat-form-field appearance="fill" class="conference-select">
-            <mat-label>Conference</mat-label>
-            <mat-select [(ngModel)]="selectedConference" class="conference-select2" name="conference"
-                (selectionChange)="updateRoute()">
-                <mat-option *ngFor="let conference of conferences" [value]="conference">
-                    {{conference.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-    </div>
-    <mat-accordion class="schools-accordian">
-        <app-school-detail class="school-detail" *ngFor="let school of selectedConference?.schools" [school]="school"
-            [class.selected]="school === selectedSchool" (click)="onSelect(school)">
-        </app-school-detail>
-    </mat-accordion>
+  <div class="conference-select-container">
+    <mat-form-field appearance="fill" class="conference-select">
+      <mat-label>Conference</mat-label>
+      <mat-select [(ngModel)]="selectedConference" class="conference-select2" name="conference"
+                  (selectionChange)="updateRoute()">
+        <mat-option *ngFor="let conference of conferences" [value]="conference">
+          {{ conference.shortName }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <mat-accordion class="schools-accordian">
+    <app-school-detail class="school-detail" *ngFor="let school of selectedConference?.schools" [school]="school"
+                       [class.selected]="school === selectedSchool" (click)="onSelect(school)">
+    </app-school-detail>
+  </mat-accordion>
 </div>

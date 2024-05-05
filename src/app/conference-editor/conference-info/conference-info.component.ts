@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, OnInit} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {Conference} from "../../conference";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
@@ -18,7 +18,7 @@ export class ConferenceInfoComponent implements OnChanges {
   ngOnChanges() {
     this.conferenceForm = this.fb.group({
       conferenceId: [this.conference.conferenceID],
-      name: [this.conference.name],
+      name: [this.conference.shortName],
       fbs: [this.conference.fbs],
       numOfConfGames: [this.conference.numOfConfGames],
       confGamesStartWeek: [this.conference.confGamesStartWeek],

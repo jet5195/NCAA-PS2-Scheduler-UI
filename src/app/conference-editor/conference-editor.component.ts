@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
-import { School } from '../school';
-import { DataService } from '../services/data.service';
-import { Conference } from '../conference';
-import { SnackBarService } from '../snackBar.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { CompareService } from '../services/compare.service';
+import {Component, OnInit} from '@angular/core';
+import {School} from '../school';
+import {DataService} from '../services/data.service';
+import {Conference} from '../conference';
+import {SnackBarService} from '../snackBar.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {CompareService} from '../services/compare.service';
 
 @Component({
   selector: 'app-conference-editor',
@@ -20,7 +20,8 @@ export class ConferenceEditorComponent implements OnInit {
   schools: School[] = [];
   selectedConference!: Conference;
 
-  constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService) {}
+  constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService) {
+  }
 
   ngOnInit() {
     this.loadData();
@@ -67,7 +68,7 @@ export class ConferenceEditorComponent implements OnInit {
    */
   cancel() {
     this.loadConferenceList().subscribe(data => {
-      const updatedConference = data.find(c => c.name === this.selectedConference.name);
+      const updatedConference = data.find(c => c.shortName === this.selectedConference.shortName);
       if (updatedConference) {
         this.conferenceUpdated(updatedConference);
       }
@@ -79,6 +80,6 @@ export class ConferenceEditorComponent implements OnInit {
    * @param conf The edited conference.
    */
   conferenceUpdated(conf: Conference) {
-    this.selectedConference = { ...conf };
+    this.selectedConference = {...conf};
   }
 }

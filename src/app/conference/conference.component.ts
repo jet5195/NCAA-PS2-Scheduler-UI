@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 // import { EventEmitter } from 'stream';
-import { Conference } from '../conference';
-import { DataService } from '../services/data.service';
-import { School } from '../school';
-import { SnackBarService } from '../snackBar.service';
+import {Conference} from '../conference';
+import {DataService} from '../services/data.service';
+import {School} from '../school';
+import {SnackBarService} from '../snackBar.service';
 
 @Component({
   selector: 'app-conference',
@@ -17,7 +17,8 @@ export class ConferenceComponent implements OnInit {
 
   divSchools: School[][] = [];
 
-  constructor(public dataService: DataService, private snackBarService: SnackBarService) { }
+  constructor(public dataService: DataService, private snackBarService: SnackBarService) {
+  }
 
   panelOpenState = false;
 
@@ -32,18 +33,18 @@ export class ConferenceComponent implements OnInit {
   }
 
   getSchoolsByDivision(): void {
-    this.dataService.getSchoolsByDivision(this.conference.name, this.conference.divisions[0]).subscribe((data: School[]) => {
+    this.dataService.getSchoolsByDivision(this.conference.shortName, this.conference.divisions[0].divisionId).subscribe((data: School[]) => {
       console.log(data);
       this.divSchools[0] = data;
     });
-    this.dataService.getSchoolsByDivision(this.conference.name, this.conference.divisions[1]).subscribe((data: School[]) => {
+    this.dataService.getSchoolsByDivision(this.conference.shortName, this.conference.divisions[1].divisionId).subscribe((data: School[]) => {
       console.log(data);
       this.divSchools[1] = data;
     });
   }
 
   removeConferenceGames(): void {
-    this.dataService.removeConferenceGames(this.conference.name).subscribe((data: void) => {
+    this.dataService.removeConferenceGames(this.conference.shortName).subscribe((data: void) => {
       console.log(data);
       this.snackBarService.openSnackBar("Conference games have been removed successfully", "Dismiss");
     }, (error: any) => {
@@ -52,8 +53,9 @@ export class ConferenceComponent implements OnInit {
   }
 
   addConferenceGames(): void {
-    this.dataService.addConferenceGames(this.conference.name).subscribe((data: void) => {
-      console.log(data);this.snackBarService.openSnackBar("Conference games have been added succesfully", "Dismiss");
+    this.dataService.addConferenceGames(this.conference.shortName).subscribe((data: void) => {
+      console.log(data);
+      this.snackBarService.openSnackBar("Conference games have been added succesfully", "Dismiss");
     }, (error: any) => {
       this.snackBarService.openSnackBar("Error adding conference games", "Dismiss");
     });
@@ -65,8 +67,7 @@ export class ConferenceComponent implements OnInit {
         this.dataService.setSelectedSchool(undefined);
       } else if (this.dataService.getSelectedSchool()?.conferenceName === selectedSchool.conferenceName && this.dataService.getSelectedSchool()?.division === selectedSchool.division) {
         this.dataService.setSelectedSchool(selectedSchool);
-      }
-      else {
+      } else {
         // this.swap(selectedSchool)
       }
     } else {

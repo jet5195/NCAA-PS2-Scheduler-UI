@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Conference } from 'src/app/conference';
-import { School } from 'src/app/school';
-import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {MatDialog} from '@angular/material/dialog';
+import {Conference} from 'src/app/conference';
+import {School} from 'src/app/school';
+import {AddSchoolDialogComponent} from '../add-school-dialog/add-school-dialog.component';
 
 @Component({
   selector: 'app-conference-school-list',
@@ -41,9 +41,9 @@ export class ConferenceSchoolListComponent {
 
   moveSchool(school: School) {
     const currentConfName: string = school.conferenceName;
-    const currentConf: Conference = this.conferences.find(c => c.name === currentConfName);
+    const currentConf: Conference = this.conferences.find(c => c.shortName === currentConfName);
 
-    school.conferenceName = this.conference.name;
+    school.conferenceName = this.conference.shortName;
 
     currentConf.schools = currentConf.schools.filter(s => school.tgid !== s.tgid);
     this.conference.schools.push(school);
