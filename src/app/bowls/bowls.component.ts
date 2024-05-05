@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Bowl } from '../bowl';
 import { Conference } from '../conference';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-bowls',

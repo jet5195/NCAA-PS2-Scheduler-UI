@@ -1,12 +1,12 @@
 import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AddGameRequest } from './addGameRequest';
-import { Bowl } from './bowl';
-import { Conference } from './conference';
-import { Game } from './game';
-import { School } from './school';
-import { SuggestedGameResponse } from './suggestedGameResponse';
+import { AddGameRequest } from '../addGameRequest';
+import { Bowl } from '../bowl';
+import { Conference } from '../conference';
+import { Game } from '../game';
+import { School } from '../school';
+import { SuggestedGameResponse } from '../suggestedGameResponse';
 
 @Injectable()
 export class DataService {
@@ -239,6 +239,10 @@ export class DataService {
 
   swapSchedule(tgid1: number, tgid2: number): Observable<any> {
     return this.http.post<any>(`${this.baseUrl}/schedule/swap-schedule/${tgid1}/${tgid2}`, { headers: this.headers });
+  }
+
+  saveConferences(conferences: Conference[]): Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}/conferences`, conferences, { headers: this.headers});
   }
 
 }

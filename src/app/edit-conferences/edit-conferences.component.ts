@@ -1,6 +1,6 @@
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Conference } from '../conference';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 import { School } from '../school';
 import { ConferenceComponent } from '../conference/conference.component';
 import * as fileSaver from 'file-saver';

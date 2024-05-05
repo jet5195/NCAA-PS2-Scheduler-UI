@@ -4,7 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Game } from '../game';
-import { DataService } from '../data.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-schedule',

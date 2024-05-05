@@ -1,9 +1,16 @@
-<h2 mat-dialog-title>Add a School</h2>
+<h2 mat-dialog-title>Add School</h2>
 <mat-dialog-content>
   <mat-form-field appearance="fill">
     <mat-label>Select School</mat-label>
-    <mat-select [(value)]="selectedSchool">
-      <mat-option *ngFor="let school of availableSchools" [value]="school">
+    <mat-select [(value)]="selectedSchool" matNativeControl>
+      <mat-form-field>
+        <mat-label>Search...</mat-label>
+        <input type="text" placeholder="Type to search..." matInput (keyup)="filterSchools($event.target)"
+          autocomplete="off">
+      </mat-form-field>
+      <mat-option [value]="null" style="display: none;"></mat-option>
+      <!-- mat-select requires one option to display;-->
+      <mat-option *ngFor="let school of filteredSchools" [value]="school">
         {{ school.name }}
       </mat-option>
     </mat-select>

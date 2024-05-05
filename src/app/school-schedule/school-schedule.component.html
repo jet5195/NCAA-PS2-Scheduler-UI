@@ -10,7 +10,7 @@
                     <span *ngIf="school" class="school-name" style="color: {{school.altColor}}"><b>{{school.name}}</b>
                         {{school.nickname}}</span>
                     <br>
-                    <span *ngIf="school && school.conference" style="color:white"><b>{{school.conference.name}}</b></span>
+                    <span *ngIf="school" style="color:white"><b>{{school.conferenceName}}</b></span>
                     <span *ngIf="school.division" style="color:white"> {{school.division}}</span>
                 </div>
                 <button mat-stroked-button style="align-self: right;" (click)="openScheduleSwapDialog()">
@@ -152,12 +152,13 @@
         <!-- <h4>Select Opponent</h4> -->
         <mat-form-field appearance="fill" class="add-game-dropdown">
             <mat-label>Select Opponent</mat-label>
-            <mat-select [(value)]="selectedOpponent" [compareWith]="compareSchools" name="availableOpponent">
+            <mat-select [(value)]="selectedOpponent" [compareWith]="compareService.compareSchools" name="availableOpponent">
                 <mat-option *ngFor="let availableOpponent of availableOpponents" [value]="availableOpponent">
                     {{availableOpponent.name}}
-                    <div *ngIf="availableOpponent.conference.name === school.conference.name"
+                    <div *ngIf="availableOpponent.conferenceName === school.conferenceName"
                         class="in-cell-school-logo-container">
-                        <img class="in-cell-conference-logo" src="{{school.conference.logo}}">
+                        <!-- TODO: get conference with getConference call and pull logo there -->
+                        <!-- <img class="in-cell-conference-logo" src="{{school.conference.logo}}"> -->
                     </div>
                 </mat-option>
             </mat-select>

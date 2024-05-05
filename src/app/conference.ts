@@ -9,6 +9,7 @@ export interface Conference {
     logo: string;
     numOfConfGames: number;
     numOfSchools: number;
+    confGamesStartWeek: number;
     fbs: boolean;
     conferenceID: number;
     schools: School[];

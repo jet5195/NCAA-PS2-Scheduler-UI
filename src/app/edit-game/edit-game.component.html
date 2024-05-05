@@ -5,7 +5,7 @@
             <!-- <div [style.margin-top.px]="10">{{game.awayTeam.name}} {{game.awayTeam.nickname}}</div> -->
             <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
                 <mat-label>Away Team</mat-label>
-                <mat-select [(ngModel)]="awayTeam" name="availableAwaySchool" [compareWith]="compareSchools"
+                <mat-select [(ngModel)]="awayTeam" name="availableAwaySchool" [compareWith]="compareService.compareSchools"
                     (selectionChange)="getAvailableHomeSchools()">
                     <mat-option *ngFor="let availableAwaySchool of availableAwaySchools" [value]="availableAwaySchool">
                         {{availableAwaySchool.name}}
@@ -17,7 +17,7 @@
             <div fxLayout fxLayout="row" fxLayoutGap="10px">
                 <mat-form-field>
                     <mat-label>Week</mat-label>
-                    <mat-select [(ngModel)]="gameWeek" [compareWith]="compareWeeks">
+                    <mat-select [(ngModel)]="gameWeek" [compareWith]="compareService.compareWeeks">
                         <mat-option *ngFor="let week of emptyWeeks" [value]="week">
                             {{week}}
                         </mat-option>
@@ -25,7 +25,7 @@
                 </mat-form-field>
                 <mat-form-field>
                     <mat-label>Day</mat-label>
-                    <mat-select [(ngModel)]="gameDay" [compareWith]="compareDays">
+                    <mat-select [(ngModel)]="gameDay" [compareWith]="compareService.compareDays">
                         <mat-option *ngFor="let day of dayList" [value]="day">
                             {{day.value}}
                         </mat-option>
@@ -50,7 +50,7 @@
             <!-- <div [style.margin-top.px]="10">{{game.homeTeam.name}} {{game.homeTeam.nickname}}</div> -->
             <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
                 <mat-label>Home Team</mat-label>
-                <mat-select [(ngModel)]="homeTeam" name="availableHomeSchool" [compareWith]="compareSchools"
+                <mat-select [(ngModel)]="homeTeam" name="availableHomeSchool" [compareWith]="compareService.compareSchools"
                     (selectionChange)="getAvailableAwaySchools()">
                     <mat-option *ngFor="let availableHomeSchool of availableHomeSchools" [value]="availableHomeSchool">
                         {{availableHomeSchool.name}}
