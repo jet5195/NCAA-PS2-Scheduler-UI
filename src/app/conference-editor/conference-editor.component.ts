@@ -7,6 +7,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {tap} from 'rxjs/operators';
 import {CompareService} from '../services/compare.service';
+import {Division} from "../division";
 
 @Component({
   selector: 'app-conference-editor',
@@ -17,6 +18,7 @@ export class ConferenceEditorComponent implements OnInit {
 
   selectedSchool!: School;
   conferences: Conference[] = [];
+  divisions: Division[] = [];
   schools: School[] = [];
   selectedConference!: Conference;
 
@@ -39,6 +41,8 @@ export class ConferenceEditorComponent implements OnInit {
     return this.dataService.getConferenceList().pipe(
       tap(data => {
         this.conferences = data;
+        // Use map and reduce to flatten the array of Division objects
+        this.divisions = this.conferences.flatMap(conference => conference.divisions);
       })
     );
   }
@@ -48,6 +52,12 @@ export class ConferenceEditorComponent implements OnInit {
       this.schools = data;
     });
   }
+
+  // loadDivisionList(): void {
+  //   this.dataService.getDivisionList().subscribe((data: Division[]) => {
+  //     this.divisions = data;
+  //   })
+  // }
 
   /**
    * Saves the edited conference data using the DataService and displays a success or error message using the SnackBarService.

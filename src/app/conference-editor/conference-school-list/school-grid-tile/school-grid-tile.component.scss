@@ -1,0 +1,82 @@
+/* Shared transition for hover effects */
+%hover-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Team card styles */
+.conference-team-card {
+  @extend %hover-transition;
+  height: 100px;
+  width: 280px;
+  background: var(--team-primary-color);
+  color: var(--team-alt-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Dynamic color styling */
+.team-primary-color {
+  background-color: var(--team-primary-color);
+}
+
+.team-alt-color {
+  color: var(--team-alt-color);
+}
+
+
+/* Team logo styles */
+.team-logo-card-avatar {
+  background-size: contain;
+  overflow: visible !important;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Content and actions */
+.team-content,
+.team-actions {
+  padding: 15px;
+  text-align: center;
+}
+
+.team-actions {
+  margin-top: auto;
+}
+
+/* School name and nickname */
+.conference-school-card-name {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.conference-school-card-nickname {
+  font-size: 18px;
+}
+
+
+/* Add school card styles */
+.add-school-card {
+  @extend %hover-transition;
+  background: #e0e0e0; // Light grey background to differentiate the 'Add' card
+  border: 2px dashed #9e9e9e; // Dashed border for a 'placeholder' look
+  cursor: pointer;
+
+  &:hover {
+    background: #bdbdbd; // Darker background on hover for interaction feedback
+  }
+}
+
+.add-school-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-icon {
+  font-size: 64px; // Large '+' icon size
+  color: #757575; // Icon color
+}

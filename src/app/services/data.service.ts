@@ -7,6 +7,7 @@ import {Conference} from '../conference';
 import {Game} from '../game';
 import {School} from '../school';
 import {SuggestedGameResponse} from '../suggestedGameResponse';
+import {Division} from "../division";
 
 @Injectable()
 export class DataService {
@@ -114,6 +115,10 @@ export class DataService {
 
   getConferenceList(): Observable<Conference[]> {
     return this.http.get<Conference[]>(`${this.baseUrl}/conferences`, {headers: this.headers});
+  }
+
+  getDivisionList(): Observable<Division[]> {
+    return this.http.get<Division[]>(`${this.baseUrl}/divisions`, {headers: this.headers});
   }
 
   // getSchoolsByConference(name: string): Observable<School[]> {
@@ -243,5 +248,6 @@ export class DataService {
   saveConferences(conferences: Conference[]): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/conferences`, conferences, {headers: this.headers});
   }
+
 
 }

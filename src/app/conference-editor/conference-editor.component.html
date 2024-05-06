@@ -24,7 +24,8 @@
       </mat-tab>
       <mat-tab label="Members">
         <app-conference-school-list (conferenceUpdated)="conferenceUpdated($event)" [conference]="selectedConference"
-                                    [schools]="schools" [conferences]="conferences"></app-conference-school-list>
+                                    [schools]="schools" [conferences]="conferences"
+                                    [divisions]="divisions"></app-conference-school-list>
       </mat-tab>
       <mat-tab label="Map">
         <div>

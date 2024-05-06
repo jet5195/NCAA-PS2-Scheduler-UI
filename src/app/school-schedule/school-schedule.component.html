@@ -11,14 +11,14 @@
                         {{school.nickname}}</span>
                     <br>
                     <span *ngIf="school" style="color:white"><b>{{school.conferenceName}}</b></span>
-                    <span *ngIf="school.division" style="color:white"> {{school.division}}</span>
+                    <span *ngIf="school.divisionName" style="color:white"> {{school.divisionName}}</span>
                 </div>
                 <button mat-stroked-button style="align-self: right;" (click)="openScheduleSwapDialog()">
                     Swap Schedule
                 </button>
             </div>
         </div>
-       
+
     </div>
 
     <table mat-table multiTemplateDataRows [dataSource]="dataSource" matSort matSortActive="week" matSortDirection="asc"

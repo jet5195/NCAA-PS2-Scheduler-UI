@@ -65,7 +65,7 @@ export class ConferenceComponent implements OnInit {
     if (this.dataService.getSelectedSchool() !== undefined) {
       if (this.dataService.getSelectedSchool() === selectedSchool) {
         this.dataService.setSelectedSchool(undefined);
-      } else if (this.dataService.getSelectedSchool()?.conferenceName === selectedSchool.conferenceName && this.dataService.getSelectedSchool()?.division === selectedSchool.division) {
+      } else if (this.dataService.getSelectedSchool()?.conferenceName === selectedSchool.conferenceName && this.dataService.getSelectedSchool()?.divisionName === selectedSchool.divisionName) {
         this.dataService.setSelectedSchool(selectedSchool);
       } else {
         // this.swap(selectedSchool)

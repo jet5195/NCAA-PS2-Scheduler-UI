@@ -2,7 +2,7 @@ import {School} from "./school";
 import {Division} from "./division";
 
 export interface Conference {
-  conferenceId: number;
+  conferenceID: number;
   name: string;
   shortName: string;
   abbreviation: string;
@@ -15,7 +15,6 @@ export interface Conference {
   numOfConfGames: number;
   numOfSchools: number;
   confGamesStartWeek: number;
-  conferenceID: number;
   schools: School[];
   fbs: boolean;
 }

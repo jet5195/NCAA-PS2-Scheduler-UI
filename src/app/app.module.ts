@@ -52,6 +52,9 @@ import {AddSchoolDialogComponent} from './conference-editor/add-school-dialog/ad
 import {ConferenceInfoComponent} from "./conference-editor/conference-info/conference-info.component";
 import {MatCheckbox} from "@angular/material/checkbox";
 import {ConferenceDivisionsComponent} from "./conference-editor/conference-divisions/conference-divisions.component";
+import {
+  SchoolGridTileComponent
+} from "./conference-editor/conference-school-list/school-grid-tile/school-grid-tile.component";
 
 @NgModule({
   declarations: [
@@ -109,7 +112,8 @@ import {ConferenceDivisionsComponent} from "./conference-editor/conference-divis
       echarts: () => import('echarts')
     }),
     ReactiveFormsModule,
-    MatCheckbox
+    MatCheckbox,
+    SchoolGridTileComponent
   ],
   providers: [MinutesAfterMidnightToTimePipe, DayOfWeekToStringPipe, ConferenceNamePipe, ConferenceLogoPipe, DataService],
   bootstrap: [AppComponent]
