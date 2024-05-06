@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { School } from '../school';
 import { DataService } from '../services/data.service';
 import { Conference } from '../conference';
@@ -15,7 +15,7 @@ import { ConferenceEditorService } from './conference-editor.service';
   templateUrl: './conference-editor.component.html',
   styleUrls: ['./conference-editor.component.css']
 })
-export class ConferenceEditorComponent implements OnInit {
+export class ConferenceEditorComponent implements OnInit, OnDestroy {
 
   selectedSchool!: School;
   conferences: Conference[] = [];
@@ -26,6 +26,9 @@ export class ConferenceEditorComponent implements OnInit {
   constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService,
     private conferenceEditorService: ConferenceEditorService
   ) { }
+  ngOnDestroy(): void {
+    this.conferenceEditorService.updateSelectedConference(null);
+  }
 
   ngOnInit() {
     this.loadData();
