@@ -18,7 +18,7 @@ export class CompareService {
    * @returns True if the conferences are equal, false otherwise.
    */
   compareConferences(c1: Conference, c2: Conference): boolean {
-    return c1 && c2 ? c1.conferenceID === c2.conferenceID : c1 === c2;
+    return c1 && c2 ? c1.conferenceId === c2.conferenceId : c1 === c2;
   }
 
   compareSchools(school1: School, school2: School): boolean {

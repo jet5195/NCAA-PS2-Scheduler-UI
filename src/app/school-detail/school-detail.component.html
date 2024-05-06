@@ -17,9 +17,9 @@
         <div class="school-quick-info" style=" color: {{getContrast(school.color)}};">
             <div><span>Division: </span>{{school.ncaaDivision}}</div>
             <span>Conference: </span>
-            {{school.conferenceName}}
-            <div *ngIf="school.divisionName">
-                <span>Division: </span>{{school.divisionName}}
+            {{school.conferenceId}}
+            <div *ngIf="school.divisionId">
+                <span>Division: </span>{{school.divisionId}}
             </div>
             <div><span>State: </span>{{school.state}}</div>
         </div>

@@ -3,8 +3,8 @@ export interface School {
   name: string;
   nickname: string;
   state: string;
-  conferenceName: string;
-  divisionName: string;
+  conferenceId: number;
+  divisionId: number;
   ncaaDivision: string;
   color: string;
   altColor: string;

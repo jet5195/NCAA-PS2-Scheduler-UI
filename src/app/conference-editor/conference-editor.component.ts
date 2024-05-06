@@ -77,7 +77,7 @@ export class ConferenceEditorComponent implements OnInit {
    */
   cancel() {
     this.loadConferenceList().subscribe(data => {
-      const updatedConference = data.find(c => c.conferenceID === this.selectedConference.conferenceID);
+      const updatedConference = data.find(c => c.conferenceId === this.selectedConference.conferenceId);
       if (updatedConference) {
         this.conferenceEditorService.updateSelectedConference(updatedConference);
       }

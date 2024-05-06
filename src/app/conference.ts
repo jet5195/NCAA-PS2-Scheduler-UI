@@ -2,7 +2,7 @@ import {School} from "./school";
 import {Division} from "./division";
 
 export interface Conference {
-  conferenceID: number;
+  conferenceId: number;
   name: string;
   shortName: string;
   abbreviation: string;

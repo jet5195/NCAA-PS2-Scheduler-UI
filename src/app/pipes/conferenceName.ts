@@ -10,7 +10,7 @@ export class ConferenceNamePipe implements PipeTransform {
     let conferenceName: string | undefined = value?.toString();
     if (value !== null && conferenceList != null) {
       conferenceList.forEach((conf: Conference) => {
-        if (conf.conferenceID === value) {
+        if (conf.conferenceId === value) {
           conferenceName = conf.shortName;
         }
       });

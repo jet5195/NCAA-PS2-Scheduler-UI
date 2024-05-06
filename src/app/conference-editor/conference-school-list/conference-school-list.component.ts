@@ -1,9 +1,9 @@
-import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Conference} from 'src/app/conference';
-import {School} from 'src/app/school';
-import {AddSchoolDialogComponent} from '../add-school-dialog/add-school-dialog.component';
-import {Division} from "../../division";
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Conference } from 'src/app/conference';
+import { School } from 'src/app/school';
+import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
+import { Division } from "../../division";
 import { ConferenceEditorService } from '../conference-editor.service';
 
 @Component({
@@ -60,40 +60,9 @@ export class ConferenceSchoolListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
       if (result != 'canceled') {
-        if (division) {
-          this.moveSchoolToDivision(result, division);
-        }
-        this.moveSchool(result);
+        this.moveSchool(result, division);
       }
     });
-  }
-
-  /**
-   * Moves a school from its current conference to a new conference and division.
-   * @param school - The school object to be moved to a new division.
-   * @param division - The division object to which the school will be moved.
-   */
-  moveSchoolToDivision(school: School, division: Division) {
-    // Find the old Conference and Division
-    const currentConf = this.conferences.find(c => c.name === school.conferenceName);
-    const currentDiv = school.divisionName ? this.divisions.find(d => d.name === school.divisionName) : null;
-
-    // Set the conferenceName & divisionName attributes with the new values
-    school.conferenceName = this.conference.shortName;
-    school.divisionName = division.name;
-
-    // Remove school from current conference & division
-    currentConf.schools = currentConf.schools.filter(s => s.tgid !== school.tgid);
-    if (currentDiv) {
-      currentDiv.schools = currentDiv.schools.filter(s => s.tgid !== school.tgid);
-    }
-
-    // Add school to new conference & division
-    this.conference.schools.push(school);
-    division.schools.push(school);
-
-    // Emit an event to notify that the conference has been updated
-    this.conferenceEditorService.updateSelectedConference(this.conference);
   }
 
   /**
@@ -101,19 +70,26 @@ export class ConferenceSchoolListComponent implements OnInit {
    * @param school - The school object to be moved to a new division.
    * @param division - The division object to which the school will be moved.
    */
-  moveSchool(school: School) {
+  moveSchool(school: School, division?: Division) {
     //find the old Conference
-    const currentConf = this.conferences.find(c => c.name === school.conferenceName);
+    const currentConf = this.conferences.find(c => c.conferenceId === school.conferenceId);
+    const currentDiv = school.divisionId ? this.divisions.find(d => d.divisionId === school.divisionId) : null;
 
     //set the conferenceName attribute with the new value
-    school.conferenceName = this.conference.shortName;
+    school.conferenceId = this.conference.conferenceId;
+    school.divisionId = division ? division.divisionId : null;
 
     //remove school from current conference
     currentConf.schools = currentConf.schools.filter(s => school.tgid !== s.tgid);
+    if (currentDiv) {
+      currentDiv.schools = currentDiv.schools.filter(s => s.tgid !== school.tgid);
+    }
 
     //add school to new conference
     this.conference.schools.push(school);
-
+    if (division) {
+      division.schools.push(school);
+    }
     // Emit an event to notify that the conference has been updated
     this.conferenceEditorService.updateSelectedConference(this.conference);
   }

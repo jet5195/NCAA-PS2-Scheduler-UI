@@ -10,7 +10,7 @@ export class ConferenceLogoPipe implements PipeTransform {
     let conferenceLogo: string | undefined = value?.toString();
     if (value !== null && conferenceList != null) {
       conferenceList.forEach((conf: Conference) => {
-        if(conf.conferenceID === value){
+        if(conf.conferenceId === value){
           conferenceLogo = conf.logo;
         }
       });

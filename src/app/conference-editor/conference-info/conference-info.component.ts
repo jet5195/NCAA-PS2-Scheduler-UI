@@ -24,7 +24,7 @@ export class ConferenceInfoComponent implements OnInit {
 
   createFormGroup(){
     this.conferenceForm = this.fb.group({
-      conferenceId: [this.conference.conferenceID],
+      conferenceId: [this.conference.conferenceId],
       name: [this.conference.name],
       shortName: [this.conference.shortName],
       abbreviation: [this.conference.abbreviation],
