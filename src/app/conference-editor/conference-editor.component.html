@@ -17,10 +17,10 @@
     </mat-form-field>    
     <mat-tab-group *ngIf="selectedConference" dynamicHeight>
       <mat-tab label="Info">
-        <app-conference-info></app-conference-info>
+        <app-conference-info [conferenceForm]="conferenceForm"></app-conference-info>
       </mat-tab>
       <mat-tab label="Divisions">
-        <app-conference-divisions [conference]="selectedConference"></app-conference-divisions>
+        <app-conference-divisions [conferenceForm]="conferenceForm"></app-conference-divisions>
       </mat-tab>
       <mat-tab label="Members">
         <app-conference-school-list

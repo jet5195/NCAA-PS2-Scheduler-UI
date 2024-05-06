@@ -19,6 +19,7 @@ export class ConferenceSchoolListComponent implements OnInit {
   @Input() divisions!: Division[];
 
   public cols: number;
+  orphanedSchools: School[] = [];
 
   constructor(public dialog: MatDialog, private conferenceEditorService: ConferenceEditorService) {
     this.calculateColumns(window.innerWidth)
@@ -26,6 +27,12 @@ export class ConferenceSchoolListComponent implements OnInit {
   ngOnInit(): void {
     this.conferenceEditorService.selectedConference.subscribe(conference => {
       this.conference = conference;
+      this.orphanedSchools = this.calculateOrphanedSchools();
+      if(this.orphanedSchools.length > 0){
+        this.conferenceEditorService.updateSchoolListValidity(false);
+      } else {
+        this.conferenceEditorService.updateSchoolListValidity(true);
+      }
     });
   }
 
@@ -108,4 +115,23 @@ export class ConferenceSchoolListComponent implements OnInit {
     return false;
   }
 
+  calculateOrphanedSchools(): School[] {
+    const orphanedSchools: School[] = [];
+  
+      // Flatten the list of schools in divisions
+      const divisionSchools: School[] = this.conference.divisions.flatMap(d => d.schools);
+  
+      // Iterate through each school in the conference's schools list
+      this.conference.schools.forEach(school => {
+          // Check if the school is not in any division's schools list
+          if (!divisionSchools.find(divisionSchool => divisionSchool.tgid === school.tgid)) {
+              orphanedSchools.push(school);
+          }
+      });
+      console.log(JSON.stringify(orphanedSchools));
+      return orphanedSchools;
+  }
+
 }
+
+

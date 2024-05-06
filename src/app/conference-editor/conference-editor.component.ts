@@ -9,6 +9,7 @@ import { tap } from 'rxjs/operators';
 import { CompareService } from '../services/compare.service';
 import { Division } from "../division";
 import { ConferenceEditorService } from './conference-editor.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-conference-editor',
@@ -23,9 +24,10 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy {
   schools: School[] = [];
   selectedConference!: Conference;
   isValid: boolean = true;
+  conferenceForm: FormGroup;
 
   constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService,
-    private conferenceEditorService: ConferenceEditorService
+    private conferenceEditorService: ConferenceEditorService, private fb: FormBuilder
   ) { }
   ngOnDestroy(): void {
     this.conferenceEditorService.updateSelectedConference(null);
@@ -35,6 +37,9 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy {
     this.loadData();
     this.conferenceEditorService.selectedConference.subscribe(conference => {
       this.selectedConference = conference;
+      if (this.selectedConference !== null) {
+        this.createFormGroup();
+      }
     })
     this.conferenceEditorService.isValid().subscribe(isValid => {
       this.isValid = isValid;
@@ -96,5 +101,58 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy {
   onConferenceSelectChange(event) {
     const selectedConf = event.value;
     this.conferenceEditorService.updateSelectedConference(selectedConf);
+  }
+
+  createFormGroup() {
+    this.conferenceForm = this.fb.group({
+      conferenceId: [this.selectedConference.conferenceId, Validators.required],
+      name: [this.selectedConference.name, Validators.required],
+      shortName: [this.selectedConference.shortName, Validators.required],
+      abbreviation: [this.selectedConference.abbreviation],
+      fbs: [this.selectedConference.fbs, Validators.required],
+      numOfConfGames: [this.selectedConference.numOfConfGames, Validators.required],
+      confGamesStartWeek: [this.selectedConference.confGamesStartWeek, Validators.required],
+      powerConf: [this.selectedConference.powerConf, Validators.required],
+      logo: [this.selectedConference.logo],
+      schools: this.fb.array(this.selectedConference.schools.map((school: School) => this.buildSchoolFormGroup(school))),
+      divisions: this.fb.array(this.selectedConference.divisions.map((division: Division) => this.buildDivisionFormGrou(division)))
+    });
+
+    this.conferenceForm.valueChanges.subscribe(data => {
+      this.selectedConference = Object.assign(this.selectedConference, this.conferenceForm.value);
+      this.conferenceEditorService.updateInfoFormValidity(this.conferenceForm.valid);
+    });
+  }
+
+  buildDivisionFormGrou(division: Division): FormGroup {
+    return this.fb.group({
+      divisionId: [division.divisionId, Validators.required],
+      name: [division.name, Validators.required],
+      shortName: [division.shortName, Validators.required],
+      schools: this.fb.array(division.schools.map((school: School) => this.buildSchoolFormGroup(school)))
+    });
+  }
+
+  buildSchoolFormGroup(school: School): FormGroup {
+    return this.fb.group({
+      tgid: school.tgid,
+      name: school.name,
+      nickname: school.nickname,
+      abbreviation: school.abbreviation,
+      city: school.city,
+      state: school.state,
+      stadiumCapacity: school.stadiumCapacity,
+      conferenceId: school.conferenceId,
+      divisionId: school.divisionId,
+      xDivRival: school.xDivRival,
+      color: school.color,
+      altColor: school.altColor,
+      logo: school.logo,
+      latitude: school.latitude,
+      longitude: school.longitude,
+      ncaaDivision: school.ncaaDivision,
+      stadiumName: school.stadiumName,
+      userTeam: school.userTeam
+    });
   }
 }
