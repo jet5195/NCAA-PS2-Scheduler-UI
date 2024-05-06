@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
-import {School} from '../school';
-import {DataService} from '../services/data.service';
-import {Conference} from '../conference';
-import {SnackBarService} from '../snackBar.service';
-import {HttpErrorResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
-import {CompareService} from '../services/compare.service';
-import {Division} from "../division";
+import { Component, OnInit } from '@angular/core';
+import { School } from '../school';
+import { DataService } from '../services/data.service';
+import { Conference } from '../conference';
+import { SnackBarService } from '../snackBar.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { CompareService } from '../services/compare.service';
+import { Division } from "../division";
+import { ConferenceEditorService } from './conference-editor.service';
 
 @Component({
   selector: 'app-conference-editor',
@@ -22,11 +23,15 @@ export class ConferenceEditorComponent implements OnInit {
   schools: School[] = [];
   selectedConference!: Conference;
 
-  constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService) {
-  }
+  constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService,
+    private conferenceEditorService: ConferenceEditorService
+  ) { }
 
   ngOnInit() {
     this.loadData();
+    this.conferenceEditorService.selectedConference.subscribe(conference => {
+      this.selectedConference = conference;
+    })
   }
 
   /**
@@ -72,18 +77,16 @@ export class ConferenceEditorComponent implements OnInit {
    */
   cancel() {
     this.loadConferenceList().subscribe(data => {
-      const updatedConference = data.find(c => c.shortName === this.selectedConference.shortName);
+      const updatedConference = data.find(c => c.conferenceID === this.selectedConference.conferenceID);
       if (updatedConference) {
-        this.conferenceUpdated(updatedConference);
+        this.conferenceEditorService.updateSelectedConference(updatedConference);
       }
     });
   }
 
-  /**
-   * Updates the selected conference when it is edited.
-   * @param conf The edited conference.
-   */
-  conferenceUpdated(conf: Conference) {
-    this.selectedConference = {...conf};
+  // Method to handle conference selection change
+  onConferenceSelectChange(event) {
+    const selectedConf = event.value;
+    this.conferenceEditorService.updateSelectedConference(selectedConf);
   }
 }

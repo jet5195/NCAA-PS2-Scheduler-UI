@@ -1,9 +1,10 @@
-import {Component, EventEmitter, HostListener, Input, Output} from '@angular/core';
+import {Component, EventEmitter, HostListener, Input, OnInit, Output} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {Conference} from 'src/app/conference';
 import {School} from 'src/app/school';
 import {AddSchoolDialogComponent} from '../add-school-dialog/add-school-dialog.component';
 import {Division} from "../../division";
+import { ConferenceEditorService } from '../conference-editor.service';
 
 @Component({
   selector: 'app-conference-school-list',
@@ -11,17 +12,21 @@ import {Division} from "../../division";
   templateUrl: './conference-school-list.component.html',
   styleUrl: './conference-school-list.component.scss'
 })
-export class ConferenceSchoolListComponent {
-  @Input() conference!: Conference;
+export class ConferenceSchoolListComponent implements OnInit {
+  conference!: Conference;
   @Input() schools!: School[];
   @Input() conferences!: Conference[];
   @Input() divisions!: Division[];
-  @Output() conferenceUpdated: EventEmitter<Conference> = new EventEmitter<Conference>();
 
   public cols: number;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private conferenceEditorService: ConferenceEditorService) {
     this.calculateColumns(window.innerWidth)
+  }
+  ngOnInit(): void {
+    this.conferenceEditorService.selectedConference.subscribe(conference => {
+      this.conference = conference;
+    });
   }
 
   @HostListener('window:resize', ['$event'])
@@ -88,7 +93,7 @@ export class ConferenceSchoolListComponent {
     division.schools.push(school);
 
     // Emit an event to notify that the conference has been updated
-    this.conferenceUpdated.emit(this.conference);
+    this.conferenceEditorService.updateSelectedConference(this.conference);
   }
 
   /**
@@ -110,7 +115,7 @@ export class ConferenceSchoolListComponent {
     this.conference.schools.push(school);
 
     // Emit an event to notify that the conference has been updated
-    this.conferenceUpdated.emit(this.conference);
+    this.conferenceEditorService.updateSelectedConference(this.conference);
   }
 
   isDark(color: string): boolean {
