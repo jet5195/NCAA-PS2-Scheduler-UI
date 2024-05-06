@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, Input, OnChanges, OnInit} from '@angular/core';
 import {Conference} from "../../conference";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import { ConferenceEditorService } from '../conference-editor.service';
 
 @Component({
@@ -24,19 +24,20 @@ export class ConferenceInfoComponent implements OnInit {
 
   createFormGroup(){
     this.conferenceForm = this.fb.group({
-      conferenceId: [this.conference.conferenceId],
-      name: [this.conference.name],
-      shortName: [this.conference.shortName],
+      conferenceId: [this.conference.conferenceId, Validators.required],
+      name: [this.conference.name, Validators.required],
+      shortName: [this.conference.shortName, Validators.required],
       abbreviation: [this.conference.abbreviation],
-      fbs: [this.conference.fbs],
+      fbs: [this.conference.fbs, Validators.required],
       numOfConfGames: [this.conference.numOfConfGames],
       confGamesStartWeek: [this.conference.confGamesStartWeek],
-      powerConf: [this.conference.powerConf],
+      powerConf: [this.conference.powerConf, Validators.required],
       logo: [this.conference.logo]
     });
 
     this.conferenceForm.valueChanges.subscribe(data => {
       this.conference = Object.assign(this.conference, this.conferenceForm.value);
+      this.conferenceEditorService.updateInfoFormValidity(this.conferenceForm.valid);
     });
   }
 

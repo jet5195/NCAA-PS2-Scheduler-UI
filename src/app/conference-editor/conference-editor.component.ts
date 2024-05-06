@@ -22,6 +22,7 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy {
   divisions: Division[] = [];
   schools: School[] = [];
   selectedConference!: Conference;
+  isValid: boolean = true;
 
   constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService,
     private conferenceEditorService: ConferenceEditorService
@@ -35,6 +36,9 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy {
     this.conferenceEditorService.selectedConference.subscribe(conference => {
       this.selectedConference = conference;
     })
+    this.conferenceEditorService.isValid().subscribe(isValid => {
+      this.isValid = isValid;
+    });
   }
 
   /**
@@ -85,6 +89,7 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy {
         this.conferenceEditorService.updateSelectedConference(updatedConference);
       }
     });
+    this.conferenceEditorService.updateFormValidities(true, true);
   }
 
   // Method to handle conference selection change
