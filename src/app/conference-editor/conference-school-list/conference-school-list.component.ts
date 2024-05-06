@@ -63,49 +63,53 @@ export class ConferenceSchoolListComponent {
     });
   }
 
+  /**
+   * Moves a school from its current conference to a new conference and division.
+   * @param school - The school object to be moved to a new division.
+   * @param division - The division object to which the school will be moved.
+   */
   moveSchoolToDivision(school: School, division: Division) {
-    const currentConfName: string = school.conferenceName;
-    const currentConf: Conference = this.conferences.find(c => c.name === currentConfName);
+    // Find the old Conference and Division
+    const currentConf = this.conferences.find(c => c.name === school.conferenceName);
+    const currentDiv = school.divisionName ? this.divisions.find(d => d.name === school.divisionName) : null;
 
-    const currentDivName: string = school.divisionName;
-    let currentDiv = null;
-    if (currentDivName !== null) {
-      currentDiv = this.divisions.find(d => d.name === currentDivName);
-    }
-
-
+    // Set the conferenceName & divisionName attributes with the new values
+    school.conferenceName = this.conference.shortName;
     school.divisionName = division.name;
 
-    //remove school from current conference & division
-    currentConf.schools = currentConf.schools.filter(s => school.tgid !== s.tgid);
-    if (currentDiv !== null) {
-      currentDiv.schools = currentDiv.schools.filter(s => school.tgid !== s.tgid);
+    // Remove school from current conference & division
+    currentConf.schools = currentConf.schools.filter(s => s.tgid !== school.tgid);
+    if (currentDiv) {
+      currentDiv.schools = currentDiv.schools.filter(s => s.tgid !== school.tgid);
     }
 
-    //add school to new conference & division
+    // Add school to new conference & division
     this.conference.schools.push(school);
     division.schools.push(school);
 
-    //TODO: see if this code is needed
-    const index = currentConf.schools.findIndex(s => s.tgid === school.tgid);
-    if (index !== -1) {
-      currentConf.schools.splice(index, 1);
-    }
+    // Emit an event to notify that the conference has been updated
     this.conferenceUpdated.emit(this.conference);
   }
 
+  /**
+   * Moves a school from its current conference to a new conference .
+   * @param school - The school object to be moved to a new division.
+   * @param division - The division object to which the school will be moved.
+   */
   moveSchool(school: School) {
-    const currentConfName: string = school.conferenceName;
-    const currentConf: Conference = this.conferences.find(c => c.name === currentConfName);
+    //find the old Conference
+    const currentConf = this.conferences.find(c => c.name === school.conferenceName);
 
+    //set the conferenceName attribute with the new value
     school.conferenceName = this.conference.shortName;
 
+    //remove school from current conference
     currentConf.schools = currentConf.schools.filter(s => school.tgid !== s.tgid);
+
+    //add school to new conference
     this.conference.schools.push(school);
-    const index = currentConf.schools.findIndex(s => s.tgid === school.tgid);
-    if (index !== -1) {
-      currentConf.schools.splice(index, 1);
-    }
+
+    // Emit an event to notify that the conference has been updated
     this.conferenceUpdated.emit(this.conference);
   }
 

@@ -53,12 +53,6 @@ export class ConferenceEditorComponent implements OnInit {
     });
   }
 
-  // loadDivisionList(): void {
-  //   this.dataService.getDivisionList().subscribe((data: Division[]) => {
-  //     this.divisions = data;
-  //   })
-  // }
-
   /**
    * Saves the edited conference data using the DataService and displays a success or error message using the SnackBarService.
    */
