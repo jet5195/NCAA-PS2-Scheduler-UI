@@ -1,11 +1,11 @@
+import { CdkDragDrop, CdkDragEnter, CdkDragExit, transferArrayItem } from "@angular/cdk/drag-drop";
 import { Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
-import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
 import { Division } from "../../division";
+import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
 import { ConferenceEditorService } from '../conference-editor.service';
-import { CdkDragDrop, CdkDragEnter, CdkDragExit, transferArrayItem } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-conference-school-list',
@@ -147,6 +147,7 @@ export class ConferenceSchoolListComponent implements OnInit {
     }
     this.isDragging = false;
     this.activeDivision = null;
+    this.conferenceEditorService.updateSelectedConference(this.conference);
   }
 
   onDragEntered(event: CdkDragEnter<any, any>) {

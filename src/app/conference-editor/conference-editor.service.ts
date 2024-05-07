@@ -27,6 +27,7 @@ export class ConferenceEditorService {
   }
 
   updateSchoolListValidity(isValid: boolean) {
+    console.log('updating school list with: ' + isValid)
     this.schoolListValiditySubject.next(isValid);
   }
 

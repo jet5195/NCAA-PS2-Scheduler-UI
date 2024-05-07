@@ -30,10 +30,11 @@ cdk-drag-preview, .cdk-drag-placeholder {
   z-index: -100;
 }
 
-.mat-grid-tile.cdk-drag {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
 
-.school-grid-list.cdk-drop-list-dragging .school-grid-tile:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
+// .mat-grid-tile.cdk-drag {
+//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+// }
+
+// .school-grid-list.cdk-drop-list-dragging .school-grid-tile:not(.cdk-drag-placeholder) {
+//   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+// }
