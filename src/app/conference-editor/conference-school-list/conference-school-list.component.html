@@ -7,26 +7,43 @@
     <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px"
                    cdkDropList
                    [cdkDropListData]="orphanedSchools"
-                   (cdkDropListDropped)="drop($event)">
+                   (cdkDropListDropped)="drop($event)"
+                   cdkDropListSortingDisabled
+                   cdkDropListAutoScrollDisabled="true"
+                   class="school-grid-list" id="orphaned-schools-list">
       <mat-grid-tile *ngFor="let school of orphanedSchools" class="school-grid-tile"
                      [style.--team-primary-color]="school.color"
-                     [style.--team-alt-color]="school.altColor" cdkDrag>
+                     [style.--team-alt-color]="school.altColor"
+                     (cdkDragStarted)="dragSchool = school"
+                     (cdkDragEntered)="onDragEntered($event)"
+                     (cdkDragExited)="onDragExited($event)"
+                     cdkDrag>
         <app-school-grid-tile [school]="school" [isDark]="isDark"></app-school-grid-tile>
       </mat-grid-tile>
     </mat-grid-list>
   </ng-container>
 
 
-  <ng-container *ngFor="let division of conference.divisions">
+  <ng-container *ngFor="let division of conference.divisions; let i = index">
     <h3>{{ division.shortName }}</h3>
     <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px"
                    cdkDropList
                    [cdkDropListData]="division.schools"
-                   (cdkDropListDropped)="drop($event)">
+                   (cdkDropListDropped)="drop($event)" 
+                   cdkDropListSortingDisabled
+                   cdkDropListAutoScrollDisabled="true"
+                   class="school-grid-list" [id]="'division-school-list-' +i">
       <mat-grid-tile *ngFor="let school of division.schools" class="school-grid-tile"
                      [style.--team-primary-color]="school.color"
-                     [style.--team-alt-color]="school.altColor" cdkDrag>
+                     [style.--team-alt-color]="school.altColor"
+                     (cdkDragStarted)="dragSchool = school"
+                     (cdkDragEntered)="onDragEntered($event)"
+                     (cdkDragExited)="onDragExited($event)"
+                     cdkDrag>
         <app-school-grid-tile [school]="school" [isDark]="isDark"></app-school-grid-tile>
+      </mat-grid-tile>
+      <mat-grid-tile id="drop-location" *ngIf="isDragging && activeDivision === ('division-school-list-' + i)">
+        <!-- <app-school-grid-tile [school]="dragSchool" [isDark]="isDark"></app-school-grid-tile> -->
       </mat-grid-tile>
       <mat-grid-tile>
         <app-school-grid-tile [isAddCard]="true" (click)="openAddSchoolDialog(division)"></app-school-grid-tile>

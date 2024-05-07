@@ -1,11 +1,11 @@
-import {Component, HostListener, Input, OnInit} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Conference} from 'src/app/conference';
-import {School} from 'src/app/school';
-import {AddSchoolDialogComponent} from '../add-school-dialog/add-school-dialog.component';
-import {Division} from "../../division";
-import {ConferenceEditorService} from '../conference-editor.service';
-import {moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
+import { Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Conference } from 'src/app/conference';
+import { School } from 'src/app/school';
+import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
+import { Division } from "../../division";
+import { ConferenceEditorService } from '../conference-editor.service';
+import { CdkDragDrop, CdkDragEnter, CdkDragExit, transferArrayItem } from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-conference-school-list',
@@ -22,7 +22,7 @@ export class ConferenceSchoolListComponent implements OnInit {
   public cols: number;
   orphanedSchools: School[] = [];
 
-  constructor(public dialog: MatDialog, private conferenceEditorService: ConferenceEditorService) {
+  constructor(public dialog: MatDialog, private conferenceEditorService: ConferenceEditorService, private el: ElementRef, private renderer: Renderer2) {
     this.calculateColumns(window.innerWidth)
   }
 
@@ -134,17 +134,53 @@ export class ConferenceSchoolListComponent implements OnInit {
     return orphanedSchools;
   }
 
-  drop(event) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
+  isDragging: boolean = false;
+  dragSchool: School = null;
+  activeDivision: string = null;
+
+  drop(event: CdkDragDrop<any>) {
+    if (event.previousContainer !== event.container) {
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.currentIndex);
+        event.container.data.length);
+    }
+    this.isDragging = false;
+    this.activeDivision = null;
+  }
+
+  onDragEntered(event: CdkDragEnter<any, any>) {
+    this.activeDivision = event.container.id;
+    // Check if the drag is entering a new container
+    if (event.container.data != event.item.dropContainer.data) {
+      this.isDragging = true;
+      setTimeout(() => {
+        this.movePlaceholderToCorrectLocation();
+      }, 1);
     }
   }
 
+  onDragExited(event: CdkDragExit<any, any>) {
+    // Check if the drag is exiting the container it entered
+    if (event.container.data != event.item.dropContainer.data) {
+      this.isDragging = false;
+    }
+  }
+
+  movePlaceholderToCorrectLocation() {
+    const elementByClass = this.el.nativeElement.querySelector('.cdk-drag-placeholder');
+    const targetElementById = document.getElementById('drop-location');
+
+    if (elementByClass && targetElementById) {
+      const elementRect = elementByClass.getBoundingClientRect();
+      const targetRect = targetElementById.getBoundingClientRect();
+
+      const xShift = targetRect.left - elementRect.left;
+      const yShift = targetRect.top - elementRect.top;
+
+      this.renderer.setStyle(elementByClass, 'transform', `translate(${xShift}px, ${yShift}px)`);
+    }
+  }
 }
 
 
