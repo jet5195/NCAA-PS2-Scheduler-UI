@@ -1,25 +1,31 @@
 <!-- Show schools by Division -->
-<ng-container *ngIf="conference.divisions && conference.divisions.length > 0; else conferenceBlock">
+<ng-container *ngIf="conference.divisions && conference.divisions.length > 0; else conferenceBlock"
+              cdkDropListGroup>
   <!-- Show schools that aren't in a division -->
   <ng-container *ngIf="orphanedSchools.length > 0">
     <h3>Orphaned Schools</h3>
-    <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px">
+    <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px"
+                   cdkDropList
+                   [cdkDropListData]="orphanedSchools"
+                   (cdkDropListDropped)="drop($event)">
       <mat-grid-tile *ngFor="let school of orphanedSchools" class="school-grid-tile"
                      [style.--team-primary-color]="school.color"
-                     [style.--team-alt-color]="school.altColor">
+                     [style.--team-alt-color]="school.altColor" cdkDrag>
         <app-school-grid-tile [school]="school" [isDark]="isDark"></app-school-grid-tile>
       </mat-grid-tile>
     </mat-grid-list>
   </ng-container>
 
 
-
   <ng-container *ngFor="let division of conference.divisions">
     <h3>{{ division.shortName }}</h3>
-    <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px">
+    <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px"
+                   cdkDropList
+                   [cdkDropListData]="division.schools"
+                   (cdkDropListDropped)="drop($event)">
       <mat-grid-tile *ngFor="let school of division.schools" class="school-grid-tile"
                      [style.--team-primary-color]="school.color"
-                     [style.--team-alt-color]="school.altColor">
+                     [style.--team-alt-color]="school.altColor" cdkDrag>
         <app-school-grid-tile [school]="school" [isDark]="isDark"></app-school-grid-tile>
       </mat-grid-tile>
       <mat-grid-tile>
@@ -31,10 +37,11 @@
 
 <!-- Show schools by Conference -->
 <ng-template #conferenceBlock>
-  <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px">
+  <mat-grid-list [cols]="cols" rowHeight="100px" gutterSize="10px" cdkDropList [cdkDropListData]="conference.schools"
+                 (cdkDropListDropped)="drop($event)">
     <ng-container *ngFor="let school of conference.schools">
       <mat-grid-tile class="school-grid-tile" [style.--team-primary-color]="school.color"
-                     [style.--team-alt-color]="school.altColor">
+                     [style.--team-alt-color]="school.altColor" cdkDrag>
         <app-school-grid-tile [school]="school" [isDark]="isDark"></app-school-grid-tile>
       </mat-grid-tile>
     </ng-container>

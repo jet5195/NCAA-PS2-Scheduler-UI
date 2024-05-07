@@ -1,15 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { School } from '../school';
-import { DataService } from '../services/data.service';
-import { Conference } from '../conference';
-import { SnackBarService } from '../snackBar.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
-import { CompareService } from '../services/compare.service';
-import { Division } from "../division";
-import { ConferenceEditorService } from './conference-editor.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {School} from '../school';
+import {DataService} from '../services/data.service';
+import {Conference} from '../conference';
+import {SnackBarService} from '../snackBar.service';
+import {HttpErrorResponse} from '@angular/common/http';
+import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
+import {CompareService} from '../services/compare.service';
+import {Division} from "../division";
+import {ConferenceEditorService} from './conference-editor.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-conference-editor',
@@ -18,7 +18,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class ConferenceEditorComponent implements OnInit, OnDestroy {
 
-  selectedSchool!: School;
   conferences: Conference[] = [];
   divisions: Division[] = [];
   schools: School[] = [];
@@ -27,8 +26,10 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy {
   conferenceForm: FormGroup;
 
   constructor(private dataService: DataService, private snackBarService: SnackBarService, public compareService: CompareService,
-    private conferenceEditorService: ConferenceEditorService, private fb: FormBuilder
-  ) { }
+              private conferenceEditorService: ConferenceEditorService, private fb: FormBuilder
+  ) {
+  }
+
   ngOnDestroy(): void {
     this.conferenceEditorService.updateSelectedConference(null);
   }

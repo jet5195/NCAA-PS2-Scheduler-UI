@@ -1,10 +1,11 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Conference } from 'src/app/conference';
-import { School } from 'src/app/school';
-import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
-import { Division } from "../../division";
-import { ConferenceEditorService } from '../conference-editor.service';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Conference} from 'src/app/conference';
+import {School} from 'src/app/school';
+import {AddSchoolDialogComponent} from '../add-school-dialog/add-school-dialog.component';
+import {Division} from "../../division";
+import {ConferenceEditorService} from '../conference-editor.service';
+import {moveItemInArray, transferArrayItem} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: 'app-conference-school-list',
@@ -24,11 +25,12 @@ export class ConferenceSchoolListComponent implements OnInit {
   constructor(public dialog: MatDialog, private conferenceEditorService: ConferenceEditorService) {
     this.calculateColumns(window.innerWidth)
   }
+
   ngOnInit(): void {
     this.conferenceEditorService.selectedConference.subscribe(conference => {
       this.conference = conference;
       this.orphanedSchools = this.calculateOrphanedSchools();
-      if(this.orphanedSchools.length > 0){
+      if (this.orphanedSchools.length > 0) {
         this.conferenceEditorService.updateSchoolListValidity(false);
       } else {
         this.conferenceEditorService.updateSchoolListValidity(true);
@@ -117,19 +119,30 @@ export class ConferenceSchoolListComponent implements OnInit {
 
   calculateOrphanedSchools(): School[] {
     const orphanedSchools: School[] = [];
-  
-      // Flatten the list of schools in divisions
-      const divisionSchools: School[] = this.conference.divisions.flatMap(d => d.schools);
-  
-      // Iterate through each school in the conference's schools list
-      this.conference.schools.forEach(school => {
-          // Check if the school is not in any division's schools list
-          if (!divisionSchools.find(divisionSchool => divisionSchool.tgid === school.tgid)) {
-              orphanedSchools.push(school);
-          }
-      });
-      console.log(JSON.stringify(orphanedSchools));
-      return orphanedSchools;
+
+    // Flatten the list of schools in divisions
+    const divisionSchools: School[] = this.conference.divisions.flatMap(d => d.schools);
+
+    // Iterate through each school in the conference's schools list
+    this.conference.schools.forEach(school => {
+      // Check if the school is not in any division's schools list
+      if (!divisionSchools.find(divisionSchool => divisionSchool.tgid === school.tgid)) {
+        orphanedSchools.push(school);
+      }
+    });
+    console.log(JSON.stringify(orphanedSchools));
+    return orphanedSchools;
+  }
+
+  drop(event) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+    }
   }
 
 }
