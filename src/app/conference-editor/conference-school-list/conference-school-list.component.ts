@@ -168,17 +168,17 @@ export class ConferenceSchoolListComponent implements OnInit {
   }
 
   movePlaceholderToCorrectLocation() {
-    const elementByClass = this.el.nativeElement.querySelector('.cdk-drag-placeholder');
-    const targetElementById = document.getElementById('drop-location');
+    const placeholder = this.renderer.selectRootElement('.cdk-drag-placeholder', true);
+    const dropLocation = this.renderer.selectRootElement('#drop-location', true);
 
-    if (elementByClass && targetElementById) {
-      const elementRect = elementByClass.getBoundingClientRect();
-      const targetRect = targetElementById.getBoundingClientRect();
+    if (placeholder && dropLocation) {
+      const elementRect = placeholder.getBoundingClientRect();
+      const targetRect = dropLocation.getBoundingClientRect();
 
       const xShift = targetRect.left - elementRect.left;
       const yShift = targetRect.top - elementRect.top;
 
-      this.renderer.setStyle(elementByClass, 'transform', `translate(${xShift}px, ${yShift}px)`);
+      this.renderer.setStyle(placeholder, 'transform', `translate(${xShift}px, ${yShift}px)`);
     }
   }
 }
