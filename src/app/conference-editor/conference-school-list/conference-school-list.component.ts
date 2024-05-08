@@ -1,9 +1,20 @@
-import { CdkDragDrop, CdkDragEnter, CdkDragExit, transferArrayItem } from "@angular/cdk/drag-drop";
-import { Component, ElementRef, HostListener, Input, OnInit, Renderer2 } from '@angular/core';
+import {
+  CdkDragDrop,
+  CdkDragEnter,
+  CdkDragExit,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnInit,
+  Renderer2,
+} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
-import { Division } from "../../division";
+import { Division } from '../../division';
 import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
 import { ConferenceEditorService } from '../conference-editor.service';
 
@@ -11,7 +22,7 @@ import { ConferenceEditorService } from '../conference-editor.service';
   selector: 'app-conference-school-list',
   standalone: false,
   templateUrl: './conference-school-list.component.html',
-  styleUrl: './conference-school-list.component.scss'
+  styleUrl: './conference-school-list.component.scss',
 })
 export class ConferenceSchoolListComponent implements OnInit {
   conference!: Conference;
@@ -22,12 +33,16 @@ export class ConferenceSchoolListComponent implements OnInit {
   public cols: number;
   orphanedSchools: School[] = [];
 
-  constructor(public dialog: MatDialog, private conferenceEditorService: ConferenceEditorService, private el: ElementRef, private renderer: Renderer2) {
-    this.calculateColumns(window.innerWidth)
+  constructor(
+    public dialog: MatDialog,
+    private conferenceEditorService: ConferenceEditorService,
+    private renderer: Renderer2
+  ) {
+    this.calculateColumns(window.innerWidth);
   }
 
   ngOnInit(): void {
-    this.conferenceEditorService.selectedConference.subscribe(conference => {
+    this.conferenceEditorService.selectedConference.subscribe((conference) => {
       this.conference = conference;
       this.orphanedSchools = this.calculateOrphanedSchools();
       if (this.orphanedSchools.length > 0) {
@@ -55,18 +70,23 @@ export class ConferenceSchoolListComponent implements OnInit {
     }
   }
 
-
   openAddSchoolDialog(division?: Division) {
-    const dialogRef: MatDialogRef<AddSchoolDialogComponent> = this.dialog.open(AddSchoolDialogComponent, {
-      width: '250px',
-      data: {
-        availableSchools: this.schools.filter(school =>
-          !this.conference.schools.some(confSchool =>
-            confSchool.tgid === school.tgid))
+    const dialogRef: MatDialogRef<AddSchoolDialogComponent> = this.dialog.open(
+      AddSchoolDialogComponent,
+      {
+        width: '250px',
+        data: {
+          availableSchools: this.schools.filter(
+            (school) =>
+              !this.conference.schools.some(
+                (confSchool) => confSchool.tgid === school.tgid
+              )
+          ),
+        },
       }
-    });
+    );
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
       if (result != 'canceled') {
         this.moveSchool(result, division);
@@ -81,17 +101,25 @@ export class ConferenceSchoolListComponent implements OnInit {
    */
   moveSchool(school: School, division?: Division) {
     //find the old Conference
-    const currentConf = this.conferences.find(c => c.conferenceId === school.conferenceId);
-    const currentDiv = school.divisionId ? this.divisions.find(d => d.divisionId === school.divisionId) : null;
+    const currentConf = this.conferences.find(
+      (c) => c.conferenceId === school.conferenceId
+    );
+    const currentDiv = school.divisionId
+      ? this.divisions.find((d) => d.divisionId === school.divisionId)
+      : null;
 
     //set the conferenceName attribute with the new value
     school.conferenceId = this.conference.conferenceId;
     school.divisionId = division ? division.divisionId : null;
 
     //remove school from current conference
-    currentConf.schools = currentConf.schools.filter(s => school.tgid !== s.tgid);
+    currentConf.schools = currentConf.schools.filter(
+      (s) => school.tgid !== s.tgid
+    );
     if (currentDiv) {
-      currentDiv.schools = currentDiv.schools.filter(s => s.tgid !== school.tgid);
+      currentDiv.schools = currentDiv.schools.filter(
+        (s) => s.tgid !== school.tgid
+      );
     }
 
     //add school to new conference
@@ -121,16 +149,21 @@ export class ConferenceSchoolListComponent implements OnInit {
     const orphanedSchools: School[] = [];
 
     // Flatten the list of schools in divisions
-    const divisionSchools: School[] = this.conference.divisions.flatMap(d => d.schools);
+    const divisionSchools: School[] = this.conference.divisions.flatMap(
+      (d) => d.schools
+    );
 
     // Iterate through each school in the conference's schools list
-    this.conference.schools.forEach(school => {
+    this.conference.schools.forEach((school) => {
       // Check if the school is not in any division's schools list
-      if (!divisionSchools.find(divisionSchool => divisionSchool.tgid === school.tgid)) {
+      if (
+        !divisionSchools.find(
+          (divisionSchool) => divisionSchool.tgid === school.tgid
+        )
+      ) {
         orphanedSchools.push(school);
       }
     });
-    console.log(JSON.stringify(orphanedSchools));
     return orphanedSchools;
   }
 
@@ -140,10 +173,12 @@ export class ConferenceSchoolListComponent implements OnInit {
 
   drop(event: CdkDragDrop<any>) {
     if (event.previousContainer !== event.container) {
-      transferArrayItem(event.previousContainer.data,
+      transferArrayItem(
+        event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.container.data.length);
+        event.container.data.length
+      );
     }
     this.isDragging = false;
     this.activeDivision = null;
@@ -169,8 +204,14 @@ export class ConferenceSchoolListComponent implements OnInit {
   }
 
   movePlaceholderToCorrectLocation() {
-    const placeholder = this.renderer.selectRootElement('.cdk-drag-placeholder', true);
-    const dropLocation = this.renderer.selectRootElement('#drop-location', true);
+    const placeholder = this.renderer.selectRootElement(
+      '.cdk-drag-placeholder',
+      true
+    );
+    const dropLocation = this.renderer.selectRootElement(
+      '#drop-location',
+      true
+    );
 
     if (placeholder && dropLocation) {
       const elementRect = placeholder.getBoundingClientRect();
@@ -179,9 +220,11 @@ export class ConferenceSchoolListComponent implements OnInit {
       const xShift = targetRect.left - elementRect.left;
       const yShift = targetRect.top - elementRect.top;
 
-      this.renderer.setStyle(placeholder, 'transform', `translate(${xShift}px, ${yShift}px)`);
+      this.renderer.setStyle(
+        placeholder,
+        'transform',
+        `translate(${xShift}px, ${yShift}px)`
+      );
     }
   }
 }
-
-
