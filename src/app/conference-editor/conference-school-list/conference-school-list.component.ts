@@ -146,6 +146,9 @@ export class ConferenceSchoolListComponent implements OnInit {
   }
 
   calculateOrphanedSchools(): School[] {
+    if (this.conference.divisions.length == 0) {
+      return [];
+    }
     const orphanedSchools: School[] = [];
 
     // Flatten the list of schools in divisions
