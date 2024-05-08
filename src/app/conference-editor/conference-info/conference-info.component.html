@@ -2,11 +2,25 @@
   <mat-form-field>
     <mat-label>Name</mat-label>
     <input matInput formControlName="name">
+    <mat-error *ngIf="conferenceForm.get('name').invalid">Please enter a valid name.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Short Name</mat-label>
+    <input matInput formControlName="shortName">
+    <mat-error *ngIf="conferenceForm.get('shortName').invalid">Please enter a valid short name.</mat-error>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Abbreviation</mat-label>
+    <input matInput formControlName="abbreviation">
+    <mat-error *ngIf="conferenceForm.get('abbreviation').invalid">Please enter a valid abbreviation.</mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Conference ID</mat-label>
-    <input matInput formControlName="conferenceId">
+    <input matInput formControlName="conferenceId" readonly>
+    <mat-error *ngIf="conferenceForm.get('conferenceId').invalid">Please enter a valid conference ID.</mat-error>
   </mat-form-field>
 
   <div class="radio-group">
@@ -14,6 +28,7 @@
       <mat-radio-button [value]="true">FBS</mat-radio-button>
       <mat-radio-button [value]="false">FCS</mat-radio-button>
     </mat-radio-group>
+    <mat-error *ngIf="conferenceForm.get('fbs').invalid">Please select a value for FBS/FCS.</mat-error>
   </div>
 
   <mat-checkbox formControlName="powerConf">Power Conference</mat-checkbox>
@@ -21,15 +36,12 @@
   <mat-form-field>
     <mat-label>Number of Conference Games</mat-label>
     <input matInput formControlName="numOfConfGames">
+    <mat-error *ngIf="conferenceForm.get('numOfConfGames').invalid">Please enter a valid number of conference games.</mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Conference Games Start Week</mat-label>
     <input matInput formControlName="confGamesStartWeek">
+    <mat-error *ngIf="conferenceForm.get('confGamesStartWeek').invalid">Please enter a valid start week for conference games.</mat-error>
   </mat-form-field>
-
-  <div class="button-container">
-    <button mat-button color="primary" type="submit">Save</button>
-    <button mat-button type="button">Cancel</button>
-  </div>
 </form>

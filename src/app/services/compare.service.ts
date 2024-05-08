@@ -1,15 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Conference } from '../conference';
-import { School } from '../school';
+import {Injectable} from '@angular/core';
+import {Conference} from '../conference';
+import {School} from '../school';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompareService {
 
-  constructor() { }
+  constructor() {
+  }
 
-  
+
   /**
    * Compares two conferences for equality.
    * @param c1 The first conference.
@@ -17,7 +18,7 @@ export class CompareService {
    * @returns True if the conferences are equal, false otherwise.
    */
   compareConferences(c1: Conference, c2: Conference): boolean {
-    return c1 && c2 ? c1.name === c2.name : c1 === c2;
+    return c1 && c2 ? c1.conferenceId === c2.conferenceId : c1 === c2;
   }
 
   compareSchools(school1: School, school2: School): boolean {

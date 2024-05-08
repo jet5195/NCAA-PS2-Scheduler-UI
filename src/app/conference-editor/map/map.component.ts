@@ -1,10 +1,11 @@
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { MapChart } from 'echarts/charts';
 import { TooltipComponent, VisualMapComponent } from 'echarts/components';
 import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
+import { ConferenceEditorService } from '../conference-editor.service';
 echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
 
 @Component({
@@ -12,9 +13,8 @@ echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
-export class MapComponent implements OnChanges {
-  @Input() conference!: Conference;
-  private isViewInit: boolean = false;
+export class MapComponent implements OnInit {
+  conference!: Conference;
   chartOptions;
 
   stateHighlightColor: string = '#b6d8df';
@@ -25,17 +25,14 @@ export class MapComponent implements OnChanges {
     'Puerto Rico': { left: -76, top: 26, width: 2 }
   };
 
-  ngAfterViewInit(): void {
-    this.isViewInit = true;
-    this.initMap();
-  }
+  constructor(private conferenceEditorService: ConferenceEditorService) { }
 
-  ngOnChanges(): void {
-    if (this.isViewInit) {
+  ngOnInit(): void {
+    this.conferenceEditorService.selectedConference.subscribe(conference => {
+      this.conference = conference;
       this.initMap();
-    }
+    });
   }
-
   initMap(): void {
     const usaMap = require('src/assets/USA.json');
     this.registerUsaMap(usaMap);

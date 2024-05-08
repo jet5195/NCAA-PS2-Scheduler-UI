@@ -1,19 +1,21 @@
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // @use '@angular/material-experimental' as matx;
 
-@use '@angular/material/prebuilt-themes/deeppurple-amber' as light;
+@use "@angular/material/prebuilt-themes/deeppurple-amber" as light;
 
 $dark-primary: mat.define-palette(mat.$indigo-palette, 500);
 $dark-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 $dark-warn: mat.define-palette(mat.$red-palette);
 
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: $dark-primary,
-    accent: $dark-accent,
-    warn: $dark-warn,
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: $dark-primary,
+      accent: $dark-accent,
+      warn: $dark-warn,
+    ),
   )
-));
+);
 
 // $light-theme: matx.define-theme((
 //   color: (
@@ -34,14 +36,14 @@ $dark-theme: mat.define-dark-theme((
 //   @include mat.all-component-themes($light-theme);
 // }
 
-
 // html, body { height: 100%; }
 // body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .big_class {
-    margin-left: auto;
-    margin-right: auto;
-    width: 75%;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 75%;
 }
 
 /* .mat-grid-tile {
@@ -49,7 +51,7 @@ $dark-theme: mat.define-dark-theme((
     overflow: visible !important;
 } */
 
-/* school-headers-align .mat-expansion-panel-header-title, 
+/* school-headers-align .mat-expansion-panel-header-title,
 .example-headers-align .mat-expansion-panel-header-description {
   flex-basis: 0;
 } */
@@ -60,21 +62,21 @@ $dark-theme: mat.define-dark-theme((
 } */
 
 .mat-grid-tile-content {
-    position: relative !important;
-} 
+  position: relative !important;
+}
 
 /* .example-spacer {
   flex: 1 1 auto;
 } */
 
 .activebutton {
-    background-color: rgb(0, 0, 0) !important;
-  }
+  background-color: rgb(0, 0, 0) !important;
+}
 
 .schedule-header {
-    /* background-color: #CEB888; */
-    height:100px;
-    color:white;
+  /* background-color: #CEB888; */
+  height: 100px;
+  color: white;
 }
 
 .school-logo {
@@ -82,15 +84,13 @@ $dark-theme: mat.define-dark-theme((
   /* padding-top: 10px; */
   padding-left: 10px;
   margin-top: -30px;
-  -webkit-filter: drop-shadow(1px 1px 0 black) 
-                    drop-shadow(-1px -1px 0 white);
-  filter:drop-shadow(1px 1px 0 black) 
-           drop-shadow(-1px -1px 0 white);
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 white);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 white);
 }
 
 .opponent-expanded-detail {
   margin-left: 20px;
-  margin-right: 20px
+  margin-right: 20px;
 }
 
 .opponent-logo {
@@ -157,7 +157,7 @@ tr.game-row:not(.game-expanded-row):active {
   padding-top: 40px;
 }
 
-.school-name {
+.conference-school-card-name {
   font-size: 25px;
   /* font-weight: bold; */
 }
@@ -187,7 +187,6 @@ tr.game-row:not(.game-expanded-row):active {
   object-fit: contain;
 }
 
-
 .in-cell-school-logo-container {
   display: inline-block;
   width: 35px;
@@ -195,14 +194,14 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .home-away-radio-group {
-    display: flex;
-    /* flex-direction: column; */
-    margin: 15px 0;
-  }
-  
-  .home-away-radio-button {
-    margin: 5px;
-  }
+  display: flex;
+  /* flex-direction: column; */
+  margin: 15px 0;
+}
+
+.home-away-radio-button {
+  margin: 5px;
+}
 
 .add-game-container {
   padding-top: 20px;
@@ -230,14 +229,14 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .schools-accordian {
-    display: flex !important;
-    flex-flow: wrap !important;
-    margin-top: 10px;
-    justify-content: center;
+  display: flex !important;
+  flex-flow: wrap !important;
+  margin-top: 10px;
+  justify-content: center;
 }
 
 .school-detail {
-    margin: 10px;
+  margin: 10px;
 }
 
 .conference-detail {
@@ -246,27 +245,25 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .school-detail-logo {
-    max-height: 75px;
-    max-width: 75px;
-    padding-top: 0px;
-    padding-left: 0px;
-    margin-top: 0px;
-    vertical-align: middle;
-    object-fit: contain;
-    -webkit-filter: drop-shadow(1px 1px 0 black) 
-                    drop-shadow(-1px -1px 0 white);
-    filter:drop-shadow(1px 1px 0 black) 
-           drop-shadow(-1px -1px 0 white);
+  max-height: 75px;
+  max-width: 75px;
+  padding-top: 0px;
+  padding-left: 0px;
+  margin-top: 0px;
+  vertical-align: middle;
+  object-fit: contain;
+  -webkit-filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 white);
+  filter: drop-shadow(1px 1px 0 black) drop-shadow(-1px -1px 0 white);
 }
 
 .expansion-panel-data {
-    display: inline-flex;
-    width: -webkit-fill-available;
+  display: inline-flex;
+  width: -webkit-fill-available;
 }
 
 .school-quick-info {
-    align-self: center;
-    margin: auto;
+  align-self: center;
+  margin: auto;
 }
 
 .conference-schools {
@@ -278,11 +275,10 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .schedule-button {
-    float: right;
+  float: right;
 }
 
 .conference-select {
-  
   max-width: 600px;
   min-width: 300px;
   width: -webkit-fill-available;
@@ -320,8 +316,9 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .selected-school-card {
-  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%) !important;
-  top: -5px
+  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%),
+    0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%) !important;
+  top: -5px;
 }
 
 .school-card-container {
@@ -356,3 +353,5 @@ tr.game-row:not(.game-expanded-row):active {
   max-width: 75px;
   object-fit: contain;
 }
+
+//Conference Edit Styles

@@ -1,67 +1,188 @@
 <div class="dashboard-buttons-container">
-    <div class="dashboard-inputs" style="border-bottom-style: ridge">
-        <h1 class="mat-h1" style="margin-top: revert">Import Setup</h1>
-        <mat-form-field>
-            <input matInput type="number" placeholder="Year" [(ngModel)]="year">
+  <div class="dashboard-inputs" style="border-bottom-style: ridge">
+    <h1 class="mat-h1" style="margin-top: revert">Import Setup</h1>
+    <mat-form-field>
+      <input matInput type="number" placeholder="Year" [(ngModel)]="year" />
+    </mat-form-field>
+    <button mat-flat-button color="primary" (click)="setYear(year)">set</button>
 
-        </mat-form-field>
-        <button mat-flat-button color="primary" (click)="setYear(year)">set</button>
-
-        <input #xlsxInputSchedule hidden="true" type="file" onclick="this.value=null"
-            (change)="xlsxScheduleChange($event)" accept=".csv, .xlsx" />
-        <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Select CSV file with schedule (this can be exported from your dynasty)"
-            (click)="xlsxInputSchedule.click()">Choose Schedule File</button>
-        <input #xlsxInputAlignment hidden="true" type="file" onclick="this.value=null"
-            (change)="xlsxAlignmentChange($event)" accept=".xlsx" />
-        <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Select Excel doc with conference alignment" (click)="xlsxInputAlignment.click()">Choose
-            Conference Alignment File</button>
-        <input #xlsxInputBowl hidden="true" type="file" onclick="this.value=null"
-            (change)="xlsxBowlChange($event)" accept=".csv, .xlsx" />
-        <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Select CSV file with bowls (bowl.csv exported from your dynasty)" (click)="xlsxInputBowl.click()">Choose
-            Bowl File</button>
-    </div>
-    <div class="dashboard-inputs" style="border-bottom-style: ridge">
-        <h1 style="margin-top: revert">Quick Editing Tools</h1>
-        <h2 style="margin-top: revert">Non-Conference Games</h2>
-        <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes all games vs FCS schools"
-            (click)="removeAllFcsGames()">Remove All FCS Games</button>
-        <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Removes non-conference games if they're not a rivalry"
-            (click)="removeAllOocGamesNonRivalry()">Remove All OOC Games (non-rivalry)</button>
-        <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes all non-conference games"
-            (click)="removeAllOocGames()">Remove All OOC Games</button>
-        <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Fills schedule with rivalries first and then randomly" (click)="autoAddGames()">Auto Fill
-            Schedule</button>
-        <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Fills schedule with rivalries first and then randomly, will remove non-rivalry OOC games to make room for more rivalries"
-            (click)="autoAddGamesAggressive()">Auto Fill Schedule (aggressive)</button>
-        <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Adds rivalries to schedule"
-            (click)="autoAddGamesRivals()">Auto Add Rivalry Games</button>
-        <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Fills schedule with random games"
-            (click)="autoAddGamesRandom()">Auto Fill Schedule (randomly)</button>
-        <button mat-flat-button color="primary" class="dashboard-buttons"
-            matTooltip="Removes games from any school with > 12 games" (click)="fixSchedule()">Remove Extra
-            Games</button>
-    </div>
-    <div class="dashboard-inputs" style="border-bottom-style: ridge">
-        <h1 style="margin-top: revert">Danger Zone</h1>
-        <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Removes ALL conference games. Only use this if you're sure what you're doing."
-            (click)="removeAllConferenceGames()"
-            [disabled]="!conferences || !dataService.isConferenceListValid(conferences)">
-            Remove All Conference Games
-            </button>
-        <button mat-flat-button color="primary" class="dashboard-buttons" matTooltip="Adds ALL conference games. Only use this if you're sure what you're doing."
-            (click)="addAllConferenceGames()"
-            [disabled]="!conferences || !dataService.isConferenceListValid(conferences)">
-            Schedule All Conference Games
-        </button>
-    </div>
+    <input
+      #xlsxInputSchedule
+      hidden="true"
+      type="file"
+      onclick="this.value=null"
+      (change)="xlsxScheduleChange($event)"
+      accept=".csv, .xlsx"
+    />
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Select CSV file with schedule (this can be exported from your dynasty)"
+      (click)="xlsxInputSchedule.click()"
+    >
+      Choose Schedule File
+    </button>
+    <input
+      #xlsxInputAlignment
+      hidden="true"
+      type="file"
+      onclick="this.value=null"
+      (change)="xlsxAlignmentChange($event)"
+      accept=".xlsx"
+    />
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Select Excel doc with conference alignment"
+      (click)="xlsxInputAlignment.click()"
+    >
+      Choose Conference Alignment File
+    </button>
+    <input
+      #xlsxInputBowl
+      hidden="true"
+      type="file"
+      onclick="this.value=null"
+      (change)="xlsxBowlChange($event)"
+      accept=".csv, .xlsx"
+    />
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Select CSV file with bowls (bowl.csv exported from your dynasty)"
+      (click)="xlsxInputBowl.click()"
+    >
+      Choose Bowl File
+    </button>
+  </div>
+  <div class="dashboard-inputs" style="border-bottom-style: ridge">
+    <h1 class="mat-h1" style="margin-top: revert">Export</h1>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Downloads schedule to CSV file"
+      (click)="downloadFile()"
+    >
+      Download Schedule
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Downloads Conference Alignment to XLSX file"
+      (click)="downloadAlignment()"
+    >
+      Download Alignment
+    </button>
+  </div>
+  <div class="dashboard-inputs" style="border-bottom-style: ridge">
+    <h1 style="margin-top: revert">Quick Editing Tools</h1>
+    <h2 style="margin-top: revert">Non-Conference Games</h2>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Removes all games vs FCS schools"
+      (click)="removeAllFcsGames()"
+    >
+      Remove All FCS Games
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Removes non-conference games if they're not a rivalry"
+      (click)="removeAllOocGamesNonRivalry()"
+    >
+      Remove All OOC Games (non-rivalry)
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Removes all non-conference games"
+      (click)="removeAllOocGames()"
+    >
+      Remove All OOC Games
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Fills schedule with rivalries first and then randomly"
+      (click)="autoAddGames()"
+    >
+      Auto Fill Schedule
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Fills schedule with rivalries first and then randomly, will remove non-rivalry OOC games to make room for more rivalries"
+      (click)="autoAddGamesAggressive()"
+    >
+      Auto Fill Schedule (aggressive)
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Adds rivalries to schedule"
+      (click)="autoAddGamesRivals()"
+    >
+      Auto Add Rivalry Games
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Fills schedule with random games"
+      (click)="autoAddGamesRandom()"
+    >
+      Auto Fill Schedule (randomly)
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Removes games from any school with > 12 games"
+      (click)="fixSchedule()"
+    >
+      Remove Extra Games
+    </button>
+  </div>
+  <div class="dashboard-inputs" style="border-bottom-style: ridge">
+    <h1 style="margin-top: revert">Batch</h1>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Removes all conference games."
+      (click)="removeAllConferenceGames()"
+    >
+      Remove All Conference Games
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Adds conference games for all FBS Conferences."
+      (click)="addAllConferenceGames()"
+    >
+      Schedule All Conference Games
+    </button>
+  </div>
 </div>
-<button mat-fab color="accent" class="save-button" matTooltip="Downloads schedule to CSV file"
-    (click)="downloadFile()">
+<!-- <button
+    mat-fab
+    color="accent"
+    class="save-button"
+    matTooltip="Downloads schedule to CSV file"
+    (click)="downloadFile()"
+  >
     <mat-icon>save</mat-icon>
-</button>
+  </button> -->
