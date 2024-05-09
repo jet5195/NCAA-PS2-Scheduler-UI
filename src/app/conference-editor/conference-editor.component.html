@@ -9,12 +9,20 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Conference</mat-label>
-      <mat-select (selectionChange)="onConferenceSelectChange($event)" [compareWith]="compareService.compareConferences">
+      <mat-select (selectionChange)="onConferenceSelectChange($event)" [compareWith]="compareService.compareConferences"
+                  [disabled]="!isValid">
         <mat-option *ngFor="let conference of conferences" [value]="conference">
           {{ conference.shortName }}
         </mat-option>
       </mat-select>
-    </mat-form-field>    
+    </mat-form-field>
+    <mat-error *ngIf="conferenceForm?.errors">
+      <ul>
+        <li *ngFor="let error of conferenceForm.errors | keyvalue">
+          {{ getErrorMessage(error.key) }}
+        </li>
+      </ul>
+    </mat-error>
     <mat-tab-group *ngIf="selectedConference" dynamicHeight>
       <mat-tab label="Info">
         <app-conference-info [conferenceForm]="conferenceForm"></app-conference-info>
@@ -22,10 +30,10 @@
       <mat-tab label="Divisions">
         <app-conference-divisions [conferenceForm]="conferenceForm"></app-conference-divisions>
       </mat-tab>
-      <mat-tab label="Members">
+      <mat-tab label="Schools">
         <app-conference-school-list
-                                    [schools]="schools" [conferences]="conferences"
-                                    [divisions]="divisions"></app-conference-school-list>
+          [schools]="schools" [conferences]="conferences"
+          [divisions]="divisions"></app-conference-school-list>
       </mat-tab>
       <mat-tab label="Map">
         <div>

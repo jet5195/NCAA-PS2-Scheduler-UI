@@ -1,22 +1,11 @@
-import {
-  CdkDragDrop,
-  CdkDragEnter,
-  CdkDragExit,
-  transferArrayItem,
-} from '@angular/cdk/drag-drop';
-import {
-  Component,
-  HostListener,
-  Input,
-  OnInit,
-  Renderer2,
-} from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Conference } from 'src/app/conference';
-import { School } from 'src/app/school';
-import { Division } from '../../division';
-import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
-import { ConferenceEditorService } from '../conference-editor.service';
+import {CdkDragDrop, CdkDragEnter, CdkDragExit, transferArrayItem,} from '@angular/cdk/drag-drop';
+import {Component, HostListener, Input, OnInit, Renderer2,} from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Conference} from 'src/app/conference';
+import {School} from 'src/app/school';
+import {Division} from '../../division';
+import {AddSchoolDialogComponent} from '../add-school-dialog/add-school-dialog.component';
+import {ConferenceEditorService} from '../conference-editor.service';
 
 @Component({
   selector: 'app-conference-school-list',
@@ -46,9 +35,9 @@ export class ConferenceSchoolListComponent implements OnInit {
       this.conference = conference;
       this.orphanedSchools = this.calculateOrphanedSchools();
       if (this.orphanedSchools.length > 0) {
-        this.conferenceEditorService.updateSchoolListValidity(false);
+        this.conferenceEditorService.updateSchoolsTabValidity(false);
       } else {
-        this.conferenceEditorService.updateSchoolListValidity(true);
+        this.conferenceEditorService.updateSchoolsTabValidity(true);
       }
     });
   }
