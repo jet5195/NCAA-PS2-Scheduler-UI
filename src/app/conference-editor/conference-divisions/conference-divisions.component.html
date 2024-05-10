@@ -1,31 +1,57 @@
 <div [formGroup]="conferenceForm" class="edit-form">
-    <div *ngIf="divisions.length > 0; else noDivisionsTemplate" class="divisions-container">
-      <div formArrayName="divisions" class="divisions-list">
-        <mat-card *ngFor="let division of divisions.controls; let i = index" [formGroupName]="i" class="division-card">
-          <mat-card-content class="card-content">
-            <div class="form-field-container">
-              <mat-form-field class="full-width-field">
-                <mat-label>Name</mat-label>
-                <input matInput formControlName="name">
-              </mat-form-field>
-              <mat-form-field class="full-width-field">
-                <mat-label>Short Name</mat-label>
-                <input matInput formControlName="shortName">
-              </mat-form-field>
-              <mat-form-field class="full-width-field">
-                <mat-label>Divisions ID</mat-label>
-                <input matInput formControlName="divisionId" readonly>
-              </mat-form-field>
-              <!-- Other division fields -->
-            </div>
-            <button mat-button color="warn" (click)="removeDivision(i)" class="remove-button">Remove</button>
-          </mat-card-content>
-        </mat-card>
-      </div>
+  <div
+    *ngIf="divisions.length > 0; else noDivisionsTemplate"
+    class="divisions-container"
+  >
+    <div formArrayName="divisions" class="divisions-list">
+      <mat-card
+        *ngFor="let division of divisions.controls; let i = index"
+        [formGroupName]="i"
+        class="division-card"
+      >
+        <mat-card-content class="card-content">
+          <div class="form-field-container">
+            <mat-form-field class="full-width-field">
+              <mat-label>Name</mat-label>
+              <input matInput formControlName="name" />
+              <mat-error *ngIf="division.get('name').invalid"
+                >Please enter a valid name.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="full-width-field">
+              <mat-label>Short Name</mat-label>
+              <input matInput formControlName="shortName" />
+              <mat-error *ngIf="division.get('shortName').invalid"
+                >Please enter a valid short name.</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field class="full-width-field">
+              <mat-label>Divisions ID</mat-label>
+              <input matInput formControlName="divisionId" readonly />
+            </mat-form-field>
+            <!-- Other division fields -->
+          </div>
+          <button
+            mat-button
+            color="warn"
+            (click)="removeDivision(i)"
+            class="remove-button"
+          >
+            Remove
+          </button>
+        </mat-card-content>
+      </mat-card>
     </div>
-    <ng-template #noDivisionsTemplate>
-      <p class="no-divisions-text">No divisions yet.</p>
-    </ng-template>
-    <button mat-raised-button color="primary" (click)="addDivision()" class="add-division-button">Add Division</button>
   </div>
-  
+  <ng-template #noDivisionsTemplate>
+    <p class="no-divisions-text">No divisions yet.</p>
+  </ng-template>
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="addDivision()"
+    class="add-division-button"
+  >
+    Add Division
+  </button>
+</div>

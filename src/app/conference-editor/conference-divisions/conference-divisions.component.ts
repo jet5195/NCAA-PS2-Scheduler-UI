@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Division } from 'src/app/division';
 import { School } from 'src/app/school';
 import { ConferenceEditorService } from '../conference-editor.service';
@@ -11,6 +11,7 @@ import { ConferenceEditorService } from '../conference-editor.service';
 })
 export class ConferenceDivisionsComponent {
   @Input() conferenceForm: FormGroup;
+  @Input() allDivisions: Division[];
 
   constructor(
     private fb: FormBuilder,
@@ -27,21 +28,41 @@ export class ConferenceDivisionsComponent {
       school.divisionId = null;
     });
     this.divisions.removeAt(index);
-    this.conferenceEditorService.updateSelectedConference(
-      this.conferenceForm.value
-    );
+    this.conferenceEditorService.validateConferences();
   }
 
   addDivision(divisionData?: Division) {
+    const divisionId = this.findNewDivisionId();
     const divisionGroup = this.fb.group({
-      name: [divisionData ? divisionData.name : ''],
-      shortName: [divisionData ? divisionData.shortName : ''],
-      divisionId: [divisionData ? divisionData.divisionId : ''],
+      name: [divisionData ? divisionData.name : '', Validators.required],
+      shortName: [
+        divisionData ? divisionData.shortName : '',
+        Validators.required,
+      ],
+      divisionId: [
+        divisionData ? divisionData.divisionId : divisionId,
+        Validators.required,
+      ],
       schools: [[]],
     });
     this.divisions.push(divisionGroup);
-    this.conferenceEditorService.updateSelectedConference(
-      this.conferenceForm.value
+    this.conferenceEditorService.validateConferences();
+  }
+  findNewDivisionId() {
+    const divisionIds: number[] = this.allDivisions.map(
+      (division) => division.divisionId
     );
+    const confDivisionIds: number[] = this.divisions.controls.map(
+      (divisionControl) => divisionControl.value.divisionId
+    );
+
+    // Assuming you have an array to store these IDs
+    divisionIds.push(...confDivisionIds);
+
+    let newId = 0;
+    while (divisionIds.includes(newId)) {
+      newId++;
+    }
+    return newId;
   }
 }
