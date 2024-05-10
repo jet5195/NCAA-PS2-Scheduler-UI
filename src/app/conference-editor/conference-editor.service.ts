@@ -1,14 +1,17 @@
-import {Injectable} from '@angular/core';
-import {BehaviorSubject, combineLatest, Observable} from 'rxjs';
-import {Conference} from '../conference';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Conference } from '../conference';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ConferenceEditorService {
   private selectedConferenceSubject = new BehaviorSubject<Conference>(null);
   selectedConference = this.selectedConferenceSubject.asObservable();
+
+  private conferencesSubject = new BehaviorSubject<Conference[]>(null);
+  conferences = this.conferencesSubject.asObservable();
 
   private infoTabValiditySubject = new BehaviorSubject<boolean>(true);
   private infoTabValidity = this.infoTabValiditySubject.asObservable();
@@ -17,13 +20,17 @@ export class ConferenceEditorService {
   private schoolsTabValidity = this.schoolsTabValiditySubject.asObservable();
 
   private divisionsTabValiditySubject = new BehaviorSubject<boolean>(true);
-  private divisionsTabValidity = this.divisionsTabValiditySubject.asObservable();
+  private divisionsTabValidity =
+    this.divisionsTabValiditySubject.asObservable();
 
-  constructor() {
-  }
+  constructor() {}
 
   updateSelectedConference(conference: Conference) {
     this.selectedConferenceSubject.next(conference);
+  }
+
+  updateConferences(conferences: Conference[]) {
+    this.conferencesSubject.next(conferences);
   }
 
   updateInfoTabValidity(isValid: boolean) {
@@ -31,7 +38,7 @@ export class ConferenceEditorService {
   }
 
   updateSchoolsTabValidity(isValid: boolean) {
-    console.log('updating school list with: ' + isValid)
+    console.log('updating school list with: ' + isValid);
     this.schoolsTabValiditySubject.next(isValid);
   }
 
@@ -43,7 +50,10 @@ export class ConferenceEditorService {
 
   isValid(): Observable<boolean> {
     return combineLatest([this.infoTabValidity, this.schoolsTabValidity]).pipe(
-      map(([infoFormValidity, schoolListValidity]) => infoFormValidity && schoolListValidity)
+      map(
+        ([infoFormValidity, schoolListValidity]) =>
+          infoFormValidity && schoolListValidity
+      )
     );
   }
 }
