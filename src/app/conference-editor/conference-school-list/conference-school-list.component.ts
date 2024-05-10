@@ -136,6 +136,7 @@ export class ConferenceSchoolListComponent implements OnInit {
     }
     // Emit an event to notify that the conference has been updated
     this.conferenceEditorService.updateSelectedConference(this.conference);
+    this.conferenceEditorService.updateConferences(this.conferences);
   }
 
   isDark(color: string): boolean {
@@ -193,6 +194,7 @@ export class ConferenceSchoolListComponent implements OnInit {
     this.isDragging = false;
     this.activeDivision = null;
     this.conferenceEditorService.updateSelectedConference(this.conference);
+    this.conferenceEditorService.updateConferences(this.conferences);
   }
 
   onDragEntered(event: CdkDragEnter<any, any>) {

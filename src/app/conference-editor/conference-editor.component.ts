@@ -1,23 +1,32 @@
-import {HttpErrorResponse} from '@angular/common/http';
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators,} from '@angular/forms';
-import {Observable} from 'rxjs';
-import {tap} from 'rxjs/operators';
-import {Conference} from '../conference';
-import {Division} from '../division';
-import {School} from '../school';
-import {CompareService} from '../services/compare.service';
-import {DataService} from '../services/data.service';
-import {SnackBarService} from '../snackBar.service';
-import {ConferenceEditorService} from './conference-editor.service';
-import {ComponentCanDeactivate} from "../unsaved-changes.guard";
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { Conference } from '../conference';
+import { Division } from '../division';
+import { School } from '../school';
+import { CompareService } from '../services/compare.service';
+import { DataService } from '../services/data.service';
+import { SnackBarService } from '../snackBar.service';
+import { ComponentCanDeactivate } from '../unsaved-changes.guard';
+import { ConferenceEditorService } from './conference-editor.service';
 
 @Component({
   selector: 'app-conference-editor',
   templateUrl: './conference-editor.component.html',
   styleUrls: ['./conference-editor.component.css'],
 })
-export class ConferenceEditorComponent implements OnInit, OnDestroy, ComponentCanDeactivate {
+export class ConferenceEditorComponent
+  implements OnInit, OnDestroy, ComponentCanDeactivate
+{
   conferences: Conference[] = [];
   divisions: Division[] = [];
   schools: School[] = [];
@@ -29,10 +38,9 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy, ComponentCa
     private dataService: DataService,
     private snackBarService: SnackBarService,
     public compareService: CompareService,
-    private conferenceEditorService: ConferenceEditorService,
+    public conferenceEditorService: ConferenceEditorService,
     private fb: FormBuilder
-  ) {
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.conferenceEditorService.updateSelectedConference(null);
@@ -69,6 +77,7 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy, ComponentCa
       tap((data) => {
         this.conferences = data;
         // Use map and reduce to flatten the array of Division objects
+        this.conferenceEditorService.updateConferences(this.conferences);
         this.divisions = this.conferences.flatMap(
           (conference) => conference.divisions
         );
@@ -160,8 +169,8 @@ export class ConferenceEditorComponent implements OnInit, OnDestroy, ComponentCa
           )
         ),
       },
-      {validators: [divisionsValidator, divisionsSchoolsValidator]}
-    )
+      { validators: [divisionsValidator, divisionsSchoolsValidator] }
+    );
 
     this.conferenceForm.valueChanges.subscribe((data) => {
       this.selectedConference = Object.assign(
@@ -235,7 +244,7 @@ export const divisionsValidator: ValidatorFn = (
 ): ValidationErrors | null => {
   const divisions: FormArray = formGroup.get('divisions') as FormArray;
   const isValid: boolean = divisions.length === 0 || divisions.length === 2;
-  return isValid ? null : {invalidDivisionsLength: true};
+  return isValid ? null : { invalidDivisionsLength: true };
 };
 
 // Custom validator functions
@@ -248,6 +257,6 @@ export const divisionsSchoolsValidator: ValidatorFn = (
     const schools2: FormArray = divisions.at(1).get('schools') as FormArray;
     console.log(schools.length, schools2.length);
     const isValid: boolean = schools.length === schools2.length;
-    return isValid ? null : {invalidDivisionsSchools: true};
+    return isValid ? null : { invalidDivisionsSchools: true };
   } else return null;
 };

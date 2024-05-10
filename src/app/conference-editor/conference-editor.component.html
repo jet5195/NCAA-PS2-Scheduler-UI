@@ -21,10 +21,10 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-error *ngIf="conferenceForm?.errors">
+    <mat-error *ngIf="conferenceEditorService.errors">
       <ul>
-        <li *ngFor="let error of conferenceForm.errors | keyvalue">
-          {{ getErrorMessage(error.key) }}
+        <li *ngFor="let error of conferenceEditorService.errors">
+          {{ error }}
         </li>
       </ul>
     </mat-error>

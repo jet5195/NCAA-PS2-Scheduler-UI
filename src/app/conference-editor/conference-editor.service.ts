@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Conference } from '../conference';
+import { School } from '../school';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,8 @@ export class ConferenceEditorService {
   private divisionsTabValidity =
     this.divisionsTabValiditySubject.asObservable();
 
+  errors: string[] = [];
+
   constructor() {}
 
   updateSelectedConference(conference: Conference) {
@@ -31,6 +34,52 @@ export class ConferenceEditorService {
 
   updateConferences(conferences: Conference[]) {
     this.conferencesSubject.next(conferences);
+    this.errors = [];
+    if (conferences) {
+      conferences.forEach((c) => this.validateConference(c));
+    }
+  }
+
+  validateConference(conference: Conference) {
+    if (
+      conference.divisions.length !== 0 &&
+      conference.divisions.length !== 2
+    ) {
+      this.errors.push(
+        conference.name + ': Only 0 or 2 divisions are allowed.'
+      );
+    }
+    //orphaned schools validation
+    if (conference.divisions.length == 2) {
+      const divSchoolsFlatMap: School[] = conference.divisions.flatMap(
+        (d) => d.schools
+      );
+      if (conference.schools.length !== divSchoolsFlatMap.length) {
+        this.errors.push(
+          conference.name +
+            ': has orphaned schools (Schools not in a division).'
+        );
+      }
+      const schoolCounts = conference.divisions.map((d) => d.schools.length);
+      const allEqual = schoolCounts.every((count) => count === schoolCounts[0]);
+      if (!allEqual) {
+        this.errors.push(
+          conference.name + ': divisions must have an equal numbers of schools.'
+        );
+      }
+      if (conference.schools.length > 14) {
+        this.errors.push +
+          ': ' +
+          conference.schools.length +
+          ' conference size is not supported.';
+      }
+    } else {
+      //validations for schools without divisions
+      if (conference.schools.length > 11) {
+        conference.name + ': conferences with > 11 schools must have divisions';
+      }
+    }
+    console.log(this.errors);
   }
 
   updateInfoTabValidity(isValid: boolean) {
