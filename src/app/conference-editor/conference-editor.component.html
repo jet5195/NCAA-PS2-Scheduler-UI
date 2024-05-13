@@ -12,6 +12,7 @@
     <mat-form-field>
       <mat-label>Conference</mat-label>
       <mat-select
+        [(ngModel)]="selectedConference"
         (selectionChange)="onConferenceSelectChange($event)"
         [compareWith]="compareService.compareConferences"
         [disabled]="!isValid"
@@ -30,13 +31,10 @@
     </mat-error>
     <mat-tab-group *ngIf="selectedConference" dynamicHeight>
       <mat-tab label="Info">
-        <app-conference-info
-          [conferenceForm]="conferenceForm"
-        ></app-conference-info>
+        <app-conference-info></app-conference-info>
       </mat-tab>
       <mat-tab label="Divisions">
         <app-conference-divisions
-          [conferenceForm]="conferenceForm"
           [allDivisions]="divisions"
         ></app-conference-divisions>
       </mat-tab>

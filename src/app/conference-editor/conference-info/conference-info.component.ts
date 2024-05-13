@@ -1,5 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { Component } from '@angular/core';
+import { Conference } from 'src/app/conference';
+import { ConferenceEditorService } from '../conference-editor.service';
 
 @Component({
   selector: 'app-conference-info',
@@ -7,11 +8,14 @@ import { FormArray, FormGroup } from '@angular/forms';
   styleUrl: './conference-info.component.css',
 })
 export class ConferenceInfoComponent {
-  @Input() conferenceForm: FormGroup;
+  conference: Conference;
+  constructor(private conferenceEditorService: ConferenceEditorService) {}
 
-  constructor() {}
-
-  get divisions(): FormArray {
-    return this.conferenceForm.get('divisions') as FormArray;
+  ngOnInit() {
+    this.conferenceEditorService.selectedConference.subscribe(
+      (conference: Conference) => {
+        this.conference = conference;
+      }
+    );
   }
 }

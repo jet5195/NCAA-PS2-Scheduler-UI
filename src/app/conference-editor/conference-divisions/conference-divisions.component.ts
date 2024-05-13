@@ -28,6 +28,9 @@ export class ConferenceDivisionsComponent {
       school.divisionId = null;
     });
     this.divisions.removeAt(index);
+    this.conferenceEditorService.updateSelectedConference(
+      this.conferenceForm.value
+    );
     this.conferenceEditorService.validateConferences();
   }
 
@@ -56,7 +59,6 @@ export class ConferenceDivisionsComponent {
       (divisionControl) => divisionControl.value.divisionId
     );
 
-    // Assuming you have an array to store these IDs
     divisionIds.push(...confDivisionIds);
 
     let newId = 0;
