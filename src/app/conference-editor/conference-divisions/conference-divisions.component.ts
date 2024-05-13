@@ -1,62 +1,61 @@
-import { Component, Input } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { Division } from 'src/app/division';
 import { School } from 'src/app/school';
 import { ConferenceEditorService } from '../conference-editor.service';
+import { Conference } from '../../conference';
 
 @Component({
   selector: 'app-conference-divisions',
   templateUrl: './conference-divisions.component.html',
   styleUrl: './conference-divisions.component.css',
 })
-export class ConferenceDivisionsComponent {
-  @Input() conferenceForm: FormGroup;
+export class ConferenceDivisionsComponent implements OnInit {
+  conference: Conference;
   @Input() allDivisions: Division[];
 
   constructor(
     private fb: FormBuilder,
-    private conferenceEditorService: ConferenceEditorService
+    private conferenceEditorService: ConferenceEditorService,
   ) {}
 
-  get divisions(): FormArray {
-    return this.conferenceForm.get('divisions') as FormArray;
+  ngOnInit() {
+    this.conferenceEditorService.selectedConference.subscribe(
+      (conference: Conference) => {
+        this.conference = conference;
+      },
+    );
   }
 
   removeDivision(index: number) {
-    const div: Division = this.divisions.at(index).value;
+    const div: Division = this.conference.divisions[index];
     div.schools.forEach((school: School) => {
       school.divisionId = null;
     });
-    this.divisions.removeAt(index);
-    this.conferenceEditorService.updateSelectedConference(
-      this.conferenceForm.value
-    );
+    this.conference.divisions.splice(index, 1);
+    this.conferenceEditorService.updateSelectedConference(this.conference);
     this.conferenceEditorService.validateConferences();
   }
 
-  addDivision(divisionData?: Division) {
+  addDivision() {
     const divisionId = this.findNewDivisionId();
-    const divisionGroup = this.fb.group({
-      name: [divisionData ? divisionData.name : '', Validators.required],
-      shortName: [
-        divisionData ? divisionData.shortName : '',
-        Validators.required,
-      ],
-      divisionId: [
-        divisionData ? divisionData.divisionId : divisionId,
-        Validators.required,
-      ],
-      schools: [[]],
-    });
-    this.divisions.push(divisionGroup);
+    const newDivision: Division = {
+      divisionId: divisionId,
+      name: '',
+      shortName: '',
+      schools: [],
+    };
+    this.conference.divisions.push(newDivision);
+    this.conferenceEditorService.updateSelectedConference(this.conference);
     this.conferenceEditorService.validateConferences();
   }
+
   findNewDivisionId() {
     const divisionIds: number[] = this.allDivisions.map(
-      (division) => division.divisionId
+      (division) => division.divisionId,
     );
-    const confDivisionIds: number[] = this.divisions.controls.map(
-      (divisionControl) => divisionControl.value.divisionId
+    const confDivisionIds: number[] = this.conference.divisions.map(
+      (division) => division.divisionId,
     );
 
     divisionIds.push(...confDivisionIds);
