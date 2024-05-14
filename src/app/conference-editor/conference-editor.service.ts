@@ -28,10 +28,14 @@ export class ConferenceEditorService {
 
   constructor() {}
 
-  updateSelectedConference(conference: Conference) {
-    this.selectedConferenceSubject.next(conference);
-    // this.errors = [];
-    // this.validateConference(conference);
+  updateSelectedConference(conference: Conference | null) {
+    if (conference) {
+      this.selectedConferenceSubject.next(conference);
+    } else {
+      //reset data;
+      this.selectedConferenceSubject = new BehaviorSubject<Conference>(null);
+      this.selectedConference = this.selectedConferenceSubject.asObservable();
+    }
   }
 
   updateConferences(conferences: Conference[]) {
@@ -56,28 +60,28 @@ export class ConferenceEditorService {
         conference.divisions.length !== 2
       ) {
         this.errors.push(
-          conference.name + ': Only 0 or 2 divisions are allowed.'
+          conference.name + ': Only 0 or 2 divisions are allowed.',
         );
       }
       //orphaned schools validation
       if (conference.divisions.length == 2) {
         const divSchoolsFlatMap: School[] = conference.divisions.flatMap(
-          (d) => d.schools
+          (d) => d.schools,
         );
         if (conference.schools.length !== divSchoolsFlatMap.length) {
           this.errors.push(
             conference.name +
-              ': has orphaned schools (Schools not in a division).'
+              ': has orphaned schools (Schools not in a division).',
           );
         }
         const schoolCounts = conference.divisions.map((d) => d.schools.length);
         const allEqual = schoolCounts.every(
-          (count) => count === schoolCounts[0]
+          (count) => count === schoolCounts[0],
         );
         if (!allEqual) {
           this.errors.push(
             conference.name +
-              ': divisions must have an equal numbers of schools.'
+              ': divisions must have an equal numbers of schools.',
           );
         }
         if (conference.schools.length > 14) {
@@ -86,7 +90,7 @@ export class ConferenceEditorService {
               conference.name +
               ' ' +
               conference.schools.length +
-              ' conference size is not supported.'
+              ' conference size is not supported.',
           );
         }
       } else {
@@ -94,7 +98,7 @@ export class ConferenceEditorService {
         if (conference.schools.length > 11) {
           this.errors.push(
             conference.name +
-              ': conferences with > 11 schools must have divisions'
+              ': conferences with > 11 schools must have divisions',
           );
         }
       }
@@ -121,8 +125,8 @@ export class ConferenceEditorService {
     return combineLatest([this.infoTabValidity, this.schoolsTabValidity]).pipe(
       map(
         ([infoFormValidity, schoolListValidity]) =>
-          infoFormValidity && schoolListValidity
-      )
+          infoFormValidity && schoolListValidity,
+      ),
     );
   }
 }

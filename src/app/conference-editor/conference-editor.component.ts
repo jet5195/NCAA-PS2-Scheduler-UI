@@ -2,12 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   FormArray,
-  FormBuilder,
   FormGroup,
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Conference } from '../conference';
 import { Division } from '../division';
@@ -31,30 +30,34 @@ export class ConferenceEditorComponent
   schools: School[] = [];
   selectedConference!: Conference;
   isValid: boolean = true;
+  private subscriptions = new Subscription();
   constructor(
     private dataService: DataService,
     private snackBarService: SnackBarService,
     public compareService: CompareService,
     public conferenceEditorService: ConferenceEditorService,
-    private fb: FormBuilder
   ) {}
 
   ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
     this.conferenceEditorService.updateSelectedConference(null);
     this.conferenceEditorService.updateFormValidities(true, true);
   }
 
   ngOnInit() {
     this.loadData();
-    this.conferenceEditorService.selectedConference.subscribe((conference) => {
-      this.selectedConference = conference;
-      if (this.selectedConference !== null) {
-        //this.createFormGroup();
-      }
-    });
-    this.conferenceEditorService.isValid().subscribe((isValid) => {
-      this.isValid = isValid;
-    });
+    this.subscriptions.add(
+      this.conferenceEditorService.selectedConference.subscribe(
+        (conference) => {
+          this.selectedConference = conference;
+        },
+      ),
+    );
+    this.subscriptions.add(
+      this.conferenceEditorService.isValid().subscribe((isValid) => {
+        this.isValid = isValid;
+      }),
+    );
   }
 
   canDeactivate(): Observable<boolean> | boolean {
@@ -76,9 +79,9 @@ export class ConferenceEditorComponent
         // Use map and reduce to flatten the array of Division objects
         this.conferenceEditorService.updateConferences(this.conferences);
         this.divisions = this.conferences.flatMap(
-          (conference) => conference.divisions
+          (conference) => conference.divisions,
         );
-      })
+      }),
     );
   }
 
@@ -97,17 +100,17 @@ export class ConferenceEditorComponent
         console.log(data);
         this.snackBarService.openSnackBar(
           'Conferences have been saved successfully',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error: HttpErrorResponse) => {
         this.snackBarService.openSnackBar(
           'Error saving conferences' + error.message,
-          'Dismiss'
+          'Dismiss',
         );
         console.error('Error status:', error.status);
         console.error('Error message:', error.message);
-      }
+      },
     );
   }
 
@@ -117,11 +120,11 @@ export class ConferenceEditorComponent
   cancel() {
     this.loadConferenceList().subscribe((data) => {
       const updatedConference = data.find(
-        (c) => c.conferenceId === this.selectedConference.conferenceId
+        (c) => c.conferenceId === this.selectedConference.conferenceId,
       );
       if (updatedConference) {
         this.conferenceEditorService.updateSelectedConference(
-          updatedConference
+          updatedConference,
         );
       }
     });
@@ -132,7 +135,7 @@ export class ConferenceEditorComponent
   onConferenceSelectChange(event) {
     // const selectedConf = event.value;
     this.conferenceEditorService.updateSelectedConference(
-      this.selectedConference
+      this.selectedConference,
     );
   }
 
@@ -157,7 +160,7 @@ export class ConferenceEditorComponent
 
 // Custom validator functions
 export const divisionsValidator: ValidatorFn = (
-  formGroup: FormGroup
+  formGroup: FormGroup,
 ): ValidationErrors | null => {
   const divisions: FormArray = formGroup.get('divisions') as FormArray;
   const isValid: boolean = divisions.length === 0 || divisions.length === 2;
@@ -166,7 +169,7 @@ export const divisionsValidator: ValidatorFn = (
 
 // Custom validator functions
 export const divisionsSchoolsValidator: ValidatorFn = (
-  formGroup: FormGroup
+  formGroup: FormGroup,
 ): ValidationErrors | null => {
   const divisions: FormArray = formGroup.get('divisions') as FormArray;
   if (divisions.length > 1) {

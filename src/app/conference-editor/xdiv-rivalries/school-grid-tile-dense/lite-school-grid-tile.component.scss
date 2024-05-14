@@ -4,7 +4,7 @@
 }
 
 /* Team card styles */
-.conference-team-card {
+.team-card {
   @extend %hover-transition;
   height: 75px;
   width: 280px;
@@ -20,6 +20,7 @@
 
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
   }
 }
 
@@ -52,13 +53,12 @@
 }
 
 /* School name */
-.conference-school-card-name {
+.school-card-name {
   position: relative;
   z-index: 1;
   font-size: 24px;
   font-weight: bold;
   color: white;
-  //background-color: rgba(0, 0, 0, 0.6);
   padding: 10px;
   border-radius: 5px;
 }

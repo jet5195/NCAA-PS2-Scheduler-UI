@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MapChart } from 'echarts/charts';
 import { TooltipComponent, VisualMapComponent } from 'echarts/components';
 import * as echarts from 'echarts/core';
 import { CanvasRenderer } from 'echarts/renderers';
+import { Subscription } from 'rxjs';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
 import { ConferenceEditorService } from '../conference-editor.service';
@@ -14,9 +15,10 @@ echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
   templateUrl: './map.component.html',
   styleUrl: './map.component.css',
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   conference!: Conference;
   chartOptions;
+  private subscriptions = new Subscription();
 
   stateHighlightColor: string = '#d4d4d4';
 
@@ -29,10 +31,18 @@ export class MapComponent implements OnInit {
   constructor(private conferenceEditorService: ConferenceEditorService) {}
 
   ngOnInit(): void {
-    this.conferenceEditorService.selectedConference.subscribe((conference) => {
-      this.conference = conference;
-      this.initMap();
-    });
+    this.subscriptions.add(
+      this.conferenceEditorService.selectedConference.subscribe(
+        (conference) => {
+          this.conference = conference;
+          this.initMap();
+        },
+      ),
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   initMap(): void {

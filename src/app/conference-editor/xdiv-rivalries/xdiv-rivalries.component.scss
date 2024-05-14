@@ -1,0 +1,26 @@
+.div1-column,
+.div2-column {
+  flex: 1; /* Make both columns equally sized */
+  padding: 10px; /* Add some padding for better visual separation */
+}
+
+/* Shared transition for hover effects */
+%hover-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+.cdk-drag-placeholder {
+  opacity: 25%;
+  z-index: -100;
+}
+
+.cdk-drag-preview {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.container {
+  margin-top: 20px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: space-evenly;
+}

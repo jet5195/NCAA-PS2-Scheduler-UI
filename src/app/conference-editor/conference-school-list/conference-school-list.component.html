@@ -15,7 +15,6 @@
       (cdkDropListDropped)="drop($event)"
       cdkDropListSortingDisabled
       cdkDropListAutoScrollDisabled="true"
-      class="school-grid-list"
       id="orphaned-schools-list"
     >
       <mat-grid-tile
@@ -44,12 +43,10 @@
       (cdkDropListDropped)="drop($event)"
       cdkDropListSortingDisabled
       cdkDropListAutoScrollDisabled="true"
-      class="school-grid-list"
       [id]="'division-school-list-' + i"
     >
       <mat-grid-tile
         *ngFor="let school of division.schools"
-        class="school-grid-tile"
         [style.--team-primary-color]="school.color"
         [style.--team-alt-color]="school.altColor"
         (cdkDragStarted)="dragSchool = school"
@@ -86,7 +83,6 @@
   >
     <ng-container *ngFor="let school of conference.schools">
       <mat-grid-tile
-        class="school-grid-tile"
         [style.--team-primary-color]="school.color"
         [style.--team-alt-color]="school.altColor"
       >

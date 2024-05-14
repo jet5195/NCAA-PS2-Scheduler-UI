@@ -1,5 +1,5 @@
 <mat-card
-  class="conference-team-card team-primary-color"
+  class="team-card team-primary-color"
   [style.--team-primary-color]="school ? school.color : ''"
   [style.--team-alt-color]="school ? school.altColor : ''"
 >
@@ -8,7 +8,7 @@
       class="team-logo-card-avatar"
       [ngStyle]="{ 'background-image': 'url(' + school?.logo + ')' }"
     ></div>
-    <mat-card-title class="conference-school-card-name">
+    <mat-card-title class="school-card-name">
       {{ school.name }}
     </mat-card-title>
   </div>
