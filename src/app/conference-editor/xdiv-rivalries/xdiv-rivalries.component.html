@@ -1,0 +1,8 @@
+<div *ngIf="isXDivEnabled">
+  <div *ngFor="let school of conference.divisions[0].schools">
+    {{ school.name }} {{ school.nickname }}
+    <!--    <app-school-grid-tile-->
+    <!--      [school]="findSchoolByTgid(school.xDivRival)"-->
+    <!--    ></app-school-grid-tile>-->
+  </div>
+</div>
