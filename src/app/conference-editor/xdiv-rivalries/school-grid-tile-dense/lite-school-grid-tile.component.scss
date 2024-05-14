@@ -1,0 +1,64 @@
+/* Shared transition for hover effects */
+%hover-transition {
+  transition: all 0.3s ease-in-out;
+}
+
+/* Team card styles */
+.conference-team-card {
+  @extend %hover-transition;
+  height: 75px;
+  width: 280px;
+  background: var(--team-primary-color);
+  color: var(--team-alt-color);
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Dynamic color styling */
+.team-primary-color {
+  background-color: var(--team-primary-color);
+}
+
+.team-alt-color {
+  color: var(--team-alt-color);
+}
+
+/* Team logo container */
+.team-logo-container {
+  position: relative;
+  text-align: center;
+}
+
+/* Team logo styles */
+.team-logo-card-avatar {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  height: 300%;
+  position: absolute;
+  top: -50px;
+  left: 0;
+  opacity: 50%;
+}
+
+/* School name */
+.conference-school-card-name {
+  position: relative;
+  z-index: 1;
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  //background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  border-radius: 5px;
+}

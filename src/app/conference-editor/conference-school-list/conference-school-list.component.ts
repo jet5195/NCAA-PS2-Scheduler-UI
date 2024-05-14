@@ -36,7 +36,7 @@ export class ConferenceSchoolListComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private conferenceEditorService: ConferenceEditorService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
   ) {
     this.calculateColumns(window.innerWidth);
   }
@@ -51,12 +51,12 @@ export class ConferenceSchoolListComponent implements OnInit {
         } else {
           this.conferenceEditorService.updateSchoolsTabValidity(true);
         }
-      }
+      },
     );
     this.conferenceEditorService.conferences.subscribe(
       (conferences: Conference[]) => {
         this.conferences = conferences;
-      }
+      },
     );
   }
 
@@ -86,11 +86,11 @@ export class ConferenceSchoolListComponent implements OnInit {
           availableSchools: this.schools.filter(
             (school) =>
               !this.conference.schools.some(
-                (confSchool) => confSchool.tgid === school.tgid
-              )
+                (confSchool) => confSchool.tgid === school.tgid,
+              ),
           ),
         },
-      }
+      },
     );
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -109,7 +109,7 @@ export class ConferenceSchoolListComponent implements OnInit {
   moveSchool(school: School, division?: Division) {
     //find the old Conference
     const currentConf = this.conferences.find(
-      (c) => c.conferenceId === school.conferenceId
+      (c) => c.conferenceId === school.conferenceId,
     );
     const currentDiv = school.divisionId
       ? this.divisions.find((d) => d.divisionId === school.divisionId)
@@ -121,11 +121,11 @@ export class ConferenceSchoolListComponent implements OnInit {
 
     //remove school from current conference
     currentConf.schools = currentConf.schools.filter(
-      (s) => school.tgid !== s.tgid
+      (s) => school.tgid !== s.tgid,
     );
     if (currentDiv) {
       currentDiv.schools = currentDiv.schools.filter(
-        (s) => s.tgid !== school.tgid
+        (s) => s.tgid !== school.tgid,
       );
     }
 
@@ -139,20 +139,6 @@ export class ConferenceSchoolListComponent implements OnInit {
     this.conferenceEditorService.updateConferences(this.conferences);
   }
 
-  isDark(color: string): boolean {
-    if (color) {
-      const rgb = parseInt(color.slice(1), 16); // Convert hex to integer
-      const r = (rgb >> 16) & 0xff;
-      const g = (rgb >> 8) & 0xff;
-      const b = (rgb >> 0) & 0xff;
-
-      // Calculate brightness
-      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-      return brightness < 128; // True if dark background
-    }
-    return false;
-  }
-
   calculateOrphanedSchools(): School[] {
     if (this.conference.divisions.length == 0) {
       return [];
@@ -161,7 +147,7 @@ export class ConferenceSchoolListComponent implements OnInit {
 
     // Flatten the list of schools in divisions
     const divisionSchools: School[] = this.conference.divisions.flatMap(
-      (d) => d.schools
+      (d) => d.schools,
     );
 
     // Iterate through each school in the conference's schools list
@@ -169,7 +155,7 @@ export class ConferenceSchoolListComponent implements OnInit {
       // Check if the school is not in any division's schools list
       if (
         !divisionSchools.find(
-          (divisionSchool) => divisionSchool.tgid === school.tgid
+          (divisionSchool) => divisionSchool.tgid === school.tgid,
         )
       ) {
         orphanedSchools.push(school);
@@ -188,7 +174,7 @@ export class ConferenceSchoolListComponent implements OnInit {
         event.previousContainer.data,
         event.container.data,
         event.previousIndex,
-        event.container.data.length
+        event.container.data.length,
       );
     }
     this.isDragging = false;
@@ -218,11 +204,11 @@ export class ConferenceSchoolListComponent implements OnInit {
   movePlaceholderToCorrectLocation() {
     const placeholder = this.renderer.selectRootElement(
       '.cdk-drag-placeholder',
-      true
+      true,
     );
     const dropLocation = this.renderer.selectRootElement(
       '#drop-location',
-      true
+      true,
     );
 
     if (placeholder && dropLocation) {
@@ -235,7 +221,7 @@ export class ConferenceSchoolListComponent implements OnInit {
       this.renderer.setStyle(
         placeholder,
         'transform',
-        `translate(${xShift}px, ${yShift}px)`
+        `translate(${xShift}px, ${yShift}px)`,
       );
     }
   }

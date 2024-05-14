@@ -55,6 +55,7 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { ConferenceDivisionsComponent } from './conference-editor/conference-divisions/conference-divisions.component';
 import { SchoolGridTileComponent } from './conference-editor/conference-school-list/school-grid-tile/school-grid-tile.component';
 import { XdivRivalriesComponent } from './conference-editor/xdiv-rivalries/xdiv-rivalries.component';
+import { LiteSchoolGridTileComponent } from './conference-editor/xdiv-rivalries/school-grid-tile-dense/lite-school-grid-tile.component';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { XdivRivalriesComponent } from './conference-editor/xdiv-rivalries/xdiv-
     ReactiveFormsModule,
     MatCheckbox,
     SchoolGridTileComponent,
+    LiteSchoolGridTileComponent,
   ],
   providers: [
     MinutesAfterMidnightToTimePipe,

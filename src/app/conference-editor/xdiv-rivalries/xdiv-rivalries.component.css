@@ -1,0 +1,22 @@
+.column-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.school-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.div1-column,
+.div2-column {
+  flex: 1;
+}
+
+.div1-column app-lite-school-grid-tile,
+.div2-column app-lite-school-grid-tile {
+  width: 100%;
+}

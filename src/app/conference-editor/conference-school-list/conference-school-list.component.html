@@ -28,10 +28,7 @@
         (cdkDragExited)="onDragExited($event)"
         cdkDrag
       >
-        <app-school-grid-tile
-          [school]="school"
-          [isDark]="isDark"
-        ></app-school-grid-tile>
+        <app-school-grid-tile [school]="school"></app-school-grid-tile>
       </mat-grid-tile>
     </mat-grid-list>
   </ng-container>
@@ -60,10 +57,7 @@
         (cdkDragExited)="onDragExited($event)"
         cdkDrag
       >
-        <app-school-grid-tile
-          [school]="school"
-          [isDark]="isDark"
-        ></app-school-grid-tile>
+        <app-school-grid-tile [school]="school"></app-school-grid-tile>
       </mat-grid-tile>
       <mat-grid-tile
         id="drop-location"
@@ -96,10 +90,7 @@
         [style.--team-primary-color]="school.color"
         [style.--team-alt-color]="school.altColor"
       >
-        <app-school-grid-tile
-          [school]="school"
-          [isDark]="isDark"
-        ></app-school-grid-tile>
+        <app-school-grid-tile [school]="school"></app-school-grid-tile>
       </mat-grid-tile>
     </ng-container>
     <mat-grid-tile>

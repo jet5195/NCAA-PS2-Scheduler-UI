@@ -1,8 +1,19 @@
 <div *ngIf="isXDivEnabled">
-  <div *ngFor="let school of conference.divisions[0].schools">
-    {{ school.name }} {{ school.nickname }}
-    <!--    <app-school-grid-tile-->
-    <!--      [school]="findSchoolByTgid(school.xDivRival)"-->
-    <!--    ></app-school-grid-tile>-->
+  <div class="column-layout">
+    <div
+      *ngFor="let school of conference.divisions[0].schools"
+      class="school-row"
+    >
+      <div class="div1-column">
+        <app-lite-school-grid-tile
+          [school]="school"
+        ></app-lite-school-grid-tile>
+      </div>
+      <div class="div2-column" cdkDrag>
+        <app-lite-school-grid-tile
+          [school]="findSchoolByTgid(school.xDivRival)"
+        ></app-lite-school-grid-tile>
+      </div>
+    </div>
   </div>
 </div>
