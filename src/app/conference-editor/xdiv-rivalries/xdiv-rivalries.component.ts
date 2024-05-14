@@ -22,18 +22,64 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.conferenceEditorService.selectedConference.subscribe(
         (conference) => {
-          if (conference !== this.conference) {
+          if (
+            !conference ||
+            !this.conference ||
+            conference !== this.conference
+          ) {
             this.isXDivEnabled = false;
             this.conference = conference;
             this.populateXDivRivalList();
+          } else if (this.haveSchoolsChanged(conference, this.conference)) {
+            console.log('schools have changed');
+            this.conference = conference;
+            this.removeXDivRivalValues();
           }
         },
       ),
     );
   }
 
+  private haveSchoolsChanged(
+    conference: Conference,
+    previousConf: Conference,
+  ): boolean {
+    if (conference.divisions.length == 2) {
+      const isIdentical: boolean =
+        this.areListsEqual(
+          conference.divisions[0].schools,
+          previousConf.divisions[0].schools,
+        ) &&
+        this.areListsEqual(
+          conference.divisions[1].schools,
+          previousConf.divisions[1].schools,
+        );
+      return !isIdentical;
+    } else return false;
+  }
+
+  areListsEqual(list1: School[], list2: School[]): boolean {
+    const idsList1 = new Set(list1.map((object) => object.tgid));
+    const idsList2 = new Set(list2.map((object) => object.tgid));
+
+    // Check if any new objects were added to list2
+    const newObjects = [...idsList2].filter((tgid) => !idsList1.has(tgid));
+
+    // Check if any objects were removed from list1
+    const removedObjects = [...idsList1].filter((tgid) => !idsList2.has(tgid));
+
+    // If both arrays are empty, no objects were added or removed
+    return newObjects.length === 0 && removedObjects.length === 0;
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  enabledToggle() {
+    if (!this.isXDivEnabled) {
+      this.removeXDivRivalValues();
+    }
   }
 
   populateXDivRivalList() {
@@ -75,6 +121,16 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
       s.xDivRival = rival.tgid;
       rival.xDivRival = s.tgid;
       //TODO: if we have issues, see if we need to set the school list under conference too!
+    });
+  }
+
+  private removeXDivRivalValues() {
+    this.conference.divisions[0].schools.forEach((s: School) => {
+      s.xDivRival = null;
+    });
+
+    this.conference.divisions[1].schools.forEach((s: School) => {
+      s.xDivRival = null;
     });
   }
 }
