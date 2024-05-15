@@ -175,7 +175,6 @@ export const divisionsSchoolsValidator: ValidatorFn = (
   if (divisions.length > 1) {
     const schools: FormArray = divisions.at(0).get('schools') as FormArray;
     const schools2: FormArray = divisions.at(1).get('schools') as FormArray;
-    console.log(schools.length, schools2.length);
     const isValid: boolean = schools.length === schools2.length;
     return isValid ? null : { invalidDivisionsSchools: true };
   } else return null;
