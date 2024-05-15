@@ -13,7 +13,10 @@
       >Enable Permanent XDiv Rivalry Games</mat-slide-toggle
     >
   </div>
-  <div *ngIf="isXDivEnabled" class="container">
+  <div
+    *ngIf="isXDivEnabled && conference.divisions.length == 2"
+    class="container"
+  >
     <div>
       <h3>{{ conference.divisions[0].shortName }}</h3>
       <div

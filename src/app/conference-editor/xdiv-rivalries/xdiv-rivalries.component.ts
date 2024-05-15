@@ -61,6 +61,8 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
       } else {
         this.initializeXDivRivalValues();
       }
+    } else {
+      this.isXDivEnabled == false;
     }
   }
 
