@@ -1,0 +1,45 @@
+<div
+  [class.disabled]="
+    conference.divisions.length == 2 &&
+    conference.divisions[0].schools.length !==
+      conference.divisions[1].schools.length
+  "
+>
+  <div>
+    <mat-slide-toggle
+      [(ngModel)]="isXDivEnabled"
+      [disabled]="conference.divisions.length !== 2"
+      (toggleChange)="enabledToggle()"
+      >Enable Permanent XDiv Rivalry Games</mat-slide-toggle
+    >
+  </div>
+  <div
+    *ngIf="isXDivEnabled && conference.divisions.length == 2"
+    class="container"
+  >
+    <div>
+      <h3>{{ conference.divisions[0].shortName }}</h3>
+      <div
+        *ngFor="let school of conference.divisions[0].schools"
+        class="div1-column"
+      >
+        <app-lite-school-grid-tile
+          [school]="school"
+        ></app-lite-school-grid-tile>
+      </div>
+    </div>
+    <div cdkDropList (cdkDropListDropped)="drop($event)">
+      <h3>{{ conference.divisions[1].shortName }}</h3>
+      <div
+        *ngFor="let school of xDivRivalList"
+        class="div2-column"
+        cdkDrag
+        [cdkDragData]="school"
+      >
+        <app-lite-school-grid-tile
+          [school]="school"
+        ></app-lite-school-grid-tile>
+      </div>
+    </div>
+  </div>
+</div>

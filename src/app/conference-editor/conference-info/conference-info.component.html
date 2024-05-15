@@ -1,47 +1,110 @@
-<form [formGroup]="conferenceForm" class="edit-form">
+<form #conferenceInfoForm="ngForm" class="edit-form">
   <mat-form-field>
     <mat-label>Name</mat-label>
-    <input matInput formControlName="name">
-    <mat-error *ngIf="conferenceForm.get('name').invalid">Please enter a valid name.</mat-error>
+    <input
+      matInput
+      [(ngModel)]="conference.name"
+      name="name"
+      #name="ngModel"
+      required
+    />
+    <mat-error *ngIf="name.invalid">Please enter a valid name.</mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Short Name</mat-label>
-    <input matInput formControlName="shortName">
-    <mat-error *ngIf="conferenceForm.get('shortName').invalid">Please enter a valid short name.</mat-error>
+    <input
+      matInput
+      [(ngModel)]="conference.shortName"
+      name="shortName"
+      #shortName="ngModel"
+      required
+    />
+    <mat-error *ngIf="shortName.invalid"
+      >Please enter a valid short name.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Abbreviation</mat-label>
-    <input matInput formControlName="abbreviation">
-    <mat-error *ngIf="conferenceForm.get('abbreviation').invalid">Please enter a valid abbreviation.</mat-error>
+    <input
+      matInput
+      [(ngModel)]="conference.abbreviation"
+      name="abbreviation"
+      #abbreviation="ngModel"
+      required
+    />
+    <mat-error *ngIf="abbreviation.invalid"
+      >Please enter a valid abbreviation.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Conference ID</mat-label>
-    <input matInput formControlName="conferenceId" readonly>
-    <mat-error *ngIf="conferenceForm.get('conferenceId').invalid">Please enter a valid conference ID.</mat-error>
+    <input
+      matInput
+      [(ngModel)]="conference.conferenceId"
+      name="conferenceId"
+      #conferenceId="ngModel"
+      required
+      readonly
+    />
+    <mat-error *ngIf="conferenceId.invalid"
+      >Conference ID is required.
+    </mat-error>
   </mat-form-field>
 
   <div class="radio-group">
-    <mat-radio-group formControlName="fbs">
-      <mat-radio-button [value]="true">FBS</mat-radio-button>
-      <mat-radio-button [value]="false">FCS</mat-radio-button>
+    <mat-radio-group
+      [(ngModel)]="conference.classification"
+      name="classification"
+      #classification="ngModel"
+      required
+    >
+      <mat-radio-button value="FBS">FBS</mat-radio-button>
+      <mat-radio-button value="FCS">FCS</mat-radio-button>
     </mat-radio-group>
-    <mat-error *ngIf="conferenceForm.get('fbs').invalid">Please select a value for FBS/FCS.</mat-error>
+
+    <mat-error *ngIf="classification.invalid"
+      >Please select a valid value for FBS/FCS.
+    </mat-error>
   </div>
 
-  <mat-checkbox formControlName="powerConf">Power Conference</mat-checkbox>
+  <mat-checkbox [(ngModel)]="conference.powerConf" name="powerConf"
+    >Power Conference
+  </mat-checkbox>
 
   <mat-form-field>
     <mat-label>Number of Conference Games</mat-label>
-    <input matInput formControlName="numOfConfGames">
-    <mat-error *ngIf="conferenceForm.get('numOfConfGames').invalid">Please enter a valid number of conference games.</mat-error>
+    <input
+      matInput
+      [(ngModel)]="conference.numOfConfGames"
+      name="numOfConfGames"
+      #numOfConfGames="ngModel"
+      [readonly]="conference.divisions.length === 0"
+      required
+      [matTooltip]="
+        conference.divisions.length === 0
+          ? 'Conferences without divisions will play a round robin schedule.'
+          : ''
+      "
+    />
+    <mat-error *ngIf="numOfConfGames.invalid"
+      >Please enter a valid number of conference games.
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field>
     <mat-label>Conference Games Start Week</mat-label>
-    <input matInput formControlName="confGamesStartWeek">
-    <mat-error *ngIf="conferenceForm.get('confGamesStartWeek').invalid">Please enter a valid start week for conference games.</mat-error>
+    <input
+      matInput
+      [(ngModel)]="conference.confGamesStartWeek"
+      name="confGamesStartWeek"
+      #confGamesStartWeek="ngModel"
+      required
+    />
+    <mat-error *ngIf="confGamesStartWeek.invalid"
+      >Please enter a valid start week for conference games.
+    </mat-error>
   </mat-form-field>
 </form>

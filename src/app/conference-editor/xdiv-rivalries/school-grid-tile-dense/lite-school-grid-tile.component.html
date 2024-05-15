@@ -1,0 +1,15 @@
+<mat-card
+  class="team-card team-primary-color"
+  [style.--team-primary-color]="school ? school.color : ''"
+  [style.--team-alt-color]="school ? school.altColor : ''"
+>
+  <div class="team-logo-container">
+    <div
+      class="team-logo-card-avatar"
+      [ngStyle]="{ 'background-image': 'url(' + school?.logo + ')' }"
+    ></div>
+    <mat-card-title class="school-card-name">
+      {{ school.name }}
+    </mat-card-title>
+  </div>
+</mat-card>
