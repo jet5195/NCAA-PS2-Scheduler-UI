@@ -22,18 +22,20 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.conferenceEditorService.selectedConference.subscribe(
         (conference) => {
-          if (conference !== this.conference) {
-            this.isXDivEnabled = false;
-            this.conference = conference;
-            this.populateXDivRivalList();
-          }
+          this.conference = conference;
+          this.populateXDivRivalList();
         },
       ),
     );
   }
-
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  enabledToggle() {
+    if (!this.isXDivEnabled) {
+      this.nullifyXDivRivalValues();
+    }
   }
 
   populateXDivRivalList() {
@@ -41,22 +43,38 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
     if (this.conference.divisions.length === 2) {
       if (this.conference.divisions[0].schools[0].xDivRival != null) {
         this.isXDivEnabled = true;
-        this.conference.divisions[0].schools.forEach((s) => {
-          this.xDivRivalList.push(this.findSchoolByTgid(s.xDivRival));
-        });
+        const div0Schools = this.conference.divisions[0].schools;
+        for (let i = 0; i < div0Schools.length; i++) {
+          const s = div0Schools[i];
+          const xDivRival = this.findSchoolByTgid(
+            s.xDivRival,
+            this.conference.divisions[1].schools,
+          );
+          if (xDivRival != null) {
+            this.xDivRivalList.push(xDivRival);
+          } else {
+            this.nullifyXDivRivalValues();
+            this.initializeXDivRivalValues();
+            break; // Break out of the loop
+          }
+        }
       } else {
-        this.conference.divisions[1].schools.forEach((s) => {
-          this.xDivRivalList.push(s);
-        });
-        this.updateXDivRivalValues();
+        this.initializeXDivRivalValues();
       }
+    } else {
+      this.isXDivEnabled == false;
     }
   }
 
-  findSchoolByTgid(tgid: number): School | undefined {
-    return this.conference.schools.find(
-      (school: School) => school.tgid === tgid,
-    );
+  private initializeXDivRivalValues() {
+    this.conference.divisions[1].schools.forEach((s) => {
+      this.xDivRivalList.push(s);
+    });
+    this.updateXDivRivalValues();
+  }
+
+  findSchoolByTgid(tgid: number, schools: School[]): School | undefined {
+    return schools.find((school: School) => school.tgid === tgid);
   }
 
   drop(event: CdkDragDrop<School[]>) {
@@ -74,7 +92,18 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
       const rival: School = this.conference.divisions[0].schools[index];
       s.xDivRival = rival.tgid;
       rival.xDivRival = s.tgid;
-      //TODO: if we have issues, see if we need to set the school list under conference too!
+      //TODO: if we have issues upon saving, see if we need to set the school list under conference too!
+    });
+  }
+
+  private nullifyXDivRivalValues() {
+    this.xDivRivalList = [];
+    this.conference.divisions[0].schools.forEach((s: School) => {
+      s.xDivRival = null;
+    });
+
+    this.conference.divisions[1].schools.forEach((s: School) => {
+      s.xDivRival = null;
     });
   }
 }

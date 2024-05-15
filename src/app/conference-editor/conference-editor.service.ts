@@ -111,7 +111,6 @@ export class ConferenceEditorService {
   }
 
   updateSchoolsTabValidity(isValid: boolean) {
-    console.log('updating school list with: ' + isValid);
     this.schoolsTabValiditySubject.next(isValid);
   }
 
