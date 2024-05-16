@@ -75,22 +75,25 @@
 
   <mat-form-field>
     <mat-label>Number of Conference Games</mat-label>
-    <input
-      matInput
+    <mat-select
       [(ngModel)]="conference.numOfConfGames"
       name="numOfConfGames"
       #numOfConfGames="ngModel"
-      [readonly]="conference.divisions.length === 0"
       required
-      [matTooltip]="
-        conference.divisions.length === 0
-          ? 'Conferences without divisions will play a round robin schedule.'
-          : ''
-      "
-    />
+    >
+      <mat-option *ngIf="conference.divisions.length === 0" [value]="0"
+        >Round Robin</mat-option
+      >
+      <mat-option *ngIf="conference.divisions.length === 2" [value]="8"
+        >8</mat-option
+      >
+      <mat-option *ngIf="conference.divisions.length === 2" [value]="9"
+        >9</mat-option
+      >
+    </mat-select>
     <mat-error *ngIf="numOfConfGames.invalid"
-      >Please enter a valid number of conference games.
-    </mat-error>
+      >Please select a valid number of conference games.</mat-error
+    >
   </mat-form-field>
 
   <mat-form-field>
