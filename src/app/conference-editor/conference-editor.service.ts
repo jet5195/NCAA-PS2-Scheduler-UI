@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Conference } from '../conference';
 import { School } from '../school';
 
@@ -15,14 +15,10 @@ export class ConferenceEditorService {
   conferences = this.conferencesSubject.asObservable();
 
   private infoTabValiditySubject = new BehaviorSubject<boolean>(true);
-  private infoTabValidity = this.infoTabValiditySubject.asObservable();
+  infoTabValidity = this.infoTabValiditySubject.asObservable();
 
-  private schoolsTabValiditySubject = new BehaviorSubject<boolean>(true);
-  private schoolsTabValidity = this.schoolsTabValiditySubject.asObservable();
-
-  private divisionsTabValiditySubject = new BehaviorSubject<boolean>(true);
-  private divisionsTabValidity =
-    this.divisionsTabValiditySubject.asObservable();
+  private schoolsValiditySubject = new BehaviorSubject<boolean>(true);
+  private schoolsValidity = this.schoolsValiditySubject.asObservable();
 
   errors: string[] = [];
 
@@ -31,6 +27,7 @@ export class ConferenceEditorService {
   updateSelectedConference(conference: Conference | null) {
     if (conference) {
       this.selectedConferenceSubject.next(conference);
+      this.validateConferences();
     } else {
       //reset data;
       this.selectedConferenceSubject = new BehaviorSubject<Conference>(null);
@@ -42,14 +39,15 @@ export class ConferenceEditorService {
     this.conferencesSubject.next(conferences);
     this.errors = [];
     if (conferences) {
-      conferences.forEach((c) => this.validateConference(c));
+      this.validateConferences();
     }
   }
 
   validateConferences() {
     this.errors = [];
-    this.conferences.subscribe((conferences) => {
+    this.conferences.pipe(take(1)).subscribe((conferences: Conference[]) => {
       conferences.forEach((c) => this.validateConference(c));
+      this.verifyFbsSchoolCount(conferences);
     });
   }
 
@@ -103,29 +101,45 @@ export class ConferenceEditorService {
         }
       }
     }
-    console.log(this.errors);
+    if (this.errors.length > 0) {
+      console.log(this.errors);
+    }
   }
 
   updateInfoTabValidity(isValid: boolean) {
     this.infoTabValiditySubject.next(isValid);
   }
 
-  updateSchoolsTabValidity(isValid: boolean) {
-    this.schoolsTabValiditySubject.next(isValid);
+  updateSchoolsValidity(isValid: boolean) {
+    this.schoolsValiditySubject.next(isValid);
   }
 
   // Single method to update all form validities
   updateFormValidities(infoValid: boolean, schoolListValid: boolean) {
     this.infoTabValiditySubject.next(infoValid);
-    this.schoolsTabValiditySubject.next(schoolListValid);
+    this.schoolsValiditySubject.next(schoolListValid);
   }
 
   isValid(): Observable<boolean> {
-    return combineLatest([this.infoTabValidity, this.schoolsTabValidity]).pipe(
-      map(
-        ([infoFormValidity, schoolListValidity]) =>
-          infoFormValidity && schoolListValidity,
-      ),
+    return combineLatest([this.infoTabValidity, this.schoolsValidity]).pipe(
+      map(([infoFormValidity, schoolListValidity]) => {
+        return (
+          infoFormValidity && schoolListValidity && this.errors.length === 0
+        );
+      }),
     );
+  }
+
+  verifyFbsSchoolCount(conferences: Conference[]) {
+    let totalFbsSchools = 0;
+    conferences.forEach((conference) => {
+      if (conference.classification === 'FBS') {
+        totalFbsSchools += conference.schools.length;
+      }
+    });
+    console.log(totalFbsSchools);
+    if (totalFbsSchools >= 120) {
+      this.errors.push('Must have 120 or fewer schools as FBS');
+    }
   }
 }

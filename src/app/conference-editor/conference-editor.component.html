@@ -3,7 +3,12 @@
     <mat-card-title>Edit Conference</mat-card-title>
     <div>
       <button mat-button (click)="cancel()">Cancel</button>
-      <button mat-button color="primary" [disabled]="!isValid" (click)="save()">
+      <button
+        mat-button
+        color="primary"
+        [disabled]="!(conferenceEditorService.isValid() | async)"
+        (click)="save()"
+      >
         Save
       </button>
     </div>
@@ -15,7 +20,7 @@
         [(ngModel)]="selectedConference"
         (selectionChange)="onConferenceSelectChange($event)"
         [compareWith]="compareService.compareConferences"
-        [disabled]="!isValid"
+        [disabled]="!(conferenceEditorService.infoTabValidity | async)"
       >
         <mat-option *ngFor="let conference of conferences" [value]="conference">
           {{ conference.shortName }}
@@ -48,7 +53,7 @@
         <app-xdiv-rivalries></app-xdiv-rivalries>
       </mat-tab>
       <mat-tab label="Map">
-          <app-conference-map></app-conference-map>
+        <app-conference-map></app-conference-map>
       </mat-tab>
     </mat-tab-group>
   </mat-card-content>

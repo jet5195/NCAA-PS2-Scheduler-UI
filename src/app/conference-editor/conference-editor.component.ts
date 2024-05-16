@@ -1,11 +1,5 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-} from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Conference } from '../conference';
@@ -133,49 +127,8 @@ export class ConferenceEditorComponent
 
   // Method to handle conference selection change
   onConferenceSelectChange(event) {
-    // const selectedConf = event.value;
     this.conferenceEditorService.updateSelectedConference(
       this.selectedConference,
     );
   }
-
-  getErrorMessage(errorKey: string) {
-    if (errorKey === null) {
-      return null;
-    }
-    switch (errorKey) {
-      case 'required':
-        return 'Please select a conference.';
-      case 'invalid': // Handle other validation errors as needed
-        return 'Invalid conference selection.';
-      case 'invalidDivisionsLength':
-        return 'Only 0 or 2 divisions are allowed.';
-      case 'invalidDivisionsSchools':
-        return 'Each division must have the same number of schools.';
-      default:
-        return JSON.stringify(errorKey);
-    }
-  }
 }
-
-// Custom validator functions
-export const divisionsValidator: ValidatorFn = (
-  formGroup: FormGroup,
-): ValidationErrors | null => {
-  const divisions: FormArray = formGroup.get('divisions') as FormArray;
-  const isValid: boolean = divisions.length === 0 || divisions.length === 2;
-  return isValid ? null : { invalidDivisionsLength: true };
-};
-
-// Custom validator functions
-export const divisionsSchoolsValidator: ValidatorFn = (
-  formGroup: FormGroup,
-): ValidationErrors | null => {
-  const divisions: FormArray = formGroup.get('divisions') as FormArray;
-  if (divisions.length > 1) {
-    const schools: FormArray = divisions.at(0).get('schools') as FormArray;
-    const schools2: FormArray = divisions.at(1).get('schools') as FormArray;
-    const isValid: boolean = schools.length === schools2.length;
-    return isValid ? null : { invalidDivisionsSchools: true };
-  } else return null;
-};

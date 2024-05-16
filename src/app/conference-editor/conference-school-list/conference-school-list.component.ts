@@ -47,9 +47,9 @@ export class ConferenceSchoolListComponent implements OnInit {
         this.conference = conference;
         this.orphanedSchools = this.calculateOrphanedSchools();
         if (this.orphanedSchools.length > 0) {
-          this.conferenceEditorService.updateSchoolsTabValidity(false);
+          this.conferenceEditorService.updateSchoolsValidity(false);
         } else {
-          this.conferenceEditorService.updateSchoolsTabValidity(true);
+          this.conferenceEditorService.updateSchoolsValidity(true);
         }
       },
     );
@@ -95,7 +95,7 @@ export class ConferenceSchoolListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
-      if (result != 'canceled') {
+      if (result !== '') {
         this.moveSchool(result, division);
       }
     });
