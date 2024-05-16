@@ -95,7 +95,7 @@ export class ConferenceSchoolListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log('The dialog was closed', result);
-      if (result != 'canceled') {
+      if (result !== '') {
         this.moveSchool(result, division);
       }
     });

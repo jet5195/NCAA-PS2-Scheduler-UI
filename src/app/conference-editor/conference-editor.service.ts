@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { Conference } from '../conference';
 import { School } from '../school';
 
@@ -27,6 +27,7 @@ export class ConferenceEditorService {
   updateSelectedConference(conference: Conference | null) {
     if (conference) {
       this.selectedConferenceSubject.next(conference);
+      this.validateConferences();
     } else {
       //reset data;
       this.selectedConferenceSubject = new BehaviorSubject<Conference>(null);
@@ -38,14 +39,15 @@ export class ConferenceEditorService {
     this.conferencesSubject.next(conferences);
     this.errors = [];
     if (conferences) {
-      conferences.forEach((c) => this.validateConference(c));
+      this.validateConferences();
     }
   }
 
   validateConferences() {
     this.errors = [];
-    this.conferences.subscribe((conferences) => {
+    this.conferences.pipe(take(1)).subscribe((conferences: Conference[]) => {
       conferences.forEach((c) => this.validateConference(c));
+      this.verifyFbsSchoolCount(conferences);
     });
   }
 
@@ -99,7 +101,9 @@ export class ConferenceEditorService {
         }
       }
     }
-    console.log(this.errors);
+    if (this.errors.length > 0) {
+      console.log(this.errors);
+    }
   }
 
   updateInfoTabValidity(isValid: boolean) {
@@ -123,5 +127,18 @@ export class ConferenceEditorService {
           infoFormValidity && schoolListValidity,
       ),
     );
+  }
+
+  verifyFbsSchoolCount(conferences: Conference[]) {
+    let totalFbsSchools = 0;
+    conferences.forEach((conference) => {
+      if (conference.classification === 'FBS') {
+        totalFbsSchools += conference.schools.length;
+      }
+    });
+    console.log(totalFbsSchools);
+    if (totalFbsSchools >= 120) {
+      this.errors.push('Must have 120 or fewer schools as FBS');
+    }
   }
 }

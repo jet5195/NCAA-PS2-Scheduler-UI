@@ -23,7 +23,21 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
       this.conferenceEditorService.selectedConference.subscribe(
         (conference) => {
           this.conference = conference;
-          this.populateXDivRivalList();
+          if (conference.divisions.length === 2) {
+            if (conference.divisions[0].schools[0].xDivRival !== null) {
+              this.isXDivEnabled = true;
+            } else {
+              this.isXDivEnabled = false;
+            }
+            if (
+              conference.divisions[0].schools.length ==
+              conference.divisions[1].schools.length
+            ) {
+              this.populateList();
+            } else {
+              this.nullifyXDivRivalValues();
+            }
+          }
         },
       ),
     );
@@ -33,44 +47,57 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
   }
 
   enabledToggle() {
-    if (!this.isXDivEnabled) {
+    if (this.isXDivEnabled) {
       this.nullifyXDivRivalValues();
+    } else {
+      this.initListWithDefaultValues();
+      this.populateList();
     }
   }
 
-  populateXDivRivalList() {
+  populateList() {
     this.xDivRivalList = [];
-    if (this.conference.divisions.length === 2) {
-      if (this.conference.divisions[0].schools[0].xDivRival != null) {
-        this.isXDivEnabled = true;
-        const div0Schools = this.conference.divisions[0].schools;
-        for (let i = 0; i < div0Schools.length; i++) {
-          const s = div0Schools[i];
-          const xDivRival = this.findSchoolByTgid(
-            s.xDivRival,
-            this.conference.divisions[1].schools,
-          );
-          if (xDivRival != null) {
-            this.xDivRivalList.push(xDivRival);
-          } else {
-            this.nullifyXDivRivalValues();
-            this.initializeXDivRivalValues();
-            break; // Break out of the loop
-          }
-        }
-      } else {
-        this.initializeXDivRivalValues();
+    if (this.xDivRivalsValuesValid()) {
+      const div0Schools = this.conference.divisions[0].schools;
+      for (let i = 0; i < div0Schools.length; i++) {
+        const s = div0Schools[i];
+        const xDivRival = this.findSchoolByTgid(
+          s.xDivRival,
+          this.conference.divisions[1].schools,
+        );
+        this.xDivRivalList.push(xDivRival);
       }
     } else {
-      this.isXDivEnabled == false;
+      this.nullifyXDivRivalValues();
+      this.initListWithDefaultValues();
     }
   }
+  xDivRivalsValuesValid(): boolean {
+    const div0Schools: School[] = this.conference.divisions[0].schools;
+    const div1Schools: School[] = this.conference.divisions[1].schools;
+    let result = true;
+    div0Schools.forEach((s) => {
+      const xDivRival = this.findSchoolByTgid(s.xDivRival, div1Schools);
+      if (!xDivRival) {
+        result = false;
+      }
+    });
+    div1Schools.forEach((s) => {
+      const xDivRival = this.findSchoolByTgid(s.xDivRival, div0Schools);
+      if (!xDivRival) {
+        result = false;
+      }
+    });
+    console.log(result);
+    return result;
+  }
 
-  private initializeXDivRivalValues() {
+  private initListWithDefaultValues() {
+    this.xDivRivalList = [];
     this.conference.divisions[1].schools.forEach((s) => {
       this.xDivRivalList.push(s);
     });
-    this.updateXDivRivalValues();
+    this.updateXDivRivalValuesFromList();
   }
 
   findSchoolByTgid(tgid: number, schools: School[]): School | undefined {
@@ -83,21 +110,20 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
       event.previousIndex,
       event.currentIndex,
     );
-    this.updateXDivRivalValues();
-    this.conferenceEditorService.updateSelectedConference(this.conference);
+    this.updateXDivRivalValuesFromList();
   }
 
-  private updateXDivRivalValues() {
+  private updateXDivRivalValuesFromList() {
     this.xDivRivalList.forEach((s: School, index: number) => {
       const rival: School = this.conference.divisions[0].schools[index];
       s.xDivRival = rival.tgid;
       rival.xDivRival = s.tgid;
       //TODO: if we have issues upon saving, see if we need to set the school list under conference too!
     });
+    this.conferenceEditorService.updateSelectedConference(this.conference);
   }
 
   private nullifyXDivRivalValues() {
-    this.xDivRivalList = [];
     this.conference.divisions[0].schools.forEach((s: School) => {
       s.xDivRival = null;
     });

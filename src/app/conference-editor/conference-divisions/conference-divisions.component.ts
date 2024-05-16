@@ -30,7 +30,6 @@ export class ConferenceDivisionsComponent implements OnInit {
     });
     this.conference.divisions.splice(index, 1);
     this.conferenceEditorService.updateSelectedConference(this.conference);
-    this.conferenceEditorService.validateConferences();
   }
 
   addDivision() {
@@ -43,7 +42,6 @@ export class ConferenceDivisionsComponent implements OnInit {
     };
     this.conference.divisions.push(newDivision);
     this.conferenceEditorService.updateSelectedConference(this.conference);
-    this.conferenceEditorService.validateConferences();
   }
 
   findNewDivisionId() {
