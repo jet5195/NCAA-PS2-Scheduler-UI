@@ -1,9 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { Division } from 'src/app/division';
 import { School } from 'src/app/school';
-import { ConferenceEditorService } from '../conference-editor.service';
 import { Conference } from '../../conference';
+import { ConferenceEditorService } from '../conference-editor.service';
 
 @Component({
   selector: 'app-conference-divisions',
@@ -14,10 +13,7 @@ export class ConferenceDivisionsComponent implements OnInit {
   conference: Conference;
   @Input() allDivisions: Division[];
 
-  constructor(
-    private fb: FormBuilder,
-    private conferenceEditorService: ConferenceEditorService,
-  ) {}
+  constructor(private conferenceEditorService: ConferenceEditorService) {}
 
   ngOnInit() {
     this.conferenceEditorService.selectedConference.subscribe(

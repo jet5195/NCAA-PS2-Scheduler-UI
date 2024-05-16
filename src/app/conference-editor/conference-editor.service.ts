@@ -17,12 +17,8 @@ export class ConferenceEditorService {
   private infoTabValiditySubject = new BehaviorSubject<boolean>(true);
   private infoTabValidity = this.infoTabValiditySubject.asObservable();
 
-  private schoolsTabValiditySubject = new BehaviorSubject<boolean>(true);
-  private schoolsTabValidity = this.schoolsTabValiditySubject.asObservable();
-
-  private divisionsTabValiditySubject = new BehaviorSubject<boolean>(true);
-  private divisionsTabValidity =
-    this.divisionsTabValiditySubject.asObservable();
+  private schoolsValiditySubject = new BehaviorSubject<boolean>(true);
+  private schoolsValidity = this.schoolsValiditySubject.asObservable();
 
   errors: string[] = [];
 
@@ -110,18 +106,18 @@ export class ConferenceEditorService {
     this.infoTabValiditySubject.next(isValid);
   }
 
-  updateSchoolsTabValidity(isValid: boolean) {
-    this.schoolsTabValiditySubject.next(isValid);
+  updateSchoolsValidity(isValid: boolean) {
+    this.schoolsValiditySubject.next(isValid);
   }
 
   // Single method to update all form validities
   updateFormValidities(infoValid: boolean, schoolListValid: boolean) {
     this.infoTabValiditySubject.next(infoValid);
-    this.schoolsTabValiditySubject.next(schoolListValid);
+    this.schoolsValiditySubject.next(schoolListValid);
   }
 
   isValid(): Observable<boolean> {
-    return combineLatest([this.infoTabValidity, this.schoolsTabValidity]).pipe(
+    return combineLatest([this.infoTabValidity, this.schoolsValidity]).pipe(
       map(
         ([infoFormValidity, schoolListValidity]) =>
           infoFormValidity && schoolListValidity,
