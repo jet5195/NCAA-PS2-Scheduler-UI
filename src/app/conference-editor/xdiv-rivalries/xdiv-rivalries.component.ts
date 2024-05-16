@@ -29,13 +29,15 @@ export class XdivRivalriesComponent implements OnInit, OnDestroy {
             } else {
               this.isXDivEnabled = false;
             }
-            if (
-              conference.divisions[0].schools.length ==
-              conference.divisions[1].schools.length
-            ) {
-              this.populateList();
-            } else {
-              this.nullifyXDivRivalValues();
+            if (this.isXDivEnabled) {
+              if (
+                conference.divisions[0].schools.length ==
+                conference.divisions[1].schools.length
+              ) {
+                this.populateList();
+              } else {
+                this.nullifyXDivRivalValues();
+              }
             }
           }
         },

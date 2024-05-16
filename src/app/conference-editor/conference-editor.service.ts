@@ -15,7 +15,7 @@ export class ConferenceEditorService {
   conferences = this.conferencesSubject.asObservable();
 
   private infoTabValiditySubject = new BehaviorSubject<boolean>(true);
-  private infoTabValidity = this.infoTabValiditySubject.asObservable();
+  infoTabValidity = this.infoTabValiditySubject.asObservable();
 
   private schoolsValiditySubject = new BehaviorSubject<boolean>(true);
   private schoolsValidity = this.schoolsValiditySubject.asObservable();
@@ -122,10 +122,11 @@ export class ConferenceEditorService {
 
   isValid(): Observable<boolean> {
     return combineLatest([this.infoTabValidity, this.schoolsValidity]).pipe(
-      map(
-        ([infoFormValidity, schoolListValidity]) =>
-          infoFormValidity && schoolListValidity,
-      ),
+      map(([infoFormValidity, schoolListValidity]) => {
+        return (
+          infoFormValidity && schoolListValidity && this.errors.length === 0
+        );
+      }),
     );
   }
 
