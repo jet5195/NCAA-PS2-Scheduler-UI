@@ -1,0 +1,85 @@
+<mat-stepper [linear]="isLinear" #stepper>
+  <mat-step label="Mode">
+    <div class="stepper-container">
+      <mat-card
+        class="option-card"
+        [class.selected]="selectedMode === 'NCAA06'"
+        (click)="selectMode('NCAA06')"
+      >
+        <mat-card-header>
+          <mat-card-title> NCAA 06 Schools </mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          alt="NCAA 06 Cover Art"
+          src="assets/NCAA_FOOTBALL_06_COVER_ART.jpg"
+        />
+        <mat-card-content
+          >For use with Vanilla Copies of NCAA 06
+        </mat-card-content>
+      </mat-card>
+      <mat-card
+        class="option-card"
+        [class.selected]="selectedMode === 'NEXT24'"
+        (click)="selectMode('NEXT24')"
+      >
+        <mat-card-header>
+          <mat-card-title> NCAA NEXT 24 Schools </mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="assets/NCAA_NEXT_24_COVER_ART.jpg"
+          alt="NCAA NEXT 24 Cover Art"
+        />
+        <mat-card-content>
+          For use with the NCAA NEXT '24 Mod
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-step>
+  <mat-step label="Import Conference Setup">
+    <div class="stepper-container">
+      <mat-card
+        class="option-card"
+        [class.selected]="selectedMode === 'NCAA06'"
+        (click)="selectMode('NCAA06')"
+      >
+        <mat-card-header>
+          <mat-card-title> NCAA 06 Schools </mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          alt="NCAA 06 Cover Art"
+          src="assets/NCAA_FOOTBALL_06_COVER_ART.jpg"
+        />
+        <mat-card-content
+          >For use with Vanilla Copies of NCAA 06
+        </mat-card-content>
+      </mat-card>
+      <mat-card
+        class="option-card"
+        [class.selected]="selectedMode === 'NEXT24'"
+        (click)="selectMode('NEXT24')"
+      >
+        <mat-card-header>
+          <mat-card-title> NCAA NEXT 24 Schools </mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="assets/NCAA_NEXT_24_COVER_ART.jpg"
+          alt="NCAA NEXT 24 Cover Art"
+        />
+        <mat-card-content>
+          For use with the NCAA NEXT '24 Mod
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-step>
+  <mat-step label="Import Schedule">
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
