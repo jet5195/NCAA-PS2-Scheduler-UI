@@ -7,6 +7,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatStepperModule } from '@angular/material/stepper';
 
+export enum ConferenceAlignmentType {
+  NEXT24_DEFAULT,
+  NCAA06_DEFAULT,
+  IMPORT,
+  EDIT_IN_APP,
+}
+
+export enum SchoolDataType {
+  NEXT24,
+  NCAA06,
+}
+
 @Component({
   selector: 'app-start-flow',
   standalone: true,
@@ -24,15 +36,17 @@ import { MatStepperModule } from '@angular/material/stepper';
   styleUrl: './start-flow.component.css',
 })
 export class StartFlowComponent {
+  public conferenceAlignmnentType = ConferenceAlignmentType;
+  public schoolDataType = SchoolDataType;
   isLinear = true;
-  selectedMode: string = '';
-  selectedAlignment: string = '';
+  selectedSchoolData: SchoolDataType;
+  selectedAlignment: ConferenceAlignmentType;
 
-  selectMode(mode: string) {
-    this.selectedMode = mode;
+  selectSchoolData(mode: SchoolDataType) {
+    this.selectedSchoolData = mode;
   }
 
-  selectAlignment(alignment: string) {
+  selectAlignment(alignment: ConferenceAlignmentType) {
     this.selectedAlignment = alignment;
   }
 
