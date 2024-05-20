@@ -1,119 +1,53 @@
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step label="Select School Data">
-    <div class="stepper-container">
-      <mat-card
-        class="option-card"
-        [class.selected]="selectedSchoolData === schoolDataType.NCAA06"
-        (click)="selectSchoolData(schoolDataType.NCAA06)"
-      >
-        <mat-card-header>
-          <mat-card-title> NCAA 06 Schools </mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          alt="NCAA 06 Cover Art"
-          src="assets/NCAA_FOOTBALL_06_COVER_ART.jpg"
-        />
-        <mat-card-content
-          >For use with Vanilla Copies of NCAA 06
-        </mat-card-content>
-      </mat-card>
-      <mat-card
-        class="option-card"
-        [class.selected]="selectedSchoolData === schoolDataType.NEXT24"
-        (click)="selectSchoolData(schoolDataType.NEXT24)"
-      >
-        <mat-card-header>
-          <mat-card-title> NCAA NEXT 24 Schools </mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="assets/NCAA_NEXT_24_COVER_ART.jpg"
-          alt="NCAA NEXT 24 Cover Art"
-        />
-        <mat-card-content>
-          For use with the NCAA NEXT '24 Mod
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <mat-step label="Select School Data" [stepControl]="schoolDataFormGroup">
+    <form [formGroup]="schoolDataFormGroup">
+      <div class="stepper-container">
+        <mat-card
+          *ngFor="let option of schoolDataOptions"
+          class="option-card"
+          [class.selected]="
+            schoolDataFormGroup.value.schoolData === option.type
+          "
+          (click)="selectSchoolData(option.type); option.action()"
+        >
+          <mat-card-header>
+            <mat-card-title>{{ option.title }}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image [alt]="option.title" [src]="option.image" />
+          <mat-card-content>{{ option.description }}</mat-card-content>
+        </mat-card>
+      </div>
+    </form>
   </mat-step>
-  <mat-step label="Conference Alignment Setup">
-    <div class="stepper-container">
-      <mat-card
-        *ngIf="selectedSchoolData === schoolDataType.NCAA06"
-        class="option-card"
-        [class.selected]="
-          selectedAlignment === conferenceAlignmnentType.NCAA06_DEFAULT
-        "
-        (click)="selectAlignment(conferenceAlignmnentType.NCAA06_DEFAULT)"
-      >
-        <mat-card-header>
-          <mat-card-title> NCAA 06 Conference Alignment </mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          alt="NCAA 06 Cover Art"
-          src="assets/NCAA_FOOTBALL_06_COVER_ART.jpg"
-        />
-        <mat-card-content
-          >For use with Vanilla Copies of NCAA 06
-        </mat-card-content>
-      </mat-card>
-      <mat-card
-        *ngIf="selectedSchoolData === schoolDataType.NEXT24"
-        class="option-card"
-        [class.selected]="
-          selectedAlignment === conferenceAlignmnentType.NEXT24_DEFAULT
-        "
-        (click)="selectAlignment(conferenceAlignmnentType.NEXT24_DEFAULT)"
-      >
-        <mat-card-header>
-          <mat-card-title> NCAA NEXT 24 Schools </mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="assets/NCAA_NEXT_24_COVER_ART.jpg"
-          alt="NCAA NEXT 24 Cover Art"
-        />
-        <mat-card-content>
-          For use with the NCAA NEXT '24 Mod
-        </mat-card-content>
-      </mat-card>
-      <mat-card
-        class="option-card"
-        [class.selected]="selectedAlignment === conferenceAlignmnentType.IMPORT"
-        (click)="selectAlignment(conferenceAlignmnentType.IMPORT)"
-      >
-        <mat-card-header>
-          <mat-card-title> Import Custom Conference Alignment </mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="assets/IMPORT_ALIGNMENT.png"
-          alt="Import Alignment Screenshot"
-        />
-        <mat-card-content>
-          Import XLSX file with Custom Conference Setup
-        </mat-card-content>
-      </mat-card>
-      <mat-card
-        class="option-card"
-        [class.selected]="
-          selectedAlignment === conferenceAlignmnentType.EDIT_IN_APP
-        "
-        (click)="selectAlignment(conferenceAlignmnentType.EDIT_IN_APP)"
-      >
-        <mat-card-header>
-          <mat-card-title> Customize Conference Alignment </mat-card-title>
-        </mat-card-header>
-        <img
-          mat-card-image
-          src="assets/CONFERENCE_EDIT.png"
-          alt="Edit Conference UX Screenshot"
-        />
-        <mat-card-content> Edit Conference Alignment </mat-card-content>
-      </mat-card>
-    </div>
+  <mat-step
+    label="Conference Alignment Setup"
+    [stepControl]="alignmentFormGroup"
+  >
+    <form [formGroup]="alignmentFormGroup">
+      <div class="stepper-container">
+        <mat-card
+          *ngFor="
+            let option of alignmentOptions
+              | filterOptions: schoolDataFormGroup.value.schoolData
+          "
+          class="option-card"
+          [class.selected]="alignmentFormGroup.value.alignment === option.type"
+          (click)="selectAlignment(option.type, option.action)"
+        >
+          <mat-card-header>
+            <mat-card-title>{{ option.title }}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image [alt]="option.title" [src]="option.image" />
+          <mat-card-content>{{ option.description }}</mat-card-content>
+        </mat-card>
+      </div>
+      <input
+        type="file"
+        hidden
+        #fileInput
+        (change)="importConferenceAlignment($event)"
+      />
+    </form>
   </mat-step>
   <mat-step label="Import Schedule">
     <p>You are now done.</p>
