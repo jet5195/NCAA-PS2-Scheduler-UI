@@ -19,6 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -45,6 +46,7 @@ import { EditGameComponent } from './edit-game/edit-game.component';
 import { ConferenceLogoPipe } from './pipes/conferenceLogo';
 import { ConferenceNamePipe } from './pipes/conferenceName';
 import { DayOfWeekToStringPipe } from './pipes/dayOfWeekToString.pipe';
+import { FilterOptionsPipe } from './pipes/filter-options.pipe';
 import { MinutesAfterMidnightToTimePipe } from './pipes/minutesAfterMidnightToTime.pipe';
 import { PlayoffSchedulerComponent } from './playoff-scheduler/playoff-scheduler.component';
 import { PlayoffComponent } from './playoff/playoff.component';
@@ -56,6 +58,7 @@ import {
 } from './school-schedule/school-schedule.component';
 import { SchoolsComponent } from './schools/schools.component';
 import { DataService } from './services/data.service';
+import { StartFlowComponent } from './start-flow/start-flow.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +87,8 @@ import { DataService } from './services/data.service';
     ConferenceInfoComponent,
     ConferenceDivisionsComponent,
     XdivRivalriesComponent,
+    StartFlowComponent,
+    FilterOptionsPipe,
   ],
   imports: [
     BrowserModule,
@@ -117,6 +122,7 @@ import { DataService } from './services/data.service';
     MatCheckbox,
     SchoolGridTileComponent,
     LiteSchoolGridTileComponent,
+    MatStepperModule,
   ],
   providers: [
     MinutesAfterMidnightToTimePipe,

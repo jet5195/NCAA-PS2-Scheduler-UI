@@ -3,7 +3,6 @@ import { CardOption, SchoolDataType } from '../start-flow/start-flow.component';
 
 @Pipe({
   name: 'filterOptions',
-  standalone: true,
 })
 export class FilterOptionsPipe implements PipeTransform {
   transform(

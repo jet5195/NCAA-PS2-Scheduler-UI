@@ -1,19 +1,7 @@
-import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatStepper, MatStepperModule } from '@angular/material/stepper';
-import { FilterOptionsPipe } from '../pipes/filter-options.pipe';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
 
@@ -40,18 +28,7 @@ export interface CardOption {
 
 @Component({
   selector: 'app-start-flow',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatStepperModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    FilterOptionsPipe,
-  ],
+  standalone: false,
   templateUrl: './start-flow.component.html',
   styleUrl: './start-flow.component.css',
 })

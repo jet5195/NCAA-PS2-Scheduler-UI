@@ -49,6 +49,11 @@
       />
     </form>
   </mat-step>
+  <mat-step label="Edit Conference Alignment" optional>
+    <ng-container *ngIf="stepper.selectedIndex === 2">
+      <app-conference-editor></app-conference-editor>
+    </ng-container>
+  </mat-step>
   <mat-step label="Import Schedule">
     <p>You are now done.</p>
     <div>
