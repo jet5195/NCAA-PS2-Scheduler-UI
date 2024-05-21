@@ -1,5 +1,9 @@
 <mat-stepper [linear]="isLinear" #stepper>
-  <mat-step label="Select School Data" [stepControl]="schoolDataFormGroup">
+  <mat-step
+    label="Select School Data"
+    [stepControl]="schoolDataFormGroup"
+    [editable]="false"
+  >
     <form [formGroup]="schoolDataFormGroup">
       <div class="stepper-container">
         <mat-card
@@ -32,7 +36,7 @@
           "
           class="option-card"
           [class.selected]="alignmentFormGroup.value.alignment === option.type"
-          (click)="selectAlignment(option.type, option.action)"
+          (click)="selectAlignment(option.type, option.action); option.action()"
         >
           <mat-card-header>
             <mat-card-title>{{ option.title }}</mat-card-title>
@@ -50,6 +54,10 @@
     </form>
   </mat-step>
   <mat-step label="Edit Conference Alignment" optional>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
     <ng-container *ngIf="stepper.selectedIndex === 2">
       <app-conference-editor></app-conference-editor>
     </ng-container>

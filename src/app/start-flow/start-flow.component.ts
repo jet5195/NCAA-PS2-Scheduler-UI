@@ -47,12 +47,14 @@ export class StartFlowComponent implements OnInit {
       description: 'For use with Vanilla Copies of NCAA 06',
       image: 'assets/NCAA_FOOTBALL_06_COVER_ART.jpg',
       type: SchoolDataType.NCAA06,
+      action: () => this.importNCAA06SchoolData(),
     },
     {
       title: 'NCAA NEXT 24 Schools',
       description: "For use with the NCAA NEXT '24 Mod",
       image: 'assets/NCAA_NEXT_24_COVER_ART.jpg',
       type: SchoolDataType.NEXT24,
+      action: () => this.importNEXT24SchoolData(),
     },
   ];
 
@@ -108,14 +110,10 @@ export class StartFlowComponent implements OnInit {
 
   selectSchoolData(schoolDataType: any) {
     this.schoolDataFormGroup.get('schoolData').setValue(schoolDataType);
-    this.stepper.next();
   }
 
   selectAlignment(alignmentType: any, action?: () => void) {
     this.alignmentFormGroup.get('alignment').setValue(alignmentType);
-    if (action) {
-      action();
-    }
   }
 
   triggerFileInput() {
@@ -135,6 +133,25 @@ export class StartFlowComponent implements OnInit {
       (error) => {
         this.snackBarService.openSnackBar(
           'Error setting conferences, try checking your file',
+          'Dismiss',
+        );
+      },
+    );
+  }
+
+  setSchoolDataFile(file: File) {
+    this.dataService.setSchoolDataFile(file).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.snackBarService.openSnackBar(
+          'School Data has been set successfully',
+          'Dismiss',
+        );
+        this.stepper.next();
+      },
+      (error) => {
+        this.snackBarService.openSnackBar(
+          'Error setting School Data, try checking your file',
           'Dismiss',
         );
       },
@@ -165,6 +182,28 @@ export class StartFlowComponent implements OnInit {
         type: blob.type,
       });
       this.setAlignmentFile(file);
+    });
+  }
+
+  importNEXT24SchoolData(): void {
+    const fileName = 'NCAA_NEXT24_School_Data.xlsx';
+    const filePath = '/assets/' + fileName;
+    this.http.get(filePath, { responseType: 'blob' }).subscribe((blob) => {
+      const file = new File([blob], fileName, {
+        type: blob.type,
+      });
+      this.setSchoolDataFile(file);
+    });
+  }
+
+  importNCAA06SchoolData(): void {
+    const fileName = 'NCAA_06_School_Data.xlsx';
+    const filePath = '/assets/' + fileName;
+    this.http.get(filePath, { responseType: 'blob' }).subscribe((blob) => {
+      const file = new File([blob], fileName, {
+        type: blob.type,
+      });
+      this.setSchoolDataFile(file);
     });
   }
 }
