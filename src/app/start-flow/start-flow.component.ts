@@ -17,11 +17,16 @@ export enum SchoolDataType {
   NCAA06,
 }
 
+export enum ScheduleType {
+  AUTOMATIC,
+  MANUAL,
+}
+
 export interface CardOption {
   title: string;
   description: string;
   image: string;
-  type: SchoolDataType | ConferenceAlignmentType;
+  type?: SchoolDataType | ConferenceAlignmentType | ScheduleType;
   condition?: () => boolean;
   action?: () => void;
 }
@@ -33,7 +38,9 @@ export interface CardOption {
   styleUrl: './start-flow.component.css',
 })
 export class StartFlowComponent implements OnInit {
-  @ViewChild('fileInput') fileInput: any;
+  year: number = 0;
+  @ViewChild('alignmentFileInput') alignmentFileInput: any;
+  @ViewChild('scheduleFileInput') scheduleFileInput: any;
   @ViewChild('stepper') private stepper: MatStepper;
   public conferenceAlignmentType = ConferenceAlignmentType;
   public schoolDataType = SchoolDataType;
@@ -82,13 +89,38 @@ export class StartFlowComponent implements OnInit {
       description: 'Import XLSX file with Custom Conference Setup',
       image: 'assets/IMPORT_ALIGNMENT.png',
       type: ConferenceAlignmentType.IMPORT,
-      action: () => this.triggerFileInput(),
+      action: () => this.triggerAlignmentFileInput(),
     },
     {
       title: 'Customize Conference Alignment',
       description: 'Edit Conference Alignment',
       image: 'assets/CONFERENCE_EDIT.png',
       type: ConferenceAlignmentType.EDIT_IN_APP,
+    },
+  ];
+
+  scheduleImportOptions: CardOption[] = [
+    {
+      title: 'Import Schedule',
+      description: 'Import Schedule from Preseason of Dynasty Mode',
+      image: 'assets/SCHEDULE_IMPORT.png',
+      action: () => this.triggerScheduleFileInput(),
+    },
+  ];
+
+  scheduleOptions: CardOption[] = [
+    {
+      title: 'Automatically Update Schedule',
+      description:
+        'Removes all games, then schedules them again based on your Conference Alignment.',
+      image: 'assets/NCAA_FOOTBALL_06_COVER_ART.jpg',
+      type: ScheduleType.AUTOMATIC,
+    },
+    {
+      title: 'Manually Edit Schedule',
+      description: 'Allows the User to manually update/edit the schedule.',
+      image: 'assets/NCAA_FOOTBALL_06_COVER_ART.jpg',
+      type: ScheduleType.MANUAL,
     },
   ];
 
@@ -106,6 +138,30 @@ export class StartFlowComponent implements OnInit {
     this.alignmentFormGroup = this.fb.group({
       alignment: [null, Validators.required],
     });
+    this.getYear();
+  }
+
+  getYear(): void {
+    this.dataService.getYear().subscribe((data: number) => {
+      this.year = data;
+    });
+  }
+
+  setYear(year: number): void {
+    this.dataService.setYear(year).subscribe(
+      (data: any) => {
+        this.snackBarService.openSnackBar(
+          'Year has been set successfully',
+          'Dismiss',
+        );
+      },
+      (error) => {
+        this.snackBarService.openSnackBar(
+          'Error setting year, please try again.',
+          'Dismiss',
+        );
+      },
+    );
   }
 
   selectSchoolData(schoolDataType: any) {
@@ -116,8 +172,12 @@ export class StartFlowComponent implements OnInit {
     this.alignmentFormGroup.get('alignment').setValue(alignmentType);
   }
 
-  triggerFileInput() {
-    this.fileInput.nativeElement.click();
+  triggerAlignmentFileInput() {
+    this.alignmentFileInput.nativeElement.click();
+  }
+
+  triggerScheduleFileInput() {
+    this.scheduleFileInput.nativeElement.click();
   }
 
   setAlignmentFile(file: File) {
@@ -156,6 +216,29 @@ export class StartFlowComponent implements OnInit {
         );
       },
     );
+  }
+
+  setScheduleFile(file: File) {
+    this.dataService.setScheduleFile(file).subscribe(
+      (data: any) => {
+        this.snackBarService.openSnackBar(
+          'Schedule has been set successfully',
+          'Dismiss',
+        );
+        this.stepper.next();
+      },
+      (error) => {
+        this.snackBarService.openSnackBar(
+          'Error setting schedule, try checking your file or exporting again',
+          'Dismiss',
+        );
+      },
+    );
+  }
+
+  importSchedule(fileInputEvent: any) {
+    const file = fileInputEvent.target.files[0];
+    this.setScheduleFile(file);
   }
 
   importConferenceAlignment(fileInputEvent: any) {

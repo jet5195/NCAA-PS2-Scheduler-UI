@@ -1,4 +1,4 @@
-<mat-stepper [linear]="isLinear" #stepper>
+<mat-stepper [linear]="false" #stepper>
   <mat-step
     label="Select School Data"
     [stepControl]="schoolDataFormGroup"
@@ -48,7 +48,7 @@
       <input
         type="file"
         hidden
-        #fileInput
+        #alignmentFileInput
         (change)="importConferenceAlignment($event)"
       />
     </form>
@@ -63,7 +63,64 @@
     </ng-container>
   </mat-step>
   <mat-step label="Import Schedule">
-    <p>You are now done.</p>
+    <div class="stepper-container">
+      <mat-card
+        *ngFor="let option of scheduleImportOptions"
+        class="option-card"
+        (click)="selectAlignment(option.type, option.action); option.action()"
+      >
+        <mat-card-header>
+          <mat-card-title>{{ option.title }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [alt]="option.title" [src]="option.image" />
+        <mat-card-content>{{ option.description }}</mat-card-content>
+      </mat-card>
+    </div>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+    <input
+      type="file"
+      hidden
+      #scheduleFileInput
+      (change)="importSchedule($event)"
+    />
+  </mat-step>
+  <mat-step label="Set Year">
+    <div class="stepper-container">
+      <mat-form-field>
+        <input matInput type="number" placeholder="Year" [(ngModel)]="year" />
+      </mat-form-field>
+      <button mat-flat-button color="primary" (click)="setYear(year)">
+        set
+      </button>
+    </div>
+    <div>
+      <button mat-button matStepperNext>Next</button>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+  <mat-step label="Generate Schedule">
+    <div class="stepper-container">
+      <mat-card
+        *ngFor="let option of scheduleOptions"
+        class="option-card"
+        (click)="selectAlignment(option.type, option.action); option.action()"
+      >
+        <mat-card-header>
+          <mat-card-title>{{ option.title }}</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image [alt]="option.title" [src]="option.image" />
+        <mat-card-content>{{ option.description }}</mat-card-content>
+      </mat-card>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+    </div>
+  </mat-step>
+  <mat-step label="Export Files">
+    <div class="stepper-container"></div>
     <div>
       <button mat-button matStepperPrevious>Back</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
