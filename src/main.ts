@@ -1,10 +1,7 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
 
 import { DragDropModule } from '@angular/cdk/drag-drop';
-import {
-  provideHttpClient,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
