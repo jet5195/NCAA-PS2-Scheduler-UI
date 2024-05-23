@@ -16,6 +16,7 @@ import {
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DataService } from 'src/app/services/data.service';
 import { SnackBarService } from 'src/app/snackBar.service';
@@ -42,11 +43,14 @@ import {
     ReactiveFormsModule,
     ConferenceEditorComponent,
     MatButtonModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class StartFlowConferenceComponent implements OnInit {
   @Input() schoolDataFormGroup: FormGroup;
   @ViewChild('alignmentFileInput') alignmentFileInput: any;
+  enableEditConferences: boolean = false;
+  enableSpinner: boolean = false;
   alignmentFormGroup: FormGroup;
   alignmentOptions: CardOption[] = [
     {
@@ -86,6 +90,13 @@ export class StartFlowConferenceComponent implements OnInit {
     private fb: FormBuilder,
   ) {}
   ngOnInit(): void {
+    //check existing alignment, if we have data. Then enable edit button
+    this.dataService.getConferenceList().subscribe((data) => {
+      if (data) {
+        this.enableEditConferences = true;
+      }
+    });
+
     this.alignmentFormGroup = this.fb.group({
       alignment: [null, Validators.required],
     });
@@ -122,15 +133,19 @@ export class StartFlowConferenceComponent implements OnInit {
   }
 
   setAlignmentFile(file: File) {
+    this.enableSpinner = true;
     this.dataService.setAlignmentFile(file).subscribe(
       (data: any) => {
-        console.log(data);
+        this.enableEditConferences = true;
+        this.enableSpinner = false;
         this.snackBarService.openSnackBar(
           'Conferences have been set successfully',
           'Dismiss',
         );
       },
       (error) => {
+        this.enableEditConferences = false;
+        this.enableSpinner = false;
         this.snackBarService.openSnackBar(
           'Error setting conferences, try checking your file',
           'Dismiss',

@@ -3,16 +3,14 @@
 }
 
 .stepper-container {
-  display: grid;
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(200px, 1fr)
-  ); /* Auto-adjust columns */
-  gap: 20px; /* Space between cards */
-  margin-top: 10px;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 20px;
 }
 
 .option-card {
+  width: 100%;
+  max-width: 650px;
   background-color: #f5f5f5;
   border: 1px solid #e0e0e0;
   border-radius: 8px; /* Rounded corners for modern look */
@@ -26,6 +24,8 @@
 .mat-mdc-card-image {
   object-fit: contain;
   height: 500px;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .option-card:hover {
