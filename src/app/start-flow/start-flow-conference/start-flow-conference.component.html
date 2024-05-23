@@ -1,0 +1,32 @@
+<mat-tab-group>
+  <mat-tab label="Conference Preset Selection">
+    <form [formGroup]="alignmentFormGroup">
+      <div class="stepper-container">
+        <mat-card
+          *ngFor="
+            let option of alignmentOptions
+              | filterOptions: schoolDataFormGroup.value.schoolData
+          "
+          class="option-card"
+          [class.selected]="alignmentFormGroup.value.alignment === option.type"
+          (click)="selectAlignment(option.type, option.action); option.action()"
+        >
+          <mat-card-header>
+            <mat-card-title>{{ option.title }}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image [alt]="option.title" [src]="option.image" />
+          <mat-card-content>{{ option.description }}</mat-card-content>
+        </mat-card>
+      </div>
+      <input
+        type="file"
+        hidden
+        #alignmentFileInput
+        (change)="importConferenceAlignment($event)"
+      />
+    </form>
+  </mat-tab>
+  <mat-tab label="Edit Conferences">
+    <app-conference-editor></app-conference-editor>
+  </mat-tab>
+</mat-tab-group>

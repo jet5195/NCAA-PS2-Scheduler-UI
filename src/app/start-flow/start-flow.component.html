@@ -23,69 +23,15 @@
       </div>
     </form>
   </mat-step>
-  <mat-step
-    label="Conference Alignment Setup"
-    [stepControl]="alignmentFormGroup"
-  >
-    <form [formGroup]="alignmentFormGroup">
-      <div class="stepper-container">
-        <mat-card
-          *ngFor="
-            let option of alignmentOptions
-              | filterOptions: schoolDataFormGroup.value.schoolData
-          "
-          class="option-card"
-          [class.selected]="alignmentFormGroup.value.alignment === option.type"
-          (click)="selectAlignment(option.type, option.action); option.action()"
-        >
-          <mat-card-header>
-            <mat-card-title>{{ option.title }}</mat-card-title>
-          </mat-card-header>
-          <img mat-card-image [alt]="option.title" [src]="option.image" />
-          <mat-card-content>{{ option.description }}</mat-card-content>
-        </mat-card>
-      </div>
-      <input
-        type="file"
-        hidden
-        #alignmentFileInput
-        (change)="importConferenceAlignment($event)"
-      />
-    </form>
-  </mat-step>
-  <mat-step label="Edit Conference Alignment" optional>
+  <mat-step label="Conference Alignment Setup">
     <div>
       <button mat-button matStepperNext>Next</button>
       <button mat-button matStepperPrevious>Back</button>
     </div>
-    <ng-container *ngIf="stepper.selectedIndex === 2">
-      <app-conference-editor></app-conference-editor>
-    </ng-container>
-  </mat-step>
-  <mat-step label="Import Schedule">
-    <div class="stepper-container">
-      <mat-card
-        *ngFor="let option of scheduleImportOptions"
-        class="option-card"
-        (click)="selectAlignment(option.type, option.action); option.action()"
-      >
-        <mat-card-header>
-          <mat-card-title>{{ option.title }}</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image [alt]="option.title" [src]="option.image" />
-        <mat-card-content>{{ option.description }}</mat-card-content>
-      </mat-card>
-    </div>
-    <div>
-      <button mat-button matStepperNext>Next</button>
-      <button mat-button matStepperPrevious>Back</button>
-    </div>
-    <input
-      type="file"
-      hidden
-      #scheduleFileInput
-      (change)="importSchedule($event)"
-    />
+    <app-start-flow-conference
+      *ngIf="stepper.selectedIndex == 1"
+      [schoolDataFormGroup]="schoolDataFormGroup"
+    ></app-start-flow-conference>
   </mat-step>
   <mat-step label="Set Year">
     <div class="stepper-container">
@@ -101,23 +47,8 @@
       <button mat-button matStepperPrevious>Back</button>
     </div>
   </mat-step>
-  <mat-step label="Generate Schedule">
-    <div class="stepper-container">
-      <mat-card
-        *ngFor="let option of scheduleOptions"
-        class="option-card"
-        (click)="selectAlignment(option.type, option.action); option.action()"
-      >
-        <mat-card-header>
-          <mat-card-title>{{ option.title }}</mat-card-title>
-        </mat-card-header>
-        <img mat-card-image [alt]="option.title" [src]="option.image" />
-        <mat-card-content>{{ option.description }}</mat-card-content>
-      </mat-card>
-    </div>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-    </div>
+  <mat-step label="Schedule Setup">
+    <app-start-flow-schedule></app-start-flow-schedule>
   </mat-step>
   <mat-step label="Export Files">
     <div class="stepper-container"></div>
