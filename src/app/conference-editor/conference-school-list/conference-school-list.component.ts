@@ -1,9 +1,13 @@
 import {
+  CdkDrag,
   CdkDragDrop,
   CdkDragEnter,
   CdkDragExit,
+  CdkDropList,
+  CdkDropListGroup,
   transferArrayItem,
 } from '@angular/cdk/drag-drop';
+import { NgFor, NgIf } from '@angular/common';
 import {
   Component,
   HostListener,
@@ -12,17 +16,29 @@ import {
   Renderer2,
 } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
 import { Division } from '../../division';
 import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
 import { ConferenceEditorService } from '../conference-editor.service';
+import { SchoolGridTileComponent } from './school-grid-tile/school-grid-tile.component';
 
 @Component({
   selector: 'app-conference-school-list',
-  standalone: false,
   templateUrl: './conference-school-list.component.html',
   styleUrl: './conference-school-list.component.scss',
+  standalone: true,
+  imports: [
+    NgIf,
+    CdkDropListGroup,
+    MatGridList,
+    CdkDropList,
+    NgFor,
+    MatGridTile,
+    CdkDrag,
+    SchoolGridTileComponent,
+  ],
 })
 export class ConferenceSchoolListComponent implements OnInit {
   conference!: Conference;

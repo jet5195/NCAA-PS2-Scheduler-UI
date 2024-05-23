@@ -4,11 +4,20 @@ import { School } from '../school';
 import { AddGameRequest } from '../addGameRequest';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { SchoolScheduleComponent } from '../school-schedule/school-schedule.component';
+import { MatButton } from '@angular/material/button';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatOption } from '@angular/material/core';
+import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-add-game',
-  templateUrl: './add-game.component.html',
-  styleUrls: ['./add-game.component.css']
+    selector: 'app-add-game',
+    templateUrl: './add-game.component.html',
+    styleUrls: ['./add-game.component.css'],
+    standalone: true,
+    imports: [MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatRadioGroup, MatRadioButton, MatButton]
 })
 
 export class AddGameComponent implements OnInit {

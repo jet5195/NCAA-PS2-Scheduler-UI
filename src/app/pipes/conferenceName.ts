@@ -2,7 +2,8 @@ import {Pipe, PipeTransform} from '@angular/core';
 import {Conference} from '../conference';
 
 @Pipe({
-  name: 'conferenceName'
+    name: 'conferenceName',
+    standalone: true
 })
 export class ConferenceNamePipe implements PipeTransform {
 

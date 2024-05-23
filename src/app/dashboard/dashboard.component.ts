@@ -4,13 +4,26 @@ import * as fileSaver from 'file-saver';
 import { Conference } from '../conference';
 import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
 //npm install @types/file-saver --save-dev
 //if that doesn't work, npm install --save @types/filesaver
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css'],
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.css'],
+    standalone: true,
+    imports: [
+        MatFormField,
+        MatInput,
+        FormsModule,
+        MatButton,
+        MatTooltip,
+    ],
 })
 export class DashboardComponent implements OnInit {
   year: number = 0;

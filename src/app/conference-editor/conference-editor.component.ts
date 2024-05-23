@@ -10,11 +10,48 @@ import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
 import { ComponentCanDeactivate } from '../unsaved-changes.guard';
 import { ConferenceEditorService } from './conference-editor.service';
+import { MapComponent } from './map/map.component';
+import { XdivRivalriesComponent } from './xdiv-rivalries/xdiv-rivalries.component';
+import { ConferenceSchoolListComponent } from './conference-school-list/conference-school-list.component';
+import { ConferenceDivisionsComponent } from './conference-divisions/conference-divisions.component';
+import { ConferenceInfoComponent } from './conference-info/conference-info.component';
+import { MatTabGroup, MatTab } from '@angular/material/tabs';
+import { MatOption } from '@angular/material/core';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
+import { MatButton } from '@angular/material/button';
+import { MatCard, MatCardHeader, MatCardTitle, MatCardContent } from '@angular/material/card';
 
 @Component({
-  selector: 'app-conference-editor',
-  templateUrl: './conference-editor.component.html',
-  styleUrls: ['./conference-editor.component.css'],
+    selector: 'app-conference-editor',
+    templateUrl: './conference-editor.component.html',
+    styleUrls: ['./conference-editor.component.css'],
+    standalone: true,
+    imports: [
+        MatCard,
+        MatCardHeader,
+        MatCardTitle,
+        MatButton,
+        MatCardContent,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        FormsModule,
+        NgFor,
+        MatOption,
+        NgIf,
+        MatError,
+        MatTabGroup,
+        MatTab,
+        ConferenceInfoComponent,
+        ConferenceDivisionsComponent,
+        ConferenceSchoolListComponent,
+        XdivRivalriesComponent,
+        MapComponent,
+        AsyncPipe,
+    ],
 })
 export class ConferenceEditorComponent
   implements OnInit, OnDestroy, ComponentCanDeactivate

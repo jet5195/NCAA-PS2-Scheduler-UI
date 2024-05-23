@@ -3,11 +3,20 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {DataService} from '../services/data.service';
 import {School} from '../school';
 import {Conference} from '../conference';
+import { SchoolDetailComponent } from '../school-detail/school-detail.component';
+import { MatAccordion } from '@angular/material/expansion';
+import { MatOption } from '@angular/material/core';
+import { NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-schools',
-  templateUrl: './schools.component.html',
-  styleUrls: ['./schools.component.css']
+    selector: 'app-schools',
+    templateUrl: './schools.component.html',
+    styleUrls: ['./schools.component.css'],
+    standalone: true,
+    imports: [MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatAccordion, SchoolDetailComponent]
 })
 export class SchoolsComponent implements OnInit {
   allSchools: School[] = [];

@@ -1,9 +1,9 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from '@angular/material/dialog';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AddGameRequest } from '../addGameRequest';
 import { DataService } from '../services/data.service';
 import { Game } from '../game';
@@ -11,19 +11,55 @@ import { School } from '../school';
 import { SnackBarService } from '../snackBar.service';
 import { SuggestedGameResponse } from '../suggestedGameResponse';
 import { CompareService } from '../services/compare.service';
+import { DayOfWeekToStringPipe } from '../pipes/dayOfWeekToString.pipe';
+import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
+import { MatRadioGroup, MatRadioButton } from '@angular/material/radio';
+import { MatOption } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatButton } from '@angular/material/button';
+import { NgIf, NgFor } from '@angular/common';
 
 
 @Component({
-  selector: 'app-school-schedule',
-  templateUrl: './school-schedule.component.html',
-  styleUrls: ['./school-schedule.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({ height: '0px', minHeight: '0' })),
-      state('expanded', style({ height: '*' })),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+    selector: 'app-school-schedule',
+    templateUrl: './school-schedule.component.html',
+    styleUrls: ['./school-schedule.component.css'],
+    animations: [
+        trigger('detailExpand', [
+            state('collapsed', style({ height: '0px', minHeight: '0' })),
+            state('expanded', style({ height: '*' })),
+            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+        ]),
+    ],
+    standalone: true,
+    imports: [
+        NgIf,
+        MatButton,
+        MatTable,
+        MatSort,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        RouterLink,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        FormsModule,
+        NgFor,
+        MatOption,
+        MatRadioGroup,
+        MatRadioButton,
+        MinutesAfterMidnightToTimePipe,
+        DayOfWeekToStringPipe,
+    ],
 })
 // @Injectable({
 //   providedIn: 'root' // just before your class
@@ -154,8 +190,23 @@ openScheduleSwapDialog(): void {
 }
 
 @Component({
-  selector: 'swap-schedule-dialog',
-  templateUrl: 'swap-schedule-dialog.html',
+    selector: 'swap-schedule-dialog',
+    templateUrl: 'swap-schedule-dialog.html',
+    standalone: true,
+    imports: [
+        MatDialogTitle,
+        MatDialogContent,
+        MatFormField,
+        MatLabel,
+        MatSelect,
+        FormsModule,
+        NgFor,
+        MatOption,
+        MatDialogActions,
+        MatButton,
+        MatDialogClose,
+        NgIf,
+    ],
 })
 export class SwapScheduleDialog {
   constructor(public dataService: DataService) {

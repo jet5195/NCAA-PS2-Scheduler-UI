@@ -7,13 +7,16 @@ import { Subscription } from 'rxjs';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
 import { ConferenceEditorService } from '../conference-editor.service';
+import { NgxEchartsDirective } from 'ngx-echarts';
 
 echarts.use([MapChart, CanvasRenderer, TooltipComponent, VisualMapComponent]);
 
 @Component({
-  selector: 'app-conference-map',
-  templateUrl: './map.component.html',
-  styleUrl: './map.component.css',
+    selector: 'app-conference-map',
+    templateUrl: './map.component.html',
+    styleUrl: './map.component.css',
+    standalone: true,
+    imports: [NgxEchartsDirective],
 })
 export class MapComponent implements OnInit, OnDestroy {
   conference!: Conference;

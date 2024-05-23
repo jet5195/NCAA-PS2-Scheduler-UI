@@ -1,7 +1,31 @@
+import { NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { MatButton } from '@angular/material/button';
+import {
+  MatCard,
+  MatCardContent,
+  MatCardHeader,
+  MatCardImage,
+  MatCardTitle,
+} from '@angular/material/card';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import {
+  MatStep,
+  MatStepper,
+  MatStepperNext,
+  MatStepperPrevious,
+} from '@angular/material/stepper';
+import { ConferenceEditorComponent } from '../conference-editor/conference-editor.component';
+import { FilterOptionsPipe } from '../pipes/filter-options.pipe';
 import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
 
@@ -33,9 +57,29 @@ export interface CardOption {
 
 @Component({
   selector: 'app-start-flow',
-  standalone: false,
   templateUrl: './start-flow.component.html',
   styleUrl: './start-flow.component.css',
+  standalone: true,
+  imports: [
+    MatStepper,
+    MatStep,
+    FormsModule,
+    ReactiveFormsModule,
+    NgFor,
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardImage,
+    MatCardContent,
+    MatButton,
+    MatStepperNext,
+    MatStepperPrevious,
+    NgIf,
+    ConferenceEditorComponent,
+    MatFormField,
+    MatInput,
+    FilterOptionsPipe,
+  ],
 })
 export class StartFlowComponent implements OnInit {
   year: number = 0;

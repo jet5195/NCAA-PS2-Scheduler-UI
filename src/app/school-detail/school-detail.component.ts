@@ -1,10 +1,17 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { School } from '../school';
+import { MatIcon } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
+import { MatFabButton } from '@angular/material/button';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { NgIf } from '@angular/common';
 
 @Component({
-  selector: 'app-school-detail',
-  templateUrl: './school-detail.component.html',
-  styleUrls: ['./school-detail.component.css']
+    selector: 'app-school-detail',
+    templateUrl: './school-detail.component.html',
+    styleUrls: ['./school-detail.component.css'],
+    standalone: true,
+    imports: [NgIf, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatFabButton, RouterLink, MatIcon]
 })
 export class SchoolDetailComponent implements OnInit {
 
