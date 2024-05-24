@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
+import { switchMap } from 'rxjs/operators';
 import { DataService } from 'src/app/services/data.service';
 import { SnackBarService } from 'src/app/snackBar.service';
 import { CardOption, ScheduleType } from '../start-flow.component';
@@ -52,8 +53,9 @@ export class StartFlowScheduleComponent implements OnInit {
       title: 'Automatically Update Schedule',
       description:
         'Removes all games, then schedules them again based on your Conference Alignment.',
-      image: 'assets/NCAA_FOOTBALL_06_COVER_ART.jpg',
+      image: 'assets/auto-awesome-icon.png',
       type: ScheduleType.AUTOMATIC,
+      action: () => this.automaticScheduleCreation(),
     },
     {
       title: 'Manually Edit Schedule',
@@ -90,5 +92,31 @@ export class StartFlowScheduleComponent implements OnInit {
   importSchedule(fileInputEvent: any) {
     const file = fileInputEvent.target.files[0];
     this.setScheduleFile(file);
+  }
+
+  automaticScheduleCreation(): void {
+    this.dataService
+      .removeAllGames()
+      .pipe(
+        switchMap((result) => {
+          return this.dataService.addAllConferenceGames();
+        }),
+        switchMap((result) => {
+          return this.dataService.autoAddGames();
+        }),
+      )
+      .subscribe(
+        (result) => {
+          // Snackbar for success of autoAddGames
+          this.snackBarService.openSnackBar(
+            'Auto-added games successfully!',
+            'Dismiss',
+          );
+        },
+        (error) => {
+          // Snackbar for any error that occurs during the observable chain
+          this.snackBarService.openSnackBar('An error occurred!', 'Dismiss');
+        },
+      );
   }
 }

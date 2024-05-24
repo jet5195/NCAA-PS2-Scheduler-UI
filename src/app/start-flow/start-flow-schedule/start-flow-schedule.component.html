@@ -22,7 +22,11 @@
   </mat-tab>
   <mat-tab label="Generate Schedule" [disabled]="!isScheduleSet">
     <div class="stepper-container">
-      <mat-card *ngFor="let option of scheduleOptions" class="option-card">
+      <mat-card
+        *ngFor="let option of scheduleOptions"
+        class="option-card"
+        (click)="option.action()"
+      >
         <mat-card-header>
           <mat-card-title>{{ option.title }}</mat-card-title>
         </mat-card-header>
