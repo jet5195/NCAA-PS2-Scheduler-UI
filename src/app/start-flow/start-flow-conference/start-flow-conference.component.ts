@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -9,6 +10,7 @@ import {
 } from '@angular/core';
 import {
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -17,7 +19,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabGroup, MatTabsModule } from '@angular/material/tabs';
 import { DataService } from 'src/app/services/data.service';
 import { SnackBarService } from 'src/app/snackBar.service';
 import { ConferenceEditorComponent } from '../../conference-editor/conference-editor.component';
@@ -47,6 +49,7 @@ import {
   ],
 })
 export class StartFlowConferenceComponent implements OnInit {
+  @ViewChild('tabs', {static: false}) matTabGroup: MatTabGroup;
   @Input() schoolDataFormGroup: FormGroup;
   @ViewChild('alignmentFileInput') alignmentFileInput: any;
   enableEditConferences: boolean = false;
@@ -88,6 +91,7 @@ export class StartFlowConferenceComponent implements OnInit {
     private snackBarService: SnackBarService,
     private http: HttpClient,
     private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef
   ) {}
   ngOnInit(): void {
     //check existing alignment, if we have data. Then enable edit button
@@ -138,6 +142,8 @@ export class StartFlowConferenceComponent implements OnInit {
       (data: any) => {
         this.enableEditConferences = true;
         this.enableSpinner = false;
+        this.matTabGroup.selectedIndex = 1;
+        this.cdRef.detectChanges();
         this.snackBarService.openSnackBar(
           'Conferences have been set successfully',
           'Dismiss',
