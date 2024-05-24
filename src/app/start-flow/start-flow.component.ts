@@ -132,6 +132,7 @@ export class StartFlowComponent implements OnInit {
   setYear(year: number): void {
     this.dataService.setYear(year).subscribe(
       (data: any) => {
+        this.stepper.next();
         this.snackBarService.openSnackBar(
           'Year has been set successfully',
           'Dismiss',
