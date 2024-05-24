@@ -35,12 +35,26 @@
   </mat-step>
   <mat-step label="Set Year">
     <div class="stepper-container">
-      <mat-form-field>
-        <input matInput type="number" placeholder="Year" [(ngModel)]="year" />
-      </mat-form-field>
-      <button mat-flat-button color="primary" (click)="setYear(year)">
-        set
-      </button>
+      <mat-card class="year-card">
+        <mat-card-header>
+          <mat-card-title> Set Year </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <label>Year</label>
+            <input matInput type="number" [(ngModel)]="year" />
+          </mat-form-field>
+          <div>
+            <button
+              class="wide-boi-button"
+              mat-stroked-button
+              (click)="setYear(year)"
+            >
+              Save
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
     </div>
     <div>
       <button mat-button matStepperNext>Next</button>

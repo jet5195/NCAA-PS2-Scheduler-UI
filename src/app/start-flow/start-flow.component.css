@@ -48,3 +48,12 @@
   transform: translateY(-3px); /* Subtle lift effect on hover */
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
+
+.year-card {
+  width: 500px;
+  height: 250px;
+}
+
+.wide-boi-button {
+  width: 100%;
+}
