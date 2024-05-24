@@ -58,7 +58,7 @@ export class StartFlowScheduleComponent implements OnInit {
     {
       title: 'Manually Edit Schedule',
       description: 'Manually update/edit the schedule.',
-      image: 'assets/NCAA_FOOTBALL_06_COVER_ART.jpg',
+      image: 'assets/SCHEDULE_EDIT.png',
       type: ScheduleType.MANUAL,
     },
   ];
