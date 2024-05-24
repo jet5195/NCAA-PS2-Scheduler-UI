@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group #tabs>
   <mat-tab label="Schedule Import">
     <div class="stepper-container">
       <mat-card
@@ -20,7 +20,7 @@
       (change)="importSchedule($event)"
     />
   </mat-tab>
-  <mat-tab label="Generate Schedule">
+  <mat-tab label="Generate Schedule" [disabled]="!isScheduleSet">
     <div class="stepper-container">
       <mat-card *ngFor="let option of scheduleOptions" class="option-card">
         <mat-card-header>

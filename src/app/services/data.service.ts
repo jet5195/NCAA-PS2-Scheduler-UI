@@ -32,6 +32,12 @@ export class DataService {
     });
   }
 
+  getSchedule() {
+    return this.http.get<Game[]>(`${this.baseUrl}/schedule`, {
+      headers: this.headers,
+    });
+  }
+
   getSchools(): Observable<School[]> {
     return this.http.get<School[]>(`${this.baseUrl}/schools`, {
       headers: this.headers,

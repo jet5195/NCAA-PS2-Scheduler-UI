@@ -29,6 +29,7 @@ import { FilterOptionsPipe } from '../pipes/filter-options.pipe';
 import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
 import { StartFlowConferenceComponent } from './start-flow-conference/start-flow-conference.component';
+import { StartFlowExportComponent } from './start-flow-export/start-flow-export.component';
 import { StartFlowScheduleComponent } from './start-flow-schedule/start-flow-schedule.component';
 
 export enum ConferenceAlignmentType {
@@ -82,15 +83,18 @@ export interface CardOption {
     FilterOptionsPipe,
     StartFlowConferenceComponent,
     StartFlowScheduleComponent,
+    StartFlowExportComponent,
   ],
 })
 export class StartFlowComponent implements OnInit {
   year: number = 0;
+  isYearValid: boolean = false;
   @ViewChild('stepper') private stepper: MatStepper;
   public conferenceAlignmentType = ConferenceAlignmentType;
   public schoolDataType = SchoolDataType;
   isLinear = true;
   schoolDataFormGroup: FormGroup;
+  alignmentFormGroup: FormGroup;
 
   schoolDataOptions: CardOption[] = [
     {
@@ -120,6 +124,9 @@ export class StartFlowComponent implements OnInit {
     this.schoolDataFormGroup = this.fb.group({
       schoolData: [null, Validators.required],
     });
+    this.alignmentFormGroup = this.fb.group({
+      conferenceAlignment: [null, Validators.required],
+    });
     this.getYear();
   }
 
@@ -132,6 +139,7 @@ export class StartFlowComponent implements OnInit {
   setYear(year: number): void {
     this.dataService.setYear(year).subscribe(
       (data: any) => {
+        this.isYearValid = true;
         this.stepper.next();
         this.snackBarService.openSnackBar(
           'Year has been set successfully',

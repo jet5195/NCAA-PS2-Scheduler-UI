@@ -23,14 +23,18 @@
       </div>
     </form>
   </mat-step>
-  <mat-step label="Conference Alignment Setup">
+  <mat-step
+    label="Conference Alignment Setup"
+    [stepControl]="alignmentFormGroup"
+  >
     <div>
-      <button mat-button matStepperNext>Next</button>
       <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
     </div>
     <app-start-flow-conference
       *ngIf="stepper.selectedIndex == 1"
       [schoolDataFormGroup]="schoolDataFormGroup"
+      [alignmentFormGroup]="alignmentFormGroup"
     ></app-start-flow-conference>
   </mat-step>
   <mat-step label="Set Year">
@@ -57,18 +61,24 @@
       </mat-card>
     </div>
     <div>
-      <button mat-button matStepperNext>Next</button>
       <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext [disabled]="!isYearValid">Next</button>
     </div>
   </mat-step>
   <mat-step label="Schedule Setup">
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
     <app-start-flow-schedule></app-start-flow-schedule>
   </mat-step>
   <mat-step label="Export Files">
-    <div class="stepper-container"></div>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+    <div class="stepper-container">
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="stepper.reset()">Reset</button>
+      </div>
+      <app-start-flow-export> </app-start-flow-export>
     </div>
   </mat-step>
 </mat-stepper>

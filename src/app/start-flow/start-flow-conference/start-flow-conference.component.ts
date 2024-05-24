@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -49,12 +48,12 @@ import {
   ],
 })
 export class StartFlowConferenceComponent implements OnInit {
-  @ViewChild('tabs', {static: false}) matTabGroup: MatTabGroup;
+  @ViewChild('tabs', { static: false }) matTabGroup: MatTabGroup;
   @Input() schoolDataFormGroup: FormGroup;
   @ViewChild('alignmentFileInput') alignmentFileInput: any;
-  enableEditConferences: boolean = false;
+  isAlignmentSet: boolean = false;
   enableSpinner: boolean = false;
-  alignmentFormGroup: FormGroup;
+  @Input() alignmentFormGroup: FormGroup;
   alignmentOptions: CardOption[] = [
     {
       title: 'NCAA 06 Conference Alignment',
@@ -91,13 +90,13 @@ export class StartFlowConferenceComponent implements OnInit {
     private snackBarService: SnackBarService,
     private http: HttpClient,
     private fb: FormBuilder,
-    private cdRef: ChangeDetectorRef
+    private cdRef: ChangeDetectorRef,
   ) {}
   ngOnInit(): void {
     //check existing alignment, if we have data. Then enable edit button
     this.dataService.getConferenceList().subscribe((data) => {
-      if (data) {
-        this.enableEditConferences = true;
+      if (data.length > 0) {
+        this.isAlignmentSet = true;
       }
     });
 
@@ -140,7 +139,7 @@ export class StartFlowConferenceComponent implements OnInit {
     this.enableSpinner = true;
     this.dataService.setAlignmentFile(file).subscribe(
       (data: any) => {
-        this.enableEditConferences = true;
+        this.isAlignmentSet = true;
         this.enableSpinner = false;
         this.matTabGroup.selectedIndex = 1;
         this.cdRef.detectChanges();
@@ -150,7 +149,7 @@ export class StartFlowConferenceComponent implements OnInit {
         );
       },
       (error) => {
-        this.enableEditConferences = false;
+        this.isAlignmentSet = false;
         this.enableSpinner = false;
         this.snackBarService.openSnackBar(
           'Error setting conferences, try checking your file',
