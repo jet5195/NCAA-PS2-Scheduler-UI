@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
@@ -62,6 +62,7 @@ import { SuggestedGameResponse } from '../suggestedGameResponse';
   ],
   standalone: true,
   imports: [
+    CommonModule,
     NgIf,
     MatButton,
     MatTable,
