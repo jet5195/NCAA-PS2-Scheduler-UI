@@ -1,105 +1,153 @@
 <div class="school-schedule-container">
-
-    <div *ngIf="school" class="schedule-header mat-elevation-z8" style="background-color: {{school.color}}">
-        <div class="school-info-container">
-            <div class="school-logo-div">
-                <img *ngIf="school" class="school-logo" src="{{school.logo}}">
-                <!-- </div> -->
-                <div class="school-info">
-                    <!-- <div class="school-name"> -->
-                    <span *ngIf="school" class="school-name" style="color: {{school.altColor}}"><b>{{school.name}}</b>
-                        {{school.nickname}}</span>
-                    <br>
-                    <span *ngIf="school" style="color:white"><b>{{school.conferenceId}}</b></span>
-                    <span *ngIf="school.divisionId" style="color:white"> {{school.divisionId}}</span>
-                </div>
-                <button mat-stroked-button style="align-self: right;" (click)="openScheduleSwapDialog()">
-                    Swap Schedule
-                </button>
-            </div>
+  <div
+    *ngIf="school"
+    class="schedule-header mat-elevation-z8"
+    style="background-color: {{ school.color }}"
+  >
+    <div class="school-info-container">
+      <div class="school-logo-div">
+        <img *ngIf="school" class="school-logo" src="{{ school.logo }}" />
+        <!-- </div> -->
+        <div class="school-info">
+          <!-- <div class="school-name"> -->
+          <span
+            *ngIf="school"
+            class="school-name"
+            style="color: {{ school.altColor }}"
+            ><b>{{ school.name }}</b> {{ school.nickname }}</span
+          >
+          <br />
+          <span *ngIf="school" style="color: white"
+            ><b>{{ getConferenceNameById(school.conferenceId) }}</b></span
+          >
+          <span *ngIf="school.divisionId" style="color: white">
+            {{ getDivisionNameById(school.divisionId) }}</span
+          >
         </div>
-
+        <button
+          mat-stroked-button
+          style="align-self: right"
+          (click)="openScheduleSwapDialog()"
+        >
+          Swap Schedule
+        </button>
+      </div>
     </div>
+  </div>
 
-    <table mat-table multiTemplateDataRows [dataSource]="dataSource" matSort matSortActive="week" matSortDirection="asc"
-        class="mat-elevation-z8 schedule-table">
-
-        <!--- Note that these columns can be defined in any order.
+  <table
+    mat-table
+    multiTemplateDataRows
+    [dataSource]="dataSource"
+    matSort
+    matSortActive="week"
+    matSortDirection="asc"
+    class="mat-elevation-z8 schedule-table"
+  >
+    <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
-        <!-- Game Column -->
-        <ng-container matColumnDef="game">
-            <th mat-header-cell *matHeaderCellDef> Game </th>
-            <td mat-cell *matCellDef="let game; let i = dataIndex">{{i + 1}}</td>
-        </ng-container>
+    <!-- Game Column -->
+    <ng-container matColumnDef="game">
+      <th mat-header-cell *matHeaderCellDef>Game</th>
+      <td mat-cell *matCellDef="let game; let i = dataIndex">{{ i + 1 }}</td>
+    </ng-container>
 
-        <!-- Week Column -->
-        <ng-container matColumnDef="week">
-            <th mat-header-cell *matHeaderCellDef> Week </th>
-            <td mat-cell *matCellDef="let game"> {{game.week}} </td>
-        </ng-container>
+    <!-- Week Column -->
+    <ng-container matColumnDef="week">
+      <th mat-header-cell *matHeaderCellDef>Week</th>
+      <td mat-cell *matCellDef="let game">{{ game.week }}</td>
+    </ng-container>
 
-        <!-- Opponent Column -->
-        <ng-container matColumnDef="opponent">
-            <th mat-header-cell *matHeaderCellDef> Opponent </th>
-            <td mat-cell *matCellDef="let game"> {{school.name! === game.homeTeam.name ? "vs ": "@ "}}
-                <div class="in-cell-school-logo-container">
-                    <img class="in-cell-school-logo"
-                        src="{{school.name! === game.homeTeam.name ? game.awayTeam.logo : game.homeTeam.logo}}"
-                        routerLink="/school/{{school.name! === game.homeTeam.name ? game.awayTeam.tgid : game.homeTeam.tgid}}/schedule">
-                </div>
-                {{school.name! === game.homeTeam.name ? game.awayTeam.name : game.homeTeam.name}}
-            </td>
-        </ng-container>
+    <!-- Opponent Column -->
+    <ng-container matColumnDef="opponent">
+      <th mat-header-cell *matHeaderCellDef>Opponent</th>
+      <td mat-cell *matCellDef="let game">
+        {{ school.name! === game.homeTeam.name ? "vs " : "@ " }}
+        <div class="in-cell-school-logo-container">
+          <img
+            class="in-cell-school-logo"
+            src="{{
+              school.name! === game.homeTeam.name
+                ? game.awayTeam.logo
+                : game.homeTeam.logo
+            }}"
+            routerLink="/school/{{
+              school.name! === game.homeTeam.name
+                ? game.awayTeam.tgid
+                : game.homeTeam.tgid
+            }}/schedule"
+          />
+        </div>
+        {{
+          school.name! === game.homeTeam.name
+            ? game.awayTeam.name
+            : game.homeTeam.name
+        }}
+      </td>
+    </ng-container>
 
-        <!-- Time Column -->
-        <ng-container matColumnDef="time">
-            <th mat-header-cell *matHeaderCellDef> Time </th>
-            <td mat-cell *matCellDef="let game">
-                {{game.time | minutesAfterMidnightToTime:false}}
-            </td>
-        </ng-container>
+    <!-- Time Column -->
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.time | minutesAfterMidnightToTime: false }}
+      </td>
+    </ng-container>
 
-        <!-- Day Column -->
-        <ng-container matColumnDef="day">
-            <th mat-header-cell *matHeaderCellDef> Day </th>
-            <td mat-cell *matCellDef="let game">
-                {{game.day | dayOfWeekToString:true}}
-            </td>
-        </ng-container>
+    <!-- Day Column -->
+    <ng-container matColumnDef="day">
+      <th mat-header-cell *matHeaderCellDef>Day</th>
+      <td mat-cell *matCellDef="let game">
+        {{ game.day | dayOfWeekToString: true }}
+      </td>
+    </ng-container>
 
-        <!-- Result Column -->
-        <ng-container matColumnDef="result">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let game">
-                <!-- {{game.conferenceGame}}  -->
-                <div *ngIf="game.gameResult.homeScore > game.gameResult.awayScore">
-                    {{game.homeTeam.name}} {{game.gameResult.homeScore}} - {{game.awayTeam.name}}
-                    {{game.gameResult.awayScore}}
-                </div>
-                <div *ngIf="game.gameResult.awayScore > game.gameResult.homeScore">
-                    {{game.awayTeam.name}} {{game.gameResult.awayScore}} - {{game.homeTeam.name}}
-                    {{game.gameResult.homeScore}}
-                </div>
-            </td>
-        </ng-container>
+    <!-- Result Column -->
+    <ng-container matColumnDef="result">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let game">
+        <!-- {{game.conferenceGame}}  -->
+        <div *ngIf="game.gameResult.homeScore > game.gameResult.awayScore">
+          {{ game.homeTeam.name }} {{ game.gameResult.homeScore }} -
+          {{ game.awayTeam.name }}
+          {{ game.gameResult.awayScore }}
+        </div>
+        <div *ngIf="game.gameResult.awayScore > game.gameResult.homeScore">
+          {{ game.awayTeam.name }} {{ game.gameResult.awayScore }} -
+          {{ game.homeTeam.name }}
+          {{ game.gameResult.homeScore }}
+        </div>
+      </td>
+    </ng-container>
 
-        <!-- ConferenceGame Column -->
-        <ng-container matColumnDef="conferenceGame">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let game">
-                <!-- {{game.conferenceGame}}  -->
-                <div *ngIf="game.conferenceGame" class="in-cell-school-logo-container">
-                    <img *ngIf="game.homeTeam.conference" class="in-cell-conference-logo" src="{{game.homeTeam.conference.logo}}">
-                </div>
-            </td>
-        </ng-container>
+    <!-- ConferenceGame Column -->
+    <ng-container matColumnDef="conferenceGame">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let game">
+        <!-- {{game.conferenceGame}}  -->
+        <div *ngIf="game.conferenceGame" class="in-cell-school-logo-container">
+          <img
+            *ngIf="game.homeTeam.conference"
+            class="in-cell-conference-logo"
+            src="{{ game.homeTeam.conference.logo }}"
+          />
+        </div>
+      </td>
+    </ng-container>
 
-        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-        <ng-container matColumnDef="expandedDetail">
-            <td mat-cell *matCellDef="let game" [attr.colspan]="displayedColumns.length">
-                <div class="game-detail" [@detailExpand]="game == expandedGame? 'expanded' : 'collapsed'">
-                    <!-- <div class="school-logo">
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td
+        mat-cell
+        *matCellDef="let game"
+        [attr.colspan]="displayedColumns.length"
+      >
+        <div
+          class="game-detail"
+          [@detailExpand]="game == expandedGame ? 'expanded' : 'collapsed'"
+        >
+          <!-- <div class="school-logo">
                         <img *ngIf="game" class="opponent-logo"
                             src="{{school.name! === game.homeTeam.name ? game.awayTeam.logo : game.homeTeam.logo}}">
                     </div>
@@ -113,65 +161,115 @@
                             game.homeTeam.division}}</span>
 
                     </div> -->
-                    <button mat-stroked-button color="primary" class="remove-button"
-                        routerLink="/game/{{game.week}}/{{game.gameNumber}}">
-                        Edit Game
-                    </button>
-                    <button mat-stroked-button color="primary" class="remove-button" (click)="delete(game)">
-                        Remove Game
-                    </button>
-                </div>
-            </td>
-        </ng-container>
+          <button
+            mat-stroked-button
+            color="primary"
+            class="remove-button"
+            routerLink="/game/{{ game.week }}/{{ game.gameNumber }}"
+          >
+            Edit Game
+          </button>
+          <button
+            mat-stroked-button
+            color="primary"
+            class="remove-button"
+            (click)="delete(game)"
+          >
+            Remove Game
+          </button>
+        </div>
+      </td>
+    </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let game; columns: displayedColumns;" class="game-row"
-            [class.example-expanded-row]="expandedGame === game"
-            (click)="expandedGame = expandedGame === game ? null : game">
-        </tr>
-        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="game-detail-row"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      *matRowDef="let game; columns: displayedColumns"
+      class="game-row"
+      [class.example-expanded-row]="expandedGame === game"
+      (click)="expandedGame = expandedGame === game ? null : game"
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: ['expandedDetail']"
+      class="game-detail-row"
+    ></tr>
+  </table>
 
-    </table>
+  <!-- <app-add-game></app-add-game> -->
 
-    <!-- <app-add-game></app-add-game> -->
+  <div class="add-game-container">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="add-game-button"
+      (click)="getSuggestedGame()"
+    >
+      Suggest Game
+    </button>
 
-    <div class="add-game-container">
-
-        <button mat-stroked-button color="primary" class="add-game-button" (click)="getSuggestedGame()">Suggest
-            Game</button>
-
-        <!-- <h4>Select Week</h4> -->
-        <mat-form-field appearance="fill" class="add-game-dropdown">
-            <mat-label>Select Week</mat-label>
-            <mat-select [(ngModel)]="selectedWeek" name="availableWeek" (selectionChange)="changeWeek()">
-                <mat-option *ngFor="let availableWeek of availableWeeks" [value]="availableWeek">
-                    {{availableWeek}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <!-- <h4>Select Opponent</h4> -->
-        <mat-form-field appearance="fill" class="add-game-dropdown">
-            <mat-label>Select Opponent</mat-label>
-            <mat-select [(value)]="selectedOpponent" [compareWith]="compareService.compareSchools" name="availableOpponent">
-                <mat-option *ngFor="let availableOpponent of availableOpponents" [value]="availableOpponent">
-                    {{availableOpponent.name}}
-                    <div *ngIf="availableOpponent.conferenceId === school.conferenceId"
-                        class="in-cell-school-logo-container">
-                        <!-- TODO: get conference with getConference call and pull logo there -->
-                        <!-- <img class="in-cell-conference-logo" src="{{school.conference.logo}}"> -->
-                    </div>
-                </mat-option>
-            </mat-select>
-
-        </mat-form-field>
-        <!-- <span>{{selectedOpponent}}</span> -->
-        <!-- <label id="example-radio-group-label">Is this needed</label> -->
-        <mat-radio-group aria-labelledby="home-away-group-label" class="home-away-radio-group" [(ngModel)]="isHomeTeam">
-            <mat-radio-button class="home-away-radio-button" [value]=true>Home</mat-radio-button>
-            <mat-radio-button class="home-away-radio-button" [value]=false>Away</mat-radio-button>
-        </mat-radio-group>
-        <!-- <div>{{isHomeTeam}}</div> -->
-        <!-- <span>{{selectedWeek}}</span> -->
-        <button mat-stroked-button color="primary" class="add-game-button" (click)="add()">Add Game</button>
-    </div>
+    <!-- <h4>Select Week</h4> -->
+    <mat-form-field appearance="fill" class="add-game-dropdown">
+      <mat-label>Select Week</mat-label>
+      <mat-select
+        [(ngModel)]="selectedWeek"
+        name="availableWeek"
+        (selectionChange)="changeWeek()"
+      >
+        <mat-option
+          *ngFor="let availableWeek of availableWeeks"
+          [value]="availableWeek"
+        >
+          {{ availableWeek }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <h4>Select Opponent</h4> -->
+    <mat-form-field appearance="fill" class="add-game-dropdown">
+      <mat-label>Select Opponent</mat-label>
+      <mat-select
+        [(value)]="selectedOpponent"
+        [compareWith]="compareService.compareSchools"
+        name="availableOpponent"
+      >
+        <mat-option
+          *ngFor="let availableOpponent of availableOpponents"
+          [value]="availableOpponent"
+        >
+          {{ availableOpponent.name }}
+          <div
+            *ngIf="availableOpponent.conferenceId === school.conferenceId"
+            class="in-cell-school-logo-container"
+          >
+            <!-- TODO: get conference with getConference call and pull logo there -->
+            <!-- <img class="in-cell-conference-logo" src="{{school.conference.logo}}"> -->
+          </div>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- <span>{{selectedOpponent}}</span> -->
+    <!-- <label id="example-radio-group-label">Is this needed</label> -->
+    <mat-radio-group
+      aria-labelledby="home-away-group-label"
+      class="home-away-radio-group"
+      [(ngModel)]="isHomeTeam"
+    >
+      <mat-radio-button class="home-away-radio-button" [value]="true"
+        >Home</mat-radio-button
+      >
+      <mat-radio-button class="home-away-radio-button" [value]="false"
+        >Away</mat-radio-button
+      >
+    </mat-radio-group>
+    <!-- <div>{{isHomeTeam}}</div> -->
+    <!-- <span>{{selectedWeek}}</span> -->
+    <button
+      mat-stroked-button
+      color="primary"
+      class="add-game-button"
+      (click)="add()"
+    >
+      Add Game
+    </button>
+  </div>
 </div>
