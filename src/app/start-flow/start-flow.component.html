@@ -73,12 +73,10 @@
     <app-start-flow-schedule></app-start-flow-schedule>
   </mat-step>
   <mat-step label="Export Files">
-    <div class="stepper-container">
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
-      <app-start-flow-export> </app-start-flow-export>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
+    <app-start-flow-export> </app-start-flow-export>
   </mat-step>
 </mat-stepper>
