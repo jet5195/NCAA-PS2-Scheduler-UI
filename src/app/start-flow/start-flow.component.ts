@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
@@ -25,6 +25,7 @@ import {
   MatStepperPrevious,
 } from '@angular/material/stepper';
 import { ConferenceEditorComponent } from '../conference-editor/conference-editor.component';
+import { ConferenceEditorService } from '../conference-editor/conference-editor.service';
 import { FilterOptionsPipe } from '../pipes/filter-options.pipe';
 import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
@@ -84,6 +85,7 @@ export interface CardOption {
     StartFlowConferenceComponent,
     StartFlowScheduleComponent,
     StartFlowExportComponent,
+    AsyncPipe,
   ],
 })
 export class StartFlowComponent implements OnInit {
@@ -118,6 +120,7 @@ export class StartFlowComponent implements OnInit {
     private dataService: DataService,
     private snackBarService: SnackBarService,
     private http: HttpClient,
+    public conferenceEditorService: ConferenceEditorService,
   ) {}
 
   ngOnInit() {

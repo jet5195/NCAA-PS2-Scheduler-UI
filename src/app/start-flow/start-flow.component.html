@@ -29,7 +29,13 @@
   >
     <div>
       <button mat-button matStepperPrevious>Back</button>
-      <button mat-button matStepperNext>Next</button>
+      <button
+        mat-button
+        matStepperNext
+        [disabled]="!(conferenceEditorService.isValid() | async)"
+      >
+        Next
+      </button>
     </div>
     <app-start-flow-conference
       *ngIf="stepper.selectedIndex == 1"

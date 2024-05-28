@@ -48,6 +48,13 @@ import {
   ],
 })
 export class StartFlowConferenceComponent implements OnInit {
+  constructor(
+    private dataService: DataService,
+    private snackBarService: SnackBarService,
+    private http: HttpClient,
+    private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef,
+  ) {}
   @ViewChild('tabs', { static: false }) matTabGroup: MatTabGroup;
   @Input() schoolDataFormGroup: FormGroup;
   @ViewChild('alignmentFileInput') alignmentFileInput: any;
@@ -85,13 +92,6 @@ export class StartFlowConferenceComponent implements OnInit {
     this.alignmentFormGroup.get('alignment').setValue(alignmentType);
   }
   stepper: any;
-  constructor(
-    private dataService: DataService,
-    private snackBarService: SnackBarService,
-    private http: HttpClient,
-    private fb: FormBuilder,
-    private cdRef: ChangeDetectorRef,
-  ) {}
   ngOnInit(): void {
     //check existing alignment, if we have data. Then enable edit button
     this.dataService.getConferenceList().subscribe((data) => {
