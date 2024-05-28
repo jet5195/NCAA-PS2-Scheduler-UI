@@ -1,20 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { Game } from '../game';
-import { Location } from '@angular/common';
+import { Location, NgIf, NgFor } from '@angular/common';
 import { School } from '../school';
 import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
 import { DayOfWeekToStringPipe } from '../pipes/dayOfWeekToString.pipe';
 import { AddGameRequest } from '../addGameRequest';
-import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { MatSlideToggleChange, MatSlideToggle } from '@angular/material/slide-toggle';
 import { CompareService } from '../services/compare.service';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { MatInput } from '@angular/material/input';
+import { MatOption } from '@angular/material/core';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatCard } from '@angular/material/card';
 
 @Component({
-  selector: 'app-edit-game',
-  templateUrl: './edit-game.component.html',
-  styleUrls: ['./edit-game.component.css']
+    selector: 'app-edit-game',
+    templateUrl: './edit-game.component.html',
+    styleUrls: ['./edit-game.component.css'],
+    standalone: true,
+    imports: [NgIf, MatCard, MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatInput, MatSlideToggle, MatButton, MatTooltip]
 })
 export class EditGameComponent implements OnInit {
 

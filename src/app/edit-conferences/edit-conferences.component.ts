@@ -4,11 +4,23 @@ import { Conference } from '../conference';
 import { ConferenceComponent } from '../conference/conference.component';
 import { School } from '../school';
 import { DataService } from '../services/data.service';
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatFabButton } from '@angular/material/button';
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-conferences',
-  templateUrl: './edit-conferences.component.html',
-  styleUrls: ['./edit-conferences.component.css'],
+    selector: 'app-edit-conferences',
+    templateUrl: './edit-conferences.component.html',
+    styleUrls: ['./edit-conferences.component.css'],
+    standalone: true,
+    imports: [
+        NgFor,
+        ConferenceComponent,
+        MatFabButton,
+        MatTooltip,
+        MatIcon,
+    ],
 })
 export class EditConferencesComponent implements OnInit {
   conferences: Conference[] = [];

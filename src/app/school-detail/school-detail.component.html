@@ -1,34 +1,46 @@
-<!-- <div *ngIf="school"> -->
-<mat-expansion-panel *ngIf="school" class="school-expansion-panel" style="background-color: {{school.color}}; border-bottom: solid;
-             border-bottom-color: {{school.altColor}};" (opened)="panelOpenState = true"
-    (closed)="panelOpenState = false">
-    <mat-expansion-panel-header>
-        <mat-panel-title style=" color: {{getContrast(school.color)}};">
-            {{school.name}} {{school.nickname}}
-        </mat-panel-title>
-        <!-- <mat-panel-description>
-                            <mat-icon></mat-icon>
-                        </mat-panel-description> -->
-    </mat-expansion-panel-header>
-    <div class="expansion-panel-data">
-        <div class="school-detail-logo-container">
-            <img *ngIf="school" class="school-detail-logo" src="{{school.logo}}">
-        </div>
-        <div class="school-quick-info" style=" color: {{getContrast(school.color)}};">
-            <div><span>Division: </span>{{school.ncaaDivision}}</div>
-            <span>Conference: </span>
-            {{school.conferenceId}}
-            <div *ngIf="school.divisionId">
-                <span>Division: </span>{{school.divisionId}}
-            </div>
-            <div><span>State: </span>{{school.state}}</div>
-        </div>
+<mat-expansion-panel
+  *ngIf="school"
+  class="school-expansion-panel"
+  [ngStyle]="{
+    'background-color': school.color,
+    'border-bottom': 'solid',
+    'border-bottom-color': school.altColor
+  }"
+  (opened)="panelOpenState = true"
+  (closed)="panelOpenState = false"
+>
+  <mat-expansion-panel-header>
+    <mat-panel-title [ngStyle]="{ color: getContrast(school.color) }">
+      {{ school.name }} {{ school.nickname }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <div class="expansion-panel-data">
+    <div class="school-detail-logo-container">
+      <img *ngIf="school" class="school-detail-logo" [src]="school.logo" />
     </div>
-    <!-- <button mat-raised-button color="primary" routerLink="/school/{{school.tgid}}/schedule">Schedule</button> -->
-    <button mat-fab style="background-color: {{school.altColor}};" class="schedule-button"
-        routerLink="/school/{{school.tgid}}/schedule">
-        <mat-icon style=" color: {{getContrast(school.altColor)}};">calendar_today</mat-icon>
-    </button>
+    <div
+      class="school-quick-info"
+      [ngStyle]="{ color: getContrast(school.color) }"
+    >
+      <div><span>Division: </span>{{ school.ncaaDivision }}</div>
+      <div>
+        <span>Conference: </span
+        >{{ getConferenceNameById(school.conferenceId) }}
+      </div>
+      <div *ngIf="school.divisionId">
+        <span>Division: </span>{{ getDivisionNameById(school.divisionId) }}
+      </div>
+      <div><span>State: </span>{{ school.state }}</div>
+    </div>
+  </div>
+  <button
+    mat-fab
+    [ngStyle]="{ 'background-color': school.altColor }"
+    class="schedule-button"
+    [routerLink]="'/school/' + school.tgid + '/schedule'"
+  >
+    <mat-icon [ngStyle]="{ color: getContrast(school.altColor) }"
+      >calendar_today</mat-icon
+    >
+  </button>
 </mat-expansion-panel>
-
-<!-- </div> -->

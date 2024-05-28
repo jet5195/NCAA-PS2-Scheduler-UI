@@ -1,21 +1,48 @@
 @use "@angular/material" as mat;
-// @use '@angular/material-experimental' as matx;
 
-@use "@angular/material/prebuilt-themes/deeppurple-amber" as light;
+@include mat.core();
 
-$dark-primary: mat.define-palette(mat.$indigo-palette, 500);
-$dark-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$dark-warn: mat.define-palette(mat.$red-palette);
-
-$dark-theme: mat.define-dark-theme(
+$angular-material-3-theme: mat.define-theme(
   (
     color: (
-      primary: $dark-primary,
-      accent: $dark-accent,
-      warn: $dark-warn,
+      theme-type: light,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    density: (
+      scale: -1,
+    ),
+    typography: (
+      plain-family: Roboto,
+      brand-family: Roboto,
     ),
   )
 );
+
+:root {
+  @include mat.all-component-themes($angular-material-3-theme);
+}
+
+html {
+  font-family: Roboto, Helvetica, sans-serif;
+}
+
+// :root {
+//   @include mat.all-component-themes(stylesm3-theme.$dark-theme);
+// }
+// $dark-primary: mat.define-palette(mat.$indigo-palette, 500);
+// $dark-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// $dark-warn: mat.define-palette(mat.$red-palette);
+
+// $dark-theme: mat.define-dark-theme(
+//   (
+//     color: (
+//       primary: $dark-primary,
+//       accent: $dark-accent,
+//       warn: $dark-warn,
+//     ),
+//   )
+// );
 
 // $light-theme: matx.define-theme((
 //   color: (
@@ -316,8 +343,10 @@ tr.game-row:not(.game-expanded-row):active {
 }
 
 .selected-school-card {
-  box-shadow: 0px 5px 5px -3px rgb(0 0 0 / 20%),
-    0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%) !important;
+  box-shadow:
+    0px 5px 5px -3px rgb(0 0 0 / 20%),
+    0px 8px 10px 1px rgb(0 0 0 / 14%),
+    0px 3px 14px 2px rgb(0 0 0 / 12%) !important;
   top: -5px;
 }
 

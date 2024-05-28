@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { Bowl } from '../bowl';
 import { Conference } from '../conference';
 import { DataService } from '../services/data.service';
+import { ConferenceLogoPipe } from '../pipes/conferenceLogo';
+import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
 
 @Component({
-  selector: 'app-bowls',
-  templateUrl: './bowls.component.html',
-  styleUrls: ['./bowls.component.css']
+    selector: 'app-bowls',
+    templateUrl: './bowls.component.html',
+    styleUrls: ['./bowls.component.css'],
+    standalone: true,
+    imports: [MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MinutesAfterMidnightToTimePipe, ConferenceLogoPipe]
 })
 export class BowlsComponent implements OnInit {
 

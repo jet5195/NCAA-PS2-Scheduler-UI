@@ -32,6 +32,12 @@ export class DataService {
     });
   }
 
+  getSchedule() {
+    return this.http.get<Game[]>(`${this.baseUrl}/schedule`, {
+      headers: this.headers,
+    });
+  }
+
   getSchools(): Observable<School[]> {
     return this.http.get<School[]>(`${this.baseUrl}/schools`, {
       headers: this.headers,
@@ -58,7 +64,7 @@ export class DataService {
     return await this.http
       .post<School>(
         `${this.baseUrl}/schools/${tgid}/schedule/week/${week}/remove-game`,
-        null
+        null,
       )
       .toPromise();
   }
@@ -74,21 +80,21 @@ export class DataService {
   getAvailableOpponents(tgid: number, week: number): Observable<School[]> {
     return this.http.get<School[]>(
       `${this.baseUrl}/schools/${tgid}/schedule/week/${week}/available-opponents`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   getEmptyWeeks(tgid: number): Observable<number[]> {
     return this.http.get<number[]>(
       `${this.baseUrl}/schools/${tgid}/schedule/empty-weeks`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   getEmptyWeeksTwoTeams(tgid: number, tgid2: number): Observable<number[]> {
     return this.http.get<number[]>(
       `${this.baseUrl}/schools/${tgid}/schedule/empty-weeks/${tgid2}`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -96,7 +102,7 @@ export class DataService {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/auto-add-games`,
       null,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -104,7 +110,7 @@ export class DataService {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/auto-add-games-random`,
       null,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -112,7 +118,7 @@ export class DataService {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/auto-add-games-rivals`,
       null,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -120,7 +126,7 @@ export class DataService {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/auto-add-games-aggressive`,
       null,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -133,21 +139,21 @@ export class DataService {
   removeAllOocGamesNonRivalry(): Observable<number> {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/remove-all-ooc-games-but-rivalry`,
-      null
+      null,
     );
   }
 
   removeAllOocGames(): Observable<number> {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/remove-all-ooc-games`,
-      null
+      null,
     );
   }
 
   removeAllFcsGames(): Observable<number> {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/remove-all-fcs-games`,
-      null
+      null,
     );
   }
 
@@ -155,7 +161,7 @@ export class DataService {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/remove-all-games`,
       null,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -181,7 +187,7 @@ export class DataService {
 
   getSuggestedOpponent(tgid: number): Observable<SuggestedGameResponse> {
     return this.http.get<SuggestedGameResponse>(
-      `${this.baseUrl}/schools/${tgid}/suggest-game`
+      `${this.baseUrl}/schools/${tgid}/suggest-game`,
     );
   }
 
@@ -191,7 +197,17 @@ export class DataService {
 
     return this.http.post<HttpEvent<any>>(
       `${this.baseUrl}/schedule/set-by-file`,
-      formData
+      formData,
+    );
+  }
+
+  setSchoolDataFile(file: File): Observable<HttpEvent<any>> {
+    const formData: FormData = new FormData();
+    formData.append('file', file);
+
+    return this.http.post<HttpEvent<any>>(
+      `${this.baseUrl}/schools/set-by-file`,
+      formData,
     );
   }
 
@@ -201,7 +217,7 @@ export class DataService {
 
     return this.http.post<HttpEvent<any>>(
       `${this.baseUrl}/conferences/set-by-file`,
-      formData
+      formData,
     );
   }
 
@@ -211,7 +227,7 @@ export class DataService {
 
     return this.http.post<HttpEvent<any>>(
       `${this.baseUrl}/bowls/set-by-file`,
-      formData
+      formData,
     );
   }
 
@@ -235,46 +251,46 @@ export class DataService {
     return this.http.post<number>(
       `${this.baseUrl}/schedule/year/${year}`,
       null,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   getGame(week: number, gameNumber: number): Observable<Game> {
     return this.http.get<Game>(
-      `${this.baseUrl}/schedule/week/${week}/${gameNumber}`
+      `${this.baseUrl}/schedule/week/${week}/${gameNumber}`,
     );
   }
 
   saveGame(
     addGameRequest: AddGameRequest,
     week: number,
-    gameNumber: number
+    gameNumber: number,
   ): Observable<any> {
     return this.http.post<Game>(
       `${this.baseUrl}/schedule/game/${week}/${gameNumber}`,
       addGameRequest,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   swapSchools(tgid1: number, tgid2: number): Observable<any> {
     return this.http.post<any>(
       `${this.baseUrl}/conferences/swap-schools/${tgid1}/${tgid2}`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   renameConference(name: string, newName: string): Observable<any> {
     return this.http.post<any>(
       `${this.baseUrl}/conferences/${name}/rename/${newName}`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   getSchoolsByDivision(name: string, division: number): Observable<School[]> {
     return this.http.get<School[]>(
       `${this.baseUrl}/conferences/${name}/division/${division}/schools`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -287,28 +303,28 @@ export class DataService {
   addConferenceGames(name: string) {
     return this.http.post<any>(
       `${this.baseUrl}/conferences/${name}/add-games`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   removeConferenceGames(name: string) {
     return this.http.post<any>(
       `${this.baseUrl}/conferences/${name}/remove-games`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   removeAllConferenceGames() {
     return this.http.post<any>(
       `${this.baseUrl}/schedule/remove-conference-games`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
   addAllConferenceGames() {
     return this.http.post<any>(
       `${this.baseUrl}/schedule/add-conference-games`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 
@@ -362,7 +378,7 @@ export class DataService {
   swapSchedule(tgid1: number, tgid2: number): Observable<any> {
     return this.http.post<any>(
       `${this.baseUrl}/schedule/swap-schedule/${tgid1}/${tgid2}`,
-      { headers: this.headers }
+      { headers: this.headers },
     );
   }
 

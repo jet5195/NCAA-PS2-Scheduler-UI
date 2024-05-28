@@ -4,11 +4,17 @@ import {Conference} from '../conference';
 import {DataService} from '../services/data.service';
 import {School} from '../school';
 import {SnackBarService} from '../snackBar.service';
+import { MatCard } from '@angular/material/card';
+import { MatButton } from '@angular/material/button';
+import { MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle } from '@angular/material/expansion';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-conference',
-  templateUrl: './conference.component.html',
-  styleUrls: ['./conference.component.css']
+    selector: 'app-conference',
+    templateUrl: './conference.component.html',
+    styleUrls: ['./conference.component.css'],
+    standalone: true,
+    imports: [NgIf, MatExpansionPanel, MatExpansionPanelHeader, MatExpansionPanelTitle, MatButton, NgFor, MatCard]
 })
 export class ConferenceComponent implements OnInit {
 

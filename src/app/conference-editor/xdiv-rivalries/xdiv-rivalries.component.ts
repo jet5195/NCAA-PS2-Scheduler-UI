@@ -1,14 +1,28 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, CdkDropList, CdkDrag } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Conference } from 'src/app/conference';
 import { School } from '../../school';
 import { ConferenceEditorService } from '../conference-editor.service';
+import { LiteSchoolGridTileComponent } from './school-grid-tile-dense/lite-school-grid-tile.component';
+import { NgIf, NgFor } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatSlideToggle } from '@angular/material/slide-toggle';
 
 @Component({
-  selector: 'app-xdiv-rivalries',
-  templateUrl: './xdiv-rivalries.component.html',
-  styleUrl: './xdiv-rivalries.component.scss',
+    selector: 'app-xdiv-rivalries',
+    templateUrl: './xdiv-rivalries.component.html',
+    styleUrl: './xdiv-rivalries.component.scss',
+    standalone: true,
+    imports: [
+        MatSlideToggle,
+        FormsModule,
+        NgIf,
+        NgFor,
+        LiteSchoolGridTileComponent,
+        CdkDropList,
+        CdkDrag,
+    ],
 })
 export class XdivRivalriesComponent implements OnInit, OnDestroy {
   isXDivEnabled: boolean = false;

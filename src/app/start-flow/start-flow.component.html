@@ -1,0 +1,88 @@
+<mat-stepper [linear]="false" #stepper>
+  <mat-step
+    label="Select School Data"
+    [stepControl]="schoolDataFormGroup"
+    [editable]="false"
+  >
+    <form [formGroup]="schoolDataFormGroup">
+      <div class="stepper-container">
+        <mat-card
+          *ngFor="let option of schoolDataOptions"
+          class="option-card"
+          [class.selected]="
+            schoolDataFormGroup.value.schoolData === option.type
+          "
+          (click)="selectSchoolData(option.type); option.action()"
+        >
+          <mat-card-header>
+            <mat-card-title>{{ option.title }}</mat-card-title>
+          </mat-card-header>
+          <img mat-card-image [alt]="option.title" [src]="option.image" />
+          <mat-card-content>{{ option.description }}</mat-card-content>
+        </mat-card>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step
+    label="Conference Alignment Setup"
+    [stepControl]="alignmentFormGroup"
+  >
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button
+        mat-button
+        matStepperNext
+        [disabled]="!(conferenceEditorService.isValid() | async)"
+      >
+        Next
+      </button>
+    </div>
+    <app-start-flow-conference
+      *ngIf="stepper.selectedIndex == 1"
+      [schoolDataFormGroup]="schoolDataFormGroup"
+      [alignmentFormGroup]="alignmentFormGroup"
+    ></app-start-flow-conference>
+  </mat-step>
+  <mat-step label="Set Year">
+    <div class="stepper-container">
+      <mat-card class="year-card">
+        <mat-card-header>
+          <mat-card-title> Set Year </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-form-field>
+            <label>Year</label>
+            <input matInput type="number" [(ngModel)]="year" />
+          </mat-form-field>
+          <div>
+            <button
+              class="wide-boi-button"
+              mat-stroked-button
+              (click)="setYear(year)"
+            >
+              Save
+            </button>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext [disabled]="!isYearValid">Next</button>
+    </div>
+  </mat-step>
+  <mat-step label="Schedule Setup">
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+    <app-start-flow-schedule></app-start-flow-schedule>
+  </mat-step>
+  <mat-step label="Export Files">
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+    <app-start-flow-export> </app-start-flow-export>
+  </mat-step>
+</mat-stepper>

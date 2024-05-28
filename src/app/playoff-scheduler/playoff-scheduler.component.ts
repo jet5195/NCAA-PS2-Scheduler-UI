@@ -3,11 +3,18 @@ import { ActivatedRoute } from '@angular/router';
 import { DataService } from '../services/data.service';
 import { School } from '../school';
 import { CompareService } from '../services/compare.service';
+import { MatOption } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
+import { MatSelect } from '@angular/material/select';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { NgIf, NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-playoff-scheduler',
-  templateUrl: './playoff-scheduler.component.html',
-  styleUrls: ['./playoff-scheduler.component.css']
+    selector: 'app-playoff-scheduler',
+    templateUrl: './playoff-scheduler.component.html',
+    styleUrls: ['./playoff-scheduler.component.css'],
+    standalone: true,
+    imports: [NgIf, MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption]
 })
 export class PlayoffSchedulerComponent implements OnInit {
 

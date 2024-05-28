@@ -1,0 +1,50 @@
+.mat-stepper-horizontal {
+  margin-top: 8px;
+}
+
+.stepper-container {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 20px;
+}
+
+.option-card {
+  width: 100%;
+  max-width: 650px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px; /* Rounded corners for modern look */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s; /* Smooth scaling and shadow on hover */
+}
+
+.mat-mdc-card-image {
+  object-fit: contain;
+  height: 500px;
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.option-card:hover {
+  transform: translateY(-3px); /* Subtle lift effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.mat-mdc-card-header {
+  align-self: center;
+  margin-bottom: 10px;
+}
+
+.mat-mdc-card-content {
+  align-self: center;
+  margin-top: 10px;
+}
+
+.option-card.selected {
+  border: 2px solid #1976d2; /* Blue border for selected card */
+  transform: translateY(-3px); /* Subtle lift effect on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
