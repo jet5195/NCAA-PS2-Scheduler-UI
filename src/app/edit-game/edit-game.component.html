@@ -1,76 +1,120 @@
-<mat-card *ngIf="game" class="mat-elevation-z8" style="margin-top: 25px">
-    <div fxLayout="row" fxLayoutAlign="space-around" [style.margin-top.px]="50">
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{awayTeam.logo}}">
-            <!-- <div [style.margin-top.px]="10">{{game.awayTeam.name}} {{game.awayTeam.nickname}}</div> -->
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>Away Team</mat-label>
-                <mat-select [(ngModel)]="awayTeam" name="availableAwaySchool" [compareWith]="compareService.compareSchools"
-                    (selectionChange)="getAvailableHomeSchools()">
-                    <mat-option *ngFor="let availableAwaySchool of availableAwaySchools" [value]="availableAwaySchool">
-                        {{availableAwaySchool.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <div fxLayout fxLayout="row" fxLayoutGap="10px">
-                <mat-form-field>
-                    <mat-label>Week</mat-label>
-                    <mat-select [(ngModel)]="gameWeek" [compareWith]="compareService.compareWeeks">
-                        <mat-option *ngFor="let week of emptyWeeks" [value]="week">
-                            {{week}}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Day</mat-label>
-                    <mat-select [(ngModel)]="gameDay" [compareWith]="compareService.compareDays">
-                        <mat-option *ngFor="let day of dayList" [value]="day">
-                            {{day.value}}
-                        </mat-option>
-                    </mat-select>
-                    <!-- <input [(ngModel)]="gameDay" autocomplete="off" matInput placeholder="Game Day"> -->
-                </mat-form-field>
-                <mat-form-field>
-                    <input [(ngModel)]="gameTime" autocomplete="off" matInput type="time" placeholder="Game Time">
-                </mat-form-field>
-            </div>
-            <div fxLayout fxLayout="row" fxLayoutGap="10px">
-                <mat-form-field>
-                    <input [(ngModel)]="game.gameResult.awayScore" autocomplete="off" matInput placeholder="Away Score">
-                </mat-form-field>
-                <mat-form-field>
-                    <input [(ngModel)]="game.gameResult.homeScore" autocomplete="off" matInput placeholder="Home Score">
-                </mat-form-field>
-            </div>
-        </div>
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{homeTeam.logo}}">
-            <!-- <div [style.margin-top.px]="10">{{game.homeTeam.name}} {{game.homeTeam.nickname}}</div> -->
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>Home Team</mat-label>
-                <mat-select [(ngModel)]="homeTeam" name="availableHomeSchool" [compareWith]="compareService.compareSchools"
-                    (selectionChange)="getAvailableAwaySchools()">
-                    <mat-option *ngFor="let availableHomeSchool of availableHomeSchools" [value]="availableHomeSchool">
-                        {{availableHomeSchool.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+<div class="main-div">
+  <mat-card *ngIf="game" class="scoreboard mat-elevation-z8">
+    <div class="teams-section">
+      <div class="team">
+        <img
+          class="team-logo"
+          [src]="awayTeam.logo"
+          alt="{{ awayTeam.name }}"
+        />
+        <mat-form-field appearance="outline">
+          <mat-label>Away Team</mat-label>
+          <mat-select
+            [(ngModel)]="awayTeam"
+            name="availableAwaySchool"
+            [compareWith]="compareService.compareSchools"
+            (selectionChange)="getAvailableHomeSchools()"
+          >
+            <mat-option
+              *ngFor="let availableAwaySchool of availableAwaySchools"
+              [value]="availableAwaySchool"
+            >
+              {{ availableAwaySchool.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Away Score</mat-label>
+          <input [(ngModel)]="game.gameResult.awayScore" matInput />
+        </mat-form-field>
+      </div>
+      <div class="versus">
+        <span>VS</span>
+      </div>
+      <div class="team">
+        <img
+          class="team-logo"
+          [src]="homeTeam.logo"
+          alt="{{ homeTeam.name }}"
+        />
+        <mat-form-field appearance="outline">
+          <mat-label>Home Team</mat-label>
+          <mat-select
+            [(ngModel)]="homeTeam"
+            name="availableHomeSchool"
+            [compareWith]="compareService.compareSchools"
+            (selectionChange)="getAvailableAwaySchools()"
+          >
+            <mat-option
+              *ngFor="let availableHomeSchool of availableHomeSchools"
+              [value]="availableHomeSchool"
+            >
+              {{ availableHomeSchool.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Home Score</mat-label>
+          <input [(ngModel)]="game.gameResult.homeScore" matInput />
+        </mat-form-field>
+      </div>
     </div>
-    <div fxLayoutAlign="end none" fxLayoutGap="10px" [style.margin-top.px]="100">
-        <mat-slide-toggle [(ngModel)]="validate" (change)="onValidateSliderChange($event)">
-            Filter Valid Opponents
-        </mat-slide-toggle>
-        <button mat-stroked-button color="accent" matTooltip="Swaps Home & Away Teams" (click)="swapHomeAway()">
-            Swap Home Team
-        </button>
-        <button mat-flat-button color="accent" matTooltip="Saves Game" (click)="editGame()">
-            Save
-        </button>
-        <button mat-button color="basic" matTooltip="Cancels Changes" (click)="cancel()">
-            Cancel
-        </button>
+    <div class="game-details">
+      <mat-form-field appearance="outline">
+        <mat-label>Week</mat-label>
+        <mat-select
+          [(ngModel)]="gameWeek"
+          [compareWith]="compareService.compareWeeks"
+        >
+          <mat-option *ngFor="let week of emptyWeeks" [value]="week">
+            {{ week }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Day</mat-label>
+        <mat-select [(ngModel)]="gameDay">
+          <mat-option *ngFor="let day of dayList" [value]="day">
+            {{ day }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Game Time</mat-label>
+        <input [(ngModel)]="gameTime" matInput type="time" />
+      </mat-form-field>
     </div>
-</mat-card>
+    <div class="game-controls">
+      <mat-slide-toggle
+        [(ngModel)]="validate"
+        (change)="onValidateSliderChange($event)"
+      >
+        Filter Valid Opponents
+      </mat-slide-toggle>
+      <button
+        mat-stroked-button
+        color="accent"
+        matTooltip="Swaps Home & Away Teams"
+        (click)="swapHomeAway()"
+      >
+        Swap Home Team
+      </button>
+      <button
+        mat-flat-button
+        color="accent"
+        matTooltip="Saves Game"
+        (click)="editGame()"
+      >
+        Save
+      </button>
+      <button
+        mat-button
+        color="basic"
+        matTooltip="Cancels Changes"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+  </mat-card>
+</div>

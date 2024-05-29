@@ -1,36 +1,50 @@
+import { Location, NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { DataService } from '../services/data.service';
-import { Game } from '../game';
-import { Location, NgIf, NgFor } from '@angular/common';
-import { School } from '../school';
-import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
-import { DayOfWeekToStringPipe } from '../pipes/dayOfWeekToString.pipe';
-import { AddGameRequest } from '../addGameRequest';
-import { MatSlideToggleChange, MatSlideToggle } from '@angular/material/slide-toggle';
-import { CompareService } from '../services/compare.service';
-import { MatTooltip } from '@angular/material/tooltip';
 import { MatButton } from '@angular/material/button';
-import { MatInput } from '@angular/material/input';
-import { MatOption } from '@angular/material/core';
-import { MatSelect } from '@angular/material/select';
-import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatCard } from '@angular/material/card';
+import { MatOption } from '@angular/material/core';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
+import {
+  MatSlideToggle,
+  MatSlideToggleChange,
+} from '@angular/material/slide-toggle';
+import { MatTooltip } from '@angular/material/tooltip';
+import { ActivatedRoute } from '@angular/router';
+import { AddGameRequest } from '../addGameRequest';
+import { Game } from '../game';
+import { MinutesAfterMidnightToTimePipe } from '../pipes/minutesAfterMidnightToTime.pipe';
+import { School } from '../school';
+import { CompareService } from '../services/compare.service';
+import { DataService } from '../services/data.service';
 
 @Component({
-    selector: 'app-edit-game',
-    templateUrl: './edit-game.component.html',
-    styleUrls: ['./edit-game.component.css'],
-    standalone: true,
-    imports: [NgIf, MatCard, MatFormField, MatLabel, MatSelect, FormsModule, NgFor, MatOption, MatInput, MatSlideToggle, MatButton, MatTooltip]
+  selector: 'app-edit-game',
+  templateUrl: './edit-game.component.html',
+  styleUrls: ['./edit-game.component.css'],
+  standalone: true,
+  imports: [
+    NgIf,
+    MatCard,
+    MatFormField,
+    MatLabel,
+    MatSelect,
+    FormsModule,
+    NgFor,
+    MatOption,
+    MatInput,
+    MatSlideToggle,
+    MatButton,
+    MatTooltip,
+  ],
 })
 export class EditGameComponent implements OnInit {
-
-  gameFormGroup!: FormGroup
+  gameFormGroup!: FormGroup;
   game!: Game;
   gameTime!: string;
-  gameDay!: any;
+  gameDay!: string;
   week!: number;
   gameNumber!: number;
   availableHomeSchools!: School[];
@@ -39,112 +53,71 @@ export class EditGameComponent implements OnInit {
   initialAwayTeam!: School;
   homeTeam!: School;
   awayTeam!: School;
-  is5Sat!: boolean;
   dayList!: any[];
   emptyWeeks!: number[];
   gameWeek!: number;
   validate: boolean = true;
 
-  constructor(private data: DataService, private route: ActivatedRoute, private location: Location,
-    private mtmToTime: MinutesAfterMidnightToTimePipe, private dowToString: DayOfWeekToStringPipe,
-  public compareService: CompareService) {
-     }
+  constructor(
+    private data: DataService,
+    private route: ActivatedRoute,
+    private location: Location,
+    private mtmToTime: MinutesAfterMidnightToTimePipe,
+    public compareService: CompareService,
+  ) {}
 
   ngOnInit(): void {
-    this.createDayList(true);
-    this.route.params.subscribe(params => {
+    this.createDayList();
+    this.route.params.subscribe((params) => {
       this.week = parseInt(this.route.snapshot.paramMap.get('week')!, 10);
-      this.gameNumber = parseInt(this.route.snapshot.paramMap.get('gameNumber')!, 10);
+      this.gameNumber = parseInt(
+        this.route.snapshot.paramMap.get('gameNumber')!,
+        10,
+      );
       this.loadGame();
       //if editing bowl games, don't force validation
-      if(this.week > 15){
+      if (this.week > 15) {
         this.validate = false;
       }
     });
   }
 
-  createDayList(ncaa06: boolean): void  {
-    if (ncaa06) {
-      this.dayList = [{
-        value: 'Monday',
-        key: 0
-      },
-      {
-        value: 'Tuesday',
-        key: 1
-      },
-      {
-        value: 'Wednesday',
-        key: 2
-      },
-      {
-        value: 'Thursday',
-        key: 3
-      },
-      {
-        value: 'Friday',
-        key: 4
-      },
-      {
-        value: 'Saturday',
-        key: 5
-      },
-      {
-        value: 'Sunday',
-        key: 6
-      }];
-    } else {
-      this.dayList = [{
-        value: 'Monday',
-        key: 4
-      },
-      {
-        value: 'Tuesday',
-        key: 5
-      },
-      {
-        value: 'Wednesday',
-        key: 6
-      },
-      {
-        value: 'Thursday',
-        key: 0
-      },
-      {
-        value: 'Friday',
-        key: 1
-      },
-      {
-        value: 'Saturday',
-        key: 2
-      },
-      {
-        value: 'Sunday',
-        key: 3
-      }];
-    }
+  createDayList(): void {
+    this.dayList = [
+      'MONDAY',
+      'TUESDAY',
+      'WEDNESDAY',
+      'THURSDAY',
+      'FRIDAY',
+      'SATURDAY',
+      'SUNDAY',
+    ];
   }
 
   getAvailableHomeSchools(): void {
     this.getEmptyWeeks();
-    this.data.getAvailableOpponents(this.awayTeam.tgid, this.week).subscribe((data: School[]) => {
-      console.log(data);
-      this.availableHomeSchools = data;
-      if (!this.availableHomeSchools.includes(this.initialHomeTeam)) {
-        this.availableHomeSchools.unshift(this.initialHomeTeam);
-      }
-      if (!this.availableHomeSchools.includes(this.homeTeam)) {
-        this.availableHomeSchools.unshift(this.homeTeam);
-      }
-    });
+    this.data
+      .getAvailableOpponents(this.awayTeam.tgid, this.week)
+      .subscribe((data: School[]) => {
+        console.log(data);
+        this.availableHomeSchools = data;
+        if (!this.availableHomeSchools.includes(this.initialHomeTeam)) {
+          this.availableHomeSchools.unshift(this.initialHomeTeam);
+        }
+        if (!this.availableHomeSchools.includes(this.homeTeam)) {
+          this.availableHomeSchools.unshift(this.homeTeam);
+        }
+      });
   }
 
   getEmptyWeeks(): void {
-    this.data.getEmptyWeeksTwoTeams(this.awayTeam.tgid, this.homeTeam.tgid).subscribe((data: number[]) => {
-      console.log(data);
-      this.emptyWeeks = data;
-      this.emptyWeeks.unshift(this.gameWeek);
-    });
+    this.data
+      .getEmptyWeeksTwoTeams(this.awayTeam.tgid, this.homeTeam.tgid)
+      .subscribe((data: number[]) => {
+        console.log(data);
+        this.emptyWeeks = data;
+        this.emptyWeeks.unshift(this.gameWeek);
+      });
   }
 
   setListsToAllSchools(): void {
@@ -157,16 +130,18 @@ export class EditGameComponent implements OnInit {
   getAvailableAwaySchools(): void {
     if (this.validate) {
       this.getEmptyWeeks();
-      this.data.getAvailableOpponents(this.homeTeam.tgid, this.week).subscribe((data: School[]) => {
-        console.log(data);
-        this.availableAwaySchools = data;
-        if (!this.availableAwaySchools.includes(this.initialAwayTeam)) {
-          this.availableAwaySchools.unshift(this.initialAwayTeam);
-        }
-        if (!this.availableAwaySchools.includes(this.awayTeam)) {
-          this.availableAwaySchools.unshift(this.awayTeam);
-        }
-      });
+      this.data
+        .getAvailableOpponents(this.homeTeam.tgid, this.week)
+        .subscribe((data: School[]) => {
+          console.log(data);
+          this.availableAwaySchools = data;
+          if (!this.availableAwaySchools.includes(this.initialAwayTeam)) {
+            this.availableAwaySchools.unshift(this.initialAwayTeam);
+          }
+          if (!this.availableAwaySchools.includes(this.awayTeam)) {
+            this.availableAwaySchools.unshift(this.awayTeam);
+          }
+        });
     } else {
       this.setListsToAllSchools();
     }
@@ -185,7 +160,6 @@ export class EditGameComponent implements OnInit {
 
   loadGame(): void {
     this.data.getGame(this.week, this.gameNumber).subscribe((data: Game) => {
-      console.log(data);
       this.game = data;
       this.gameWeek = data.week;
       this.homeTeam = data.homeTeam;
@@ -194,7 +168,7 @@ export class EditGameComponent implements OnInit {
       this.initialAwayTeam = data.awayTeam;
       this.setLists(this.validate);
       this.gameTime = this.mtmToTime.transform(data.time, true);
-      this.gameDay = this.dayList.find(day => day.key === data.day);
+      this.gameDay = data.day;
     });
   }
 
@@ -217,7 +191,6 @@ export class EditGameComponent implements OnInit {
   //     gameResult: this.game.gameResult
   //   };
 
-
   //   await this.data.addGame(addGameRequest);
   //   this.location.back();
   // }
@@ -227,21 +200,23 @@ export class EditGameComponent implements OnInit {
     this.game.homeTeam = this.homeTeam;
     this.game.awayTeam = this.awayTeam;
     this.game.time = this.timeToMinutesAfterMidnight();
-    this.game.day = this.gameDay.key;
+    this.game.day = this.gameDay;
 
     const addGameRequest: AddGameRequest = {
       homeId: this.homeTeam.tgid,
       awayId: this.awayTeam.tgid,
       week: this.gameWeek,
-      day: this.gameDay.key,
+      day: this.gameDay,
       time: this.timeToMinutesAfterMidnight(),
-      gameResult: this.game.gameResult
+      gameResult: this.game.gameResult,
     };
 
-    this.data.saveGame(addGameRequest, this.game.week, this.game.gameNumber).subscribe(data => {
-      console.log(data);
-      this.location.back();
-    });
+    this.data
+      .saveGame(addGameRequest, this.game.week, this.game.gameNumber)
+      .subscribe((data) => {
+        console.log(data);
+        this.location.back();
+      });
   }
 
   cancel(): void {
@@ -253,7 +228,7 @@ export class EditGameComponent implements OnInit {
     let hour: number = +this.gameTime.slice(0, 2);
     let minutes: number = +this.gameTime.slice(3, 5);
     console.log(hour + ':' + minutes);
-    let result: number = (hour * 60) + minutes;
+    let result: number = hour * 60 + minutes;
     console.log(result);
     return result;
   }
@@ -269,11 +244,13 @@ export class EditGameComponent implements OnInit {
   }
 
   getAllWeeks(): number[] {
-    return [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21];
+    return [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+      21,
+    ];
   }
 
   onValidateSliderChange($event: MatSlideToggleChange): void {
     this.setLists($event.checked);
   }
-
 }

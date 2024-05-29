@@ -1,0 +1,62 @@
+.scoreboard {
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  width: 800px;
+}
+
+.teams-section {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.team {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.team-logo {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+.team-score {
+  width: 100px;
+}
+
+.versus {
+  font-size: 24px;
+  font-weight: bold;
+  color: black;
+}
+
+.game-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.game-controls {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.mat-slide-toggle {
+  margin-right: 20px;
+}
+
+button {
+  margin-left: 10px;
+}
+
+.main-div {
+  display: flex;
+  justify-content: center;
+}
