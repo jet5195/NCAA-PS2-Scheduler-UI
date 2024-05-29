@@ -1,31 +1,54 @@
 <div class="add-game-container">
-
-    <!-- <h4>Select Week</h4> -->
-    <mat-form-field appearance="fill" class="add-game-dropdown">
-        <mat-label>Select Week</mat-label>
-        <mat-select [(ngModel)]="selectedWeek" name="availableWeek" (selectionChange)="changeWeek()">
-            <mat-option *ngFor="let availableWeek of availableWeeks" [value]="availableWeek">
-                {{availableWeek}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <!-- <h4>Select Opponent</h4> -->
-    <mat-form-field appearance="fill" class="add-game-dropdown">
-        <mat-label>Select Opponent</mat-label>
-        <mat-select [(ngModel)]="selectedOpponent" name="availableOpponent">
-            <mat-option *ngFor="let availableOpponent of availableOpponents" [value]="availableOpponent">
-                {{availableOpponent.name}}
-            </mat-option>
-        </mat-select>
-    </mat-form-field>
-    <!-- <span>{{selectedOpponent}}</span> -->
-    <!-- <label id="example-radio-group-label">Is this needed</label> -->
-    <mat-radio-group aria-labelledby="home-away-group-label" class="home-away-radio-group" [(ngModel)]="isHomeTeam">
-        <mat-radio-button class="home-away-radio-button" value="true">Home</mat-radio-button>
-        <mat-radio-button class="home-away-radio-button" value="false">Away</mat-radio-button>
-    </mat-radio-group>
-    <!-- <div>{{isHomeTeam}}</div> -->
-    <!-- <span>{{selectedWeek}}</span> -->
-    <button mat-stroked-button color="primary" class="add-game-button" (click)="add()">Add Game</button>
-
+  <!-- <h4>Select Week</h4> -->
+  <mat-form-field appearance="outline" class="add-game-dropdown">
+    <mat-label>Select Week</mat-label>
+    <mat-select
+      [(ngModel)]="selectedWeek"
+      name="availableWeek"
+      (selectionChange)="changeWeek()"
+    >
+      <mat-option
+        *ngFor="let availableWeek of availableWeeks"
+        [value]="availableWeek"
+      >
+        {{ availableWeek }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- <h4>Select Opponent</h4> -->
+  <mat-form-field appearance="outline" class="add-game-dropdown">
+    <mat-label>Select Opponent</mat-label>
+    <mat-select [(ngModel)]="selectedOpponent" name="availableOpponent">
+      <mat-option
+        *ngFor="let availableOpponent of availableOpponents"
+        [value]="availableOpponent"
+      >
+        {{ availableOpponent.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <!-- <span>{{selectedOpponent}}</span> -->
+  <!-- <label id="example-radio-group-label">Is this needed</label> -->
+  <mat-radio-group
+    aria-labelledby="home-away-group-label"
+    class="home-away-radio-group"
+    [(ngModel)]="isHomeTeam"
+  >
+    <mat-radio-button class="home-away-radio-button" value="true"
+      >Home</mat-radio-button
+    >
+    <mat-radio-button class="home-away-radio-button" value="false"
+      >Away</mat-radio-button
+    >
+  </mat-radio-group>
+  <!-- <div>{{isHomeTeam}}</div> -->
+  <!-- <span>{{selectedWeek}}</span> -->
+  <button
+    mat-stroked-button
+    color="primary"
+    class="add-game-button"
+    (click)="add()"
+  >
+    Add Game
+  </button>
 </div>

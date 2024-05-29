@@ -1,4 +1,7 @@
-
 .edit-conference-card-header {
-    justify-content: space-between;
+  justify-content: space-between;
+}
+.conference-editor-card {
+  margin-left: 20px;
+  margin-right: 20px;
 }

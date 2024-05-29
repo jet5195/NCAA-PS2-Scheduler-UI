@@ -1,8 +1,9 @@
 <div class="dashboard-buttons-container">
   <div class="dashboard-inputs" style="border-bottom-style: ridge">
     <h1 class="mat-h1" style="margin-top: revert">Import Setup</h1>
-    <mat-form-field>
-      <input matInput type="number" placeholder="Year" [(ngModel)]="year" />
+    <mat-form-field appearance="outline">
+      <mat-label>Year</mat-label>
+      <input matInput type="number" [(ngModel)]="year" />
     </mat-form-field>
     <button mat-flat-button color="primary" (click)="setYear(year)">set</button>
 

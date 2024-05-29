@@ -1,29 +1,29 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormField } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import * as fileSaver from 'file-saver';
 import { Conference } from '../conference';
 import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
-import { MatTooltip } from '@angular/material/tooltip';
-import { MatButton } from '@angular/material/button';
-import { FormsModule } from '@angular/forms';
-import { MatInput } from '@angular/material/input';
-import { MatFormField } from '@angular/material/form-field';
 //npm install @types/file-saver --save-dev
 //if that doesn't work, npm install --save @types/filesaver
 
 @Component({
-    selector: 'app-dashboard',
-    templateUrl: './dashboard.component.html',
-    styleUrls: ['./dashboard.component.css'],
-    standalone: true,
-    imports: [
-        MatFormField,
-        MatInput,
-        FormsModule,
-        MatButton,
-        MatTooltip,
-    ],
+  selector: 'app-dashboard',
+  templateUrl: './dashboard.component.html',
+  styleUrls: ['./dashboard.component.css'],
+  standalone: true,
+  imports: [
+    MatFormField,
+    MatInputModule,
+    FormsModule,
+    MatButtonModule,
+    MatTooltipModule,
+  ],
 })
 export class DashboardComponent implements OnInit {
   year: number = 0;
@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     public dataService: DataService,
-    private snackBarService: SnackBarService
+    private snackBarService: SnackBarService,
   ) {}
 
   ngOnInit(): void {
@@ -48,15 +48,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been added',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error automatically adding games',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -66,15 +66,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been modified (some may have been removed)',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error automatically adding games (aggressively adding rivalries)',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -84,15 +84,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been added',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error automatically adding rivalry games',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -102,15 +102,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been added',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error automatically adding random games',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -120,12 +120,12 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' extra games have been removed',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar('Error fixing schedule', 'Dismiss');
-      }
+      },
     );
   }
 
@@ -135,15 +135,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been removed',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error removing all FCS games',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -153,15 +153,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been removed',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error removing all OOC games',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -171,15 +171,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been removed',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error removing all OOC games (non-rivalry)',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -189,15 +189,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           data + ' games have been removed',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error removing all games',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -210,19 +210,19 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           'Schedule has been set successfully',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error setting schedule, try checking your file',
-          'Dismiss'
+          'Dismiss',
         );
         // if(error instanceof HttpErrorResponse){
         //   this.snackBarService.openSnackBar(error.statusText, "Dismiss");
         // }
         //console.log(error);
-      }
+      },
     );
   }
 
@@ -235,7 +235,7 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           'Conferences have been set successfully',
-          'Dismiss'
+          'Dismiss',
         );
         this.dataService.getConferenceList().subscribe((data) => {
           this.conferences = data;
@@ -244,9 +244,9 @@ export class DashboardComponent implements OnInit {
       (error) => {
         this.snackBarService.openSnackBar(
           'Error setting conferences, try checking your file',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -259,15 +259,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           'Bowls have been set successfully',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error setting bowls, try checking your file',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -307,15 +307,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           'Year has been set successfully',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error setting year, please try again in a few moments',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -325,15 +325,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           'Conference games have been removed successfully.',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error removing conference games.',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 
@@ -343,15 +343,15 @@ export class DashboardComponent implements OnInit {
         console.log(data);
         this.snackBarService.openSnackBar(
           'Conference games have been added successfully.',
-          'Dismiss'
+          'Dismiss',
         );
       },
       (error) => {
         this.snackBarService.openSnackBar(
           'Error adding conference games.',
-          'Dismiss'
+          'Dismiss',
         );
-      }
+      },
     );
   }
 }

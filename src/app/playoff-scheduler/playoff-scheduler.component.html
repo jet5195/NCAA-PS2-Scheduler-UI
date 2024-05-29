@@ -1,11 +1,10 @@
 <p>playoff-scheduler works!</p>
 
-
 <!-- ng for strat
 <ng-container *ngFor="let ps of playoffSchools; let i = index;">
     <div *ngIf="ps" fxLayout="column" fxLayoutAlign="center center">
         <img class="medium-team-logo" src="{{ps.logo}}">
-        <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
+        <mat-form-field appearance="outline" class="add-game-dropdown" [style.margin-top.px]="10">
             <mat-label>{{i+1}}</mat-label>
             <mat-select [(ngModel)]="playoffSchools[i]" name="ps{{i}}" [compareWith]="compareSchools">
                 <mat-option *ngFor="let school of allSchools" [value]="school">
@@ -16,375 +15,559 @@
     </div>
 </ng-container>
 -->
-<ng-container *ngIf="teamCount === 4 && playoffSchools.length > 0;">
-
-
-    <div class="bracket">
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[0].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>1</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[0]" name="ps0" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[1].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>2</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[1]" name="ps1" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+<ng-container *ngIf="teamCount === 4 && playoffSchools.length > 0">
+  <div class="bracket">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img class="medium-team-logo" src="{{ playoffSchools[0].logo }}" />
+      <mat-form-field
+        appearance="outline"
+        class="add-game-dropdown"
+        [style.margin-top.px]="10"
+      >
+        <mat-label>1</mat-label>
+        <mat-select
+          [(ngModel)]="playoffSchools[0]"
+          name="ps0"
+          [compareWith]="compareService.compareSchools"
+        >
+          <mat-option *ngFor="let school of allSchools" [value]="school">
+            {{ school.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
-    <div class="bracket">
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[2].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>3</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[2]" name="ps2" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img class="medium-team-logo" src="{{ playoffSchools[1].logo }}" />
+      <mat-form-field
+        appearance="outline"
+        class="add-game-dropdown"
+        [style.margin-top.px]="10"
+      >
+        <mat-label>2</mat-label>
+        <mat-select
+          [(ngModel)]="playoffSchools[1]"
+          name="ps1"
+          [compareWith]="compareService.compareSchools"
+        >
+          <mat-option *ngFor="let school of allSchools" [value]="school">
+            {{ school.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 
-        <div fxLayout="column" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[3].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>4</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[3]" name="ps3" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+  <div class="bracket">
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img class="medium-team-logo" src="{{ playoffSchools[2].logo }}" />
+      <mat-form-field
+        appearance="outline"
+        class="add-game-dropdown"
+        [style.margin-top.px]="10"
+      >
+        <mat-label>3</mat-label>
+        <mat-select
+          [(ngModel)]="playoffSchools[2]"
+          name="ps2"
+          [compareWith]="compareService.compareSchools"
+        >
+          <mat-option *ngFor="let school of allSchools" [value]="school">
+            {{ school.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
 
-
+    <div fxLayout="column" fxLayoutAlign="center center">
+      <img class="medium-team-logo" src="{{ playoffSchools[3].logo }}" />
+      <mat-form-field
+        appearance="outline"
+        class="add-game-dropdown"
+        [style.margin-top.px]="10"
+      >
+        <mat-label>4</mat-label>
+        <mat-select
+          [(ngModel)]="playoffSchools[3]"
+          name="ps3"
+          [compareWith]="compareService.compareSchools"
+        >
+          <mat-option *ngFor="let school of allSchools" [value]="school">
+            {{ school.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
 </ng-container>
 
-<ng-container *ngIf="teamCount === 12 && playoffSchools.length > 0;">
-    <div fxLayout="row">
-
-
-
-
+<ng-container *ngIf="teamCount === 12 && playoffSchools.length > 0">
+  <div fxLayout="row">
     <div class="bracket" fxLayout="column">
-        First Round
+      First Round
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[7].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>8</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[7]" name="ps7" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[7].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>8</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[7]"
+            name="ps7"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[8].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>9</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[8]" name="ps8" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[8].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>9</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[8]"
+            name="ps8"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div>
+      <div></div>
 
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[4].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>5</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[4]"
+            name="ps4"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[4].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>5</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[4]" name="ps4" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[11].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>12</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[11]"
+            name="ps11"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[11].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>12</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[11]" name="ps11" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div></div>
 
-        <div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[5].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>6</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[5]"
+            name="ps5"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[10].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>11</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[10]"
+            name="ps10"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[5].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>6</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[5]" name="ps5" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div></div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[10].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>11</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[10]" name="ps10" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[6].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>7</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[6]"
+            name="ps6"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div>
-
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[6].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>7</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[6]" name="ps6" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[9].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>10</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[9]" name="ps9" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[9].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>10</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[9]"
+            name="ps9"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="bracket" fxLayout="column">
-        Quarterfinals
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[0].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>1</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[0]" name="ps0" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      Quarterfinals
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[0].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>1</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[0]"
+            name="ps0"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[7].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>8</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[7]" name="ps7" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[7].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>8</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[7]"
+            name="ps7"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div>
+      <div></div>
 
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[3].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>4</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[3]"
+            name="ps3"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[3].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>4</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[3]" name="ps3" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[4].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>5</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[4]"
+            name="ps4"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[4].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>5</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[4]" name="ps4" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div></div>
 
-        <div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[2].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>3</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[2]"
+            name="ps2"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[5].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>6</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[5]"
+            name="ps5"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[2].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>3</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[2]" name="ps2" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div></div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[5].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>6</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[5]" name="ps5" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[1].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>2</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[1]"
+            name="ps1"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div>
-
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[1].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>2</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[1]" name="ps1" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[6].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>7</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[6]" name="ps6" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[6].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>7</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[6]"
+            name="ps6"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="bracket" fxLayout="column">
-        Semifinals
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[0].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>1</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[0]" name="ps0" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      Semifinals
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[0].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>1</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[0]"
+            name="ps0"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[3].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>4</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[3]" name="ps3" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[3].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>4</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[3]"
+            name="ps3"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div>
+      <div></div>
 
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[2].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>3</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[2]"
+            name="ps2"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[2].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>3</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[2]" name="ps2" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[1].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>2</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[1]" name="ps1" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[1].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>2</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[1]"
+            name="ps1"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
 
     <div class="bracket" fxLayout="column">
-        National Championship
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[0].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>1</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[0]" name="ps0" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      National Championship
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[0].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>1</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[0]"
+            name="ps0"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-        <div fxLayout="row" fxLayoutAlign="center center">
-            <img class="medium-team-logo" src="{{playoffSchools[1].logo}}">
-            <mat-form-field appearance="fill" class="add-game-dropdown" [style.margin-top.px]="10">
-                <mat-label>2</mat-label>
-                <mat-select [(ngModel)]="playoffSchools[1]" name="ps1" [compareWith]="compareService.compareSchools">
-                    <mat-option *ngFor="let school of allSchools" [value]="school">
-                        {{school.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <img class="medium-team-logo" src="{{ playoffSchools[1].logo }}" />
+        <mat-form-field
+          appearance="outline"
+          class="add-game-dropdown"
+          [style.margin-top.px]="10"
+        >
+          <mat-label>2</mat-label>
+          <mat-select
+            [(ngModel)]="playoffSchools[1]"
+            name="ps1"
+            [compareWith]="compareService.compareSchools"
+          >
+            <mat-option *ngFor="let school of allSchools" [value]="school">
+              {{ school.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </div>
-</div>
-
-
+  </div>
 </ng-container>
