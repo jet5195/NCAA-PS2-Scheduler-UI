@@ -19,6 +19,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatGridList, MatGridTile } from '@angular/material/grid-list';
 import { Conference } from 'src/app/conference';
 import { School } from 'src/app/school';
+import { SnackBarService } from 'src/app/snackBar.service';
 import { Division } from '../../division';
 import { AddSchoolDialogComponent } from '../add-school-dialog/add-school-dialog.component';
 import { ConferenceEditorService } from '../conference-editor.service';
@@ -53,6 +54,7 @@ export class ConferenceSchoolListComponent implements OnInit {
     public dialog: MatDialog,
     private conferenceEditorService: ConferenceEditorService,
     private renderer: Renderer2,
+    private snackBarService: SnackBarService,
   ) {
     this.calculateColumns(window.innerWidth);
   }
@@ -127,32 +129,39 @@ export class ConferenceSchoolListComponent implements OnInit {
     const currentConf = this.conferences.find(
       (c) => c.conferenceId === school.conferenceId,
     );
-    const currentDiv = school.divisionId
-      ? this.divisions.find((d) => d.divisionId === school.divisionId)
-      : null;
+    if (currentConf) {
+      const currentDiv = school.divisionId
+        ? this.divisions.find((d) => d.divisionId === school.divisionId)
+        : null;
 
-    //set the conferenceName attribute with the new value
-    school.conferenceId = this.conference.conferenceId;
-    school.divisionId = division ? division.divisionId : null;
+      //set the conferenceName attribute with the new value
+      school.conferenceId = this.conference.conferenceId;
+      school.divisionId = division ? division.divisionId : null;
 
-    //remove school from current conference
-    currentConf.schools = currentConf.schools.filter(
-      (s) => school.tgid !== s.tgid,
-    );
-    if (currentDiv) {
-      currentDiv.schools = currentDiv.schools.filter(
-        (s) => s.tgid !== school.tgid,
+      //remove school from current conference
+      currentConf.schools = currentConf.schools.filter(
+        (s) => school.tgid !== s.tgid,
+      );
+      if (currentDiv) {
+        currentDiv.schools = currentDiv.schools.filter(
+          (s) => s.tgid !== school.tgid,
+        );
+      }
+
+      //add school to new conference
+      this.conference.schools.push(school);
+      if (division) {
+        division.schools.push(school);
+      }
+      // Emit an event to notify that the conference has been updated
+      this.conferenceEditorService.updateSelectedConference(this.conference);
+      this.conferenceEditorService.updateConferences(this.conferences);
+    } else {
+      this.snackBarService.openSnackBar(
+        "Error. Current conference of school is null! That's weird, try again.",
+        'Ok',
       );
     }
-
-    //add school to new conference
-    this.conference.schools.push(school);
-    if (division) {
-      division.schools.push(school);
-    }
-    // Emit an event to notify that the conference has been updated
-    this.conferenceEditorService.updateSelectedConference(this.conference);
-    this.conferenceEditorService.updateConferences(this.conferences);
   }
 
   calculateOrphanedSchools(): School[] {
