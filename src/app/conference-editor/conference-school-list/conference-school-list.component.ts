@@ -130,9 +130,10 @@ export class ConferenceSchoolListComponent implements OnInit {
       (c) => c.conferenceId === school.conferenceId,
     );
     if (currentConf) {
-      const currentDiv = school.divisionId
-        ? this.divisions.find((d) => d.divisionId === school.divisionId)
-        : null;
+      const currentDiv =
+        school.divisionId !== null
+          ? this.divisions.find((d) => d.divisionId === school.divisionId)
+          : null;
 
       //set the conferenceName attribute with the new value
       school.conferenceId = this.conference.conferenceId;
