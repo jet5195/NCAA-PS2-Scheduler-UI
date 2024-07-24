@@ -5,7 +5,23 @@
       <input matInput type="number" placeholder="Year" [(ngModel)]="year" />
     </mat-form-field>
     <button mat-flat-button color="primary" (click)="setYear(year)">set</button>
-
+    <input
+      #xlsxInputSchoolData
+      hidden="true"
+      type="file"
+      onclick="this.value=null"
+      (change)="xlsxSchoolDataChange($event)"
+      accept=".xlsx"
+    />
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Select Excel doc with School Data"
+      (click)="xlsxInputSchoolData.click()"
+    >
+      Choose School Data File
+    </button>
     <input
       #xlsxInputSchedule
       hidden="true"
@@ -60,6 +76,15 @@
   </div>
   <div class="dashboard-inputs" style="border-bottom-style: ridge">
     <h1 class="mat-h1" style="margin-top: revert">Export</h1>
+    <button
+      mat-flat-button
+      color="primary"
+      class="dashboard-buttons"
+      matTooltip="Downloads school data to XLSX file"
+      (click)="downloadSchoolData()"
+    >
+      Download School Data
+    </button>
     <button
       mat-flat-button
       color="primary"
