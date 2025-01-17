@@ -2,11 +2,10 @@
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/tmp" />
+    <content url="file://$MODULE_DIR$/NCAA-PS2-Scheduler-UI">
+      <excludeFolder url="file://$MODULE_DIR$/NCAA-PS2-Scheduler-UI/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/NCAA-PS2-Scheduler-UI/tmp" />
     </content>
-    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>

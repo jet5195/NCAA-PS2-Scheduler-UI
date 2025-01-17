@@ -39,13 +39,13 @@
   </mat-step>
   <mat-step label="Import Conference Setup">
     <div class="stepper-container">
-      <mat-card
+      <mat-card *ngIf="selectedMode == 'NCAA06'"
         class="option-card"
-        [class.selected]="selectedMode === 'NCAA06'"
-        (click)="selectMode('NCAA06')"
+        [class.selected]="selectedAlignment === 'NCAA06'"
+        (click)="selectAlignment('NCAA06_Default')"
       >
         <mat-card-header>
-          <mat-card-title> NCAA 06 Schools </mat-card-title>
+          <mat-card-title> Default 06 Conferences</mat-card-title>
         </mat-card-header>
         <img
           mat-card-image
@@ -53,7 +53,24 @@
           src="assets/NCAA_FOOTBALL_06_COVER_ART.jpg"
         />
         <mat-card-content
-          >For use with Vanilla Copies of NCAA 06
+          >
+        </mat-card-content>
+      </mat-card>
+      <mat-card *ngIf="selectedMode == 'NEXT24'"
+        class="option-card"
+        [class.selected]="selectedAlignment === 'NEXT24'"
+        (click)="selectAlignment('NEXT24_Default')"
+      >
+        <mat-card-header>
+          <mat-card-title> Default NCAA NEXT 24 Conferences</mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="assets/NCAA_NEXT_24_COVER_ART.jpg"
+          alt="NCAA NEXT 24 Cover Art"
+        />
+        <mat-card-content
+          >
         </mat-card-content>
       </mat-card>
       <mat-card
@@ -62,15 +79,15 @@
         (click)="selectMode('NEXT24')"
       >
         <mat-card-header>
-          <mat-card-title> NCAA NEXT 24 Schools </mat-card-title>
+          <mat-card-title> Import Custom Conferences </mat-card-title>
         </mat-card-header>
-        <img
+        <!-- <img
           mat-card-image
           src="assets/NCAA_NEXT_24_COVER_ART.jpg"
           alt="NCAA NEXT 24 Cover Art"
-        />
+        /> -->
         <mat-card-content>
-          For use with the NCAA NEXT '24 Mod
+          
         </mat-card-content>
       </mat-card>
     </div>
