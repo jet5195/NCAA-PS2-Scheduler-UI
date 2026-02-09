@@ -231,6 +231,12 @@ export class DataService {
     );
   }
 
+  saveSchoolDataToExcel(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/schools/download`, {
+      responseType: 'blob',
+    });
+  }
+
   saveScheduleToExcel(): Observable<any> {
     return this.http.get(`${this.baseUrl}/schedule/download`, {
       responseType: 'blob',

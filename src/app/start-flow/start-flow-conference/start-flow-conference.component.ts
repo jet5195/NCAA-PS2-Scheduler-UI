@@ -94,11 +94,11 @@ export class StartFlowConferenceComponent implements OnInit {
   stepper: any;
   ngOnInit(): void {
     //check existing alignment, if we have data. Then enable edit button
-    this.dataService.getConferenceList().subscribe((data) => {
-      if (data.length > 0) {
-        this.isAlignmentSet = true;
-      }
-    });
+    // this.dataService.getConferenceList().subscribe((data) => {
+    //   if (data.length > 0) {
+    //     this.isAlignmentSet = true;
+    //   }
+    // });
 
     this.alignmentFormGroup = this.fb.group({
       alignment: [null, Validators.required],

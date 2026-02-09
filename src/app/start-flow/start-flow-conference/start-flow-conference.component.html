@@ -32,6 +32,6 @@
     </form>
   </mat-tab>
   <mat-tab label="(Optional) Edit Conferences" [disabled]="!isAlignmentSet">
-    <app-conference-editor></app-conference-editor>
+    <app-conference-editor *ngIf="isAlignmentSet"></app-conference-editor>
   </mat-tab>
 </mat-tab-group>
