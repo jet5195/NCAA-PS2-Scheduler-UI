@@ -139,7 +139,7 @@ export class ConferenceEditorService {
     });
     console.log(totalFbsSchools);
     if (totalFbsSchools >= 120) {
-      this.errors.push('Must have 120 or fewer schools as FBS');
+      this.errors.push('Must have 120 or fewer schools as FBS. Currently ' + totalFbsSchools);
     }
   }
 }
