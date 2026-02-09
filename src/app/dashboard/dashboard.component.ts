@@ -1,9 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { MatButton } from '@angular/material/button';
-import { MatFormField } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import * as fileSaver from 'file-saver';
 import { Conference } from '../conference';
@@ -14,6 +9,7 @@ import { MatButton } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatInput } from '@angular/material/input';
 import { MatFormField } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 //npm install @types/file-saver --save-dev
 //if that doesn't work, npm install --save @types/filesaver
 
@@ -22,7 +18,7 @@ import { MatFormField } from '@angular/material/form-field';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [MatFormField, MatInput, FormsModule, MatButton, MatTooltip],
+  imports: [MatFormField, MatInput, FormsModule, MatButton, MatTooltip, MatInputModule],
 })
 export class DashboardComponent implements OnInit {
   year: number = 0;
