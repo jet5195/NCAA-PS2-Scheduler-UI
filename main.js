@@ -23,8 +23,10 @@ const {
         nodeIntegration: true
       }
     })
-
-    var jarPath = app.getAppPath() + '\\ncaa-06-scheduler.jar';
+    const path = require('path');
+    var jarPath = path.join(process.cwd(),  'resources');
+    jarPath = path.join(jarPath,  'ncaa-06-scheduler.jar');
+    console.log('Jar path: ', jarPath );
     var child = require('child_process').spawn(
     'java', ['-jar', jarPath, '']
   );
@@ -62,7 +64,7 @@ const {
   })
   
   app.on('activate', function () {
-    if (win === null) {
+    if (appWindow === null) {
       initWindow()
     }
   })

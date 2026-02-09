@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
+import { MatButton } from '@angular/material/button';
 import { MatFormField } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInput } from '@angular/material/input';
+import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import * as fileSaver from 'file-saver';
 import { Conference } from '../conference';
 import { DataService } from '../services/data.service';
 import { SnackBarService } from '../snackBar.service';
+import { MatTooltip } from '@angular/material/tooltip';
+import { MatButton } from '@angular/material/button';
+import { FormsModule } from '@angular/forms';
+import { MatInput } from '@angular/material/input';
+import { MatFormField } from '@angular/material/form-field';
 //npm install @types/file-saver --save-dev
 //if that doesn't work, npm install --save @types/filesaver
 
@@ -17,13 +22,7 @@ import { SnackBarService } from '../snackBar.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
   standalone: true,
-  imports: [
-    MatFormField,
-    MatInputModule,
-    FormsModule,
-    MatButtonModule,
-    MatTooltipModule,
-  ],
+  imports: [MatFormField, MatInput, FormsModule, MatButton, MatTooltip],
 })
 export class DashboardComponent implements OnInit {
   year: number = 0;
@@ -201,6 +200,27 @@ export class DashboardComponent implements OnInit {
     );
   }
 
+  xlsxSchoolDataChange(fileInputEvent: any) {
+    console.log(fileInputEvent.target.files[0]);
+    let schoolData = fileInputEvent.target.files[0];
+
+    this.dataService.setSchoolDataFile(schoolData).subscribe(
+      (data: any) => {
+        console.log(data);
+        this.snackBarService.openSnackBar(
+          'School Data has been set successfully',
+          'Dismiss',
+        );
+      },
+      (error) => {
+        this.snackBarService.openSnackBar(
+          'Error setting School Data, try checking your file',
+          'Dismiss',
+        );
+      },
+    );
+  }
+
   xlsxScheduleChange(fileInputEvent: any) {
     console.log(fileInputEvent.target.files[0]);
     this.selectedSchedule = fileInputEvent.target.files[0];
@@ -269,6 +289,17 @@ export class DashboardComponent implements OnInit {
         );
       },
     );
+  }
+
+  downloadSchoolData(): void {
+    this.dataService.saveSchoolDataToExcel().subscribe((response: any) => {
+      let blob: any = new Blob([response], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      fileSaver.saveAs(blob, 'SchoolData.xlsx');
+    }),
+      (error: any) => console.log('Error downloading SchoolData'),
+      () => console.info('SchoolData downloaded successfully');
   }
 
   downloadFile(): void {
